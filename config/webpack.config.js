@@ -155,6 +155,11 @@ module.exports = function (webpackEnv) {
         }
       );
     }
+    //添加sass-resources-loader
+    loaders.push( {
+      loader: require.resolve('sass-resources-loader'),options: {
+        resources: './src/globalVars.scss'
+      }})
     return loaders;
   };
 
@@ -523,16 +528,16 @@ module.exports = function (webpackEnv) {
             {
               test: sassModuleRegex,
               use: getStyleLoaders(
-                {
-                  importLoaders: 3,
-                  sourceMap: isEnvProduction
-                    ? shouldUseSourceMap
-                    : isEnvDevelopment,
-                  modules: {
-                    getLocalIdent: getCSSModuleLocalIdent,
+                  {
+                    importLoaders: 3,
+                    sourceMap: isEnvProduction
+                        ? shouldUseSourceMap
+                        : isEnvDevelopment,
+                    modules: {
+                      getLocalIdent: getCSSModuleLocalIdent,
+                    },
                   },
-                },
-                'sass-loader'
+                  'sass-loader'
               ),
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
@@ -678,7 +683,7 @@ module.exports = function (webpackEnv) {
           dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
           exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
           // Bump up the default maximum size (2mb) that's precached,
-          // to make lazy-loading failure scenarios less likely.
+          // to make lazy-Loading failure scenarios less likely.
           // See https://github.com/cra-template/pwa/issues/13#issuecomment-722667270
           maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         }),

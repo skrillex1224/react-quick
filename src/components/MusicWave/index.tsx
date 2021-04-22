@@ -63,14 +63,14 @@ var load=function(){
             var index = 0
             rec=Recorder({
                 onProcess:function(buffersBak,powerLevel,bufferDuration,bufferSampleRate){
-                    console.log(buffersBak)
+                    // console.log(buffersBak)
                     wave.input(newArr,powerLevel,bufferSampleRate);//输入音频数据，更新显示波形
                 }
             });
             rec.open(function(){
                 wave=Recorder.FrequencyHistogramView(set); //创建wave对象，写这里面浏览器妥妥的
                 const container = document.querySelector("#container");
-                console.log(container)
+                // console.log(container)
                 container.append(wave.canvas)
                 rec.start();
             });

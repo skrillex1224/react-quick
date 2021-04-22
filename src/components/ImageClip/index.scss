@@ -1,0 +1,58 @@
+.wrapper{
+    width: 80%;
+    margin: 0 auto;
+
+    &_ops{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &_croppers{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin: 30px 0 60px;
+    }
+
+    &_btn{
+        font-size: 40px;
+        width: 300px;
+        line-height: 75px;
+        height: 80px;
+        color: #f0f0f0CC;
+        border-radius: 20px;
+        background-color: #5396E0EE;
+        box-shadow: 4px 4px 5px 2px #5396E0 ;
+        margin: 40px auto;
+        transition: .4s;
+        transform: translateX(0) scale(1);
+    }
+
+    &_btn:hover{
+        background-color: #5396E0AA;
+        transform: translateX(5px) scale(1);
+    }
+
+    &_cropResult{
+        width: 40%;
+        height: 300px;
+
+        &_result{
+            width: auto;
+            height: 300px;
+        }
+    }
+}
+
+
+/*默认样式*/
+.box {
+    display: inline-block;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.imgPreview {
+    overflow: hidden;
+}

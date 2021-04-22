@@ -5,10 +5,10 @@ import MusicWave from '../../components/MusicWave'
 import VideoEditor from '../../components/VideoEditor'
 import {Animated} from 'react-animated-css'
 import styles from './index.scss';
-import {func} from "prop-types";
+import ImageClip from '../../components/ImageClip'
 
 let arr = [];
-for (let i = 3; i < 10; i++) {
+for (let i = 4; i < 10; i++) {
     arr.push(i);
 }
 
@@ -113,6 +113,13 @@ export default class  Index extends React.Component<any, any>{
                                <a>视频截取</a>
                            </div>
                             <VideoEditor/>
+                       </div>
+
+                       <div style={!!suspend[3] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[3]}   className={styles.wrapper_box} >
+                           <div className={styles.wrapper_box_title}>
+                               <a href={'https://github.com/react-cropper/react-cropper'}>图片裁剪</a>
+                           </div>
+                           <ImageClip/>
                        </div>
 
                        {

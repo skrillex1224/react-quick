@@ -82,18 +82,26 @@ export default class  Index extends React.Component<any, any>{
                          animationOutDuration={600}>
                    <div className={styles.wrapper}>
                        <div className={styles.wrapper_mainScreen}>
-                           主屏
+                           {/*根据padding撑开父元素, 容纳整个背景图片*/}
+                           <div className={styles.wrapper_mainScreen_extend}/>
+                           <div className={styles.wrapper_mainScreen_titleBox}>
+                              <div className={styles.wrapper_mainScreen_titleBox_title}>案例测试集</div>
+                              <div className={styles.wrapper_mainScreen_titleBox_subTitle}>Case Test Set</div>
+                          </div>
                        </div>
-                       <div style={!!suspend[0] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[0]}  onClick={debounce(()=>{
-                           window.location.href ='BoYiCap://'
-                       },200)}  className={styles.wrapper_box} >
-                              点击这里直接唤醒本地.exe文件
+                       <div style={!!suspend[0] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[0]} className={styles.wrapper_box} >
+                           <div className={styles.wrapper_box_title}>
+                               <a href={'https://github.com/xiangyuecn/Recorder'}>点击下方按钮唤醒本地.exe文件</a>
+                               <div className={styles.wrapper_box_btn} onClick={debounce(()=>{
+                                   window.location.href ='BoYiCap://'
+                               },200)}>WakeUp</div>
+                           </div>
                        </div>
+
 
                        <div style={!!suspend[1] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[1]}   className={styles.wrapper_box} >
                            <div className={styles.wrapper_box_title}>
                                <a href={'https://github.com/xiangyuecn/Recorder'}>自定义音乐播放波纹</a>
-
                            </div>
                            <div style={styles.wrapper_musicWave}>
                                 <MusicWave />
@@ -101,6 +109,9 @@ export default class  Index extends React.Component<any, any>{
                        </div>
 
                        <div style={!!suspend[2] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[2]}   className={styles.wrapper_box} >
+                           <div className={styles.wrapper_box_title}>
+                               <a>视频截取</a>
+                           </div>
                             <VideoEditor/>
                        </div>
 

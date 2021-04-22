@@ -1,0 +1,41 @@
+.wrapper{
+    width: 100%;
+    min-height: 100vh;
+
+    &_videoContainer{
+        width:80%;
+        margin-left: 10%;
+        margin-top: 100px;
+        height: auto;
+    }
+    
+    &_info{
+        width: 80%;
+        height: 30px;
+        margin: 10px  0 10px 10%;
+        color: #fafafa;
+    }
+    
+    &_dragger{
+        width: 80%;
+        height: 40px;
+        margin-left: 10%;
+        background-image: linear-gradient(90deg,#bfbfbf 30%,#bfbfbf 70%,#bfbfbf);
+        background-size: 100% 2px;
+        background-position: 50%;
+        background-repeat: no-repeat;
+        position: relative;
+
+        &_ball{
+            $wANDh : 12px;
+            position: absolute;
+            left: 0;
+            top: calc(50% - #{$wANDh /2}) ;
+            width: $wANDh;
+            height: $wANDh;
+            z-index: 999;
+            border-radius: 50%;
+            background-color:#fafafa;
+        }
+    }
+}

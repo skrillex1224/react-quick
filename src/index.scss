@@ -16,10 +16,32 @@ code {
     monospace;
 }
 
+a{
+  color: #5396E0;
+  text-decoration: none;
+  transition: .4s ;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+a:hover{
+  color: #5396E0;
+  font-size: 32px;
+}
+
+a:hover:after{
+  content:'💨';
+}
+
+a:hover:before{
+  content:'🎈';
+}
+
 /**
 给animate-css 修改默认样式
  */
 :global{
+
   .animated{
     width: 100% !important;
   }

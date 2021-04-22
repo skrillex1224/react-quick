@@ -1,12 +1,14 @@
 import React from "react";
 import {observer} from "mobx-react";
 import Preload from '../../components/Preload'
+import MusicWave from '../../components/MusicWave'
+import VideoEditor from '../../components/VideoEditor'
 import {Animated} from 'react-animated-css'
 import styles from './index.scss';
 import {func} from "prop-types";
 
 let arr = [];
-for (let i = 2; i < 10; i++) {
+for (let i = 3; i < 10; i++) {
     arr.push(i);
 }
 
@@ -16,6 +18,7 @@ for (let i = 0; i < 10; i++) {
     arrRef[i] = React.createRef();
 }
 
+//节流
 function throttle(eventHandler :Function,delay =200) {
     let timer ;
     return function(...params){
@@ -27,6 +30,16 @@ function throttle(eventHandler :Function,delay =200) {
     }
 }
 
+//防抖
+function debounce(eventHandler : Function , internal = 200){
+    let timer ;
+    return function(...params){
+        if(timer) clearTimeout(timer);
+        timer = setTimeout(()=>{
+            eventHandler(...params)
+        },internal);
+    }
+}
 
 @observer
 export default class  Index extends React.Component<any, any>{
@@ -55,9 +68,7 @@ export default class  Index extends React.Component<any, any>{
                 }
 
             }
-            this.setState({suspend},()=>{
-                console.log(this.state)
-            })
+            this.setState({suspend})
         },200),false)
 
     }
@@ -73,20 +84,24 @@ export default class  Index extends React.Component<any, any>{
                        <div className={styles.wrapper_mainScreen}>
                            主屏
                        </div>
-                       <div style={!!suspend[0] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[0]}  onClick={()=>{
+                       <div style={!!suspend[0] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[0]}  onClick={debounce(()=>{
                            window.location.href ='BoYiCap://'
-                       }}  className={styles.wrapper_box} >
+                       },200)}  className={styles.wrapper_box} >
                               点击这里直接唤醒本地.exe文件
                        </div>
 
-                       <div style={!!suspend[0] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[0]}   className={styles.wrapper_box} >
+                       <div style={!!suspend[1] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[1]}   className={styles.wrapper_box} >
                            <div className={styles.wrapper_box_title}>
-                               自定义音乐播放波纹
-                           </div>
-                           <div style={styles.draggable}>
-
+                               <a href={'https://github.com/xiangyuecn/Recorder'}>自定义音乐播放波纹</a>
 
                            </div>
+                           <div style={styles.wrapper_musicWave}>
+                                <MusicWave />
+                           </div>
+                       </div>
+
+                       <div style={!!suspend[2] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[2]}   className={styles.wrapper_box} >
+                            <VideoEditor/>
                        </div>
 
                        {

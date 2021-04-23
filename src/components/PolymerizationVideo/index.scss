@@ -1,6 +1,21 @@
 .wrapper{
-    width: 100%;
-    margin: 200px;
+    width: 80%;
+    height: 600px;
+    margin: 0 auto;
+    background-color: #fffa;
+
+    &_video{
+        width: 60%;
+        height: 100%;
+        background-color: #bfa;
+    }
+
+    &_ops{
+        width: 40%;
+        height: 100%;
+        background-color: pink;
+    }
+    
     //亮度 模糊
     //filter: brightness(1.5) blur(10px);
     // 对比度

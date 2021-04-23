@@ -133,7 +133,7 @@ export default class Index extends React.Component<any, any>{
                 */}
                 <video onTimeUpdate={this.handleVideoPlaying} onLoadedData={this.handleVideoOnload} ref={this.videoRef} className={styles.wrapper_videoContainer} autoPlay={true} src={mp4}   controls={false} />
                 <div className={styles.wrapper_info}>
-                    <span style={{marginRight:20}}>视频总长为：{duration}s</span>
+                    <span>视频总长为：{duration}s</span>
                     <span>您截取的视频区域为：{calcVideoCurrent(left,parentWidth,duration)}s 至 {calcVideoCurrent(right,parentWidth,duration)}s </span>
                     <span>当前视频播放至 : {videoCurTime}s </span>
                 </div>

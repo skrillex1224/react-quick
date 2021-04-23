@@ -18,15 +18,16 @@ code {
 
 a{
   color: #5396E0;
+  font-family: $baseChineseFontFamily;
   text-decoration: none;
   transition: .4s ;
-  font-size: 30px;
+  font-size: 32px;
   font-weight: bold;
 }
 
 a:hover{
   color: #5396E0;
-  font-size: 32px;
+  font-size: 34px;
 }
 
 a:hover:after{

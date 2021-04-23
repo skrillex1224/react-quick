@@ -9,14 +9,12 @@
     &_videoContainer{
         width:80%;
         height: auto;
-        border-radius: 50px;
-        transition: .1s;
-        box-shadow: 50px 50px 0 50px white;
-    }
-    &_videoContainer:hover{
+        border-radius: 20px;
+        transition: .4s;
+        padding: 0 2px 2px 0 ;
 
     }
-    
+
     &_info{
         width: 80%;
         height: 30px;
@@ -24,16 +22,30 @@
         font-size: 22px;
         color: #fafafa;
         margin: 10px 0;
+
+        > span {
+             margin-right: 20px;
+             font-family: $baseChineseFontFamily;
+            color: #5396E0;
+        }
     }
     
     &_dragger{
         width: 80%;
         height: 40px;
-        background-image: linear-gradient(90deg,#bfbfbf 30%,#bfbfbf 70%,#bfbfbf);
-        background-size: 100% 2px;
-        background-position: 50%;
+        margin-bottom: 20px;
+        background:{
+            image:  linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4,#03a9f4,#f441a5,#ffeb3b,#03a9f4);;
+            size: 200% 2px;
+            repeat: repeat-y;
+        }
+        background-position:0 50%;
         background-repeat: no-repeat;
         position: relative;
+        animation: sunFlow  infinite paused 2s;
+        &:hover{
+           animation-play-state: running;
+        }
 
         &_ball{
             $wANDh : 12px;
@@ -44,7 +56,15 @@
             height: $wANDh;
             z-index: 999;
             border-radius: 50%;
-            background-color:#fafafa;
+            background-color: white;
         }
+    }
+}
+
+@keyframes sunFlow {
+    from{
+        background-position: 0 50%;
+    }to{
+        background-position: 100% 50%;
     }
 }

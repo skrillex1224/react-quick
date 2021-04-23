@@ -78,7 +78,7 @@ export default class  Index extends React.Component<any, any>{
     /**animationOut没啥用在这里*/
         return (
             <Preload  isLoading={isLoading} >
-               <Animated   animationIn={'fadeIn'} animationOut={'fadeOut'} isVisible={true} animationInDuration={1600}
+               <Animated   animationIn={'zoomIn'} animationOut={'fadeOut'} isVisible={true} animationInDuration={1600}
                          animationOutDuration={600}>
                    <div className={styles.wrapper}>
                        <div className={styles.wrapper_mainScreen}>

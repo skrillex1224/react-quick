@@ -1,6 +1,6 @@
 import React from "react";
 import {BrowserRouter,Switch,Route,Redirect} from "react-router-dom";
-import './App.scss';
+import './App.noModule.scss';
 import Px2Rem from "./pages/Px2rem";
 import Index from "./pages/Index";
 

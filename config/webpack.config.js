@@ -62,7 +62,7 @@ const swSrc = paths.swSrc;
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
-const sassModuleRegex = /\.(scss|sass)$/;
+const sassNoModuleRegex = /\.noModule\.(scss|sass)$/;
 
 const hasJsxRuntime = (() => {
   if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
@@ -507,10 +507,11 @@ module.exports = function (webpackEnv) {
             // extensions .module.scss or .module.sass
             {
               test: sassRegex,
-              exclude: sassModuleRegex,
+              exclude: sassNoModuleRegex,
               use: getStyleLoaders(
                 {
                   importLoaders: 3,
+                  modules: true,
                   sourceMap: isEnvProduction
                     ? shouldUseSourceMap
                     : isEnvDevelopment,
@@ -526,16 +527,14 @@ module.exports = function (webpackEnv) {
             // Adds support for CSS Modules, but using SASS
             // using the extension .module.scss or .module.sass
             {
-              test: sassModuleRegex,
+              test: sassNoModuleRegex,
               use: getStyleLoaders(
                   {
                     importLoaders: 3,
                     sourceMap: isEnvProduction
                         ? shouldUseSourceMap
                         : isEnvDevelopment,
-                    modules: {
-                      getLocalIdent: getCSSModuleLocalIdent,
-                    },
+                    modules: false,
                   },
                   'sass-loader'
               ),

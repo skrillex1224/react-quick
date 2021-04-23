@@ -1,0 +1,16 @@
+.wrapper{
+    width: 100%;
+    margin: 200px;
+    //亮度 模糊
+    //filter: brightness(1.5) blur(10px);
+    // 对比度
+    //filter: contrast(60%);
+    // 和box-shadow差不多
+    //filter:  drop-shadow(16px 16px 10px black);
+    //灰度
+    //filter: grayscale(100%)
+    //透明度
+    //filter: opacity(.5)
+
+    // https://developer.mozilla.org/zh-CN/docs/Web/CSS/filter
+}

@@ -40,10 +40,10 @@ export const Index: React.FC = () => {
         <div className={styles.wrapper}>
             <input ref={inputEle} className={styles.wrapper_btn} type="file" onChange={onChange} hidden={true} />
             <div className={styles.wrapper_ops}>
-                <div className={styles.wrapper_btn} onClick={clickInput}>
+                <div className={'index_btn'} onClick={clickInput}>
                     上传图片
                 </div>
-                <div className={styles.wrapper_btn} onClick={getCropData}>
+                <div className={'index_btn'} onClick={getCropData}>
                     剪切图片
                 </div>
             </div>

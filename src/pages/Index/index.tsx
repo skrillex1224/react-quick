@@ -92,7 +92,7 @@ export default class  Index extends React.Component<any, any>{
                        <div style={!!suspend[0] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[0]} className={styles.wrapper_box} >
                            <div className={styles.wrapper_box_title}>
                                <a href={'https://github.com/xiangyuecn/Recorder'}>点击下方按钮唤醒本地.exe文件</a>
-                               <div className={styles.wrapper_box_btn} onClick={debounce(()=>{
+                               <div className='index_btn' onClick={debounce(()=>{
                                    window.location.href ='BoYiCap://'
                                },200)}>WakeUp</div>
                            </div>

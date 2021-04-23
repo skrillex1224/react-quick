@@ -9,6 +9,12 @@
     &_videoContainer{
         width:80%;
         height: auto;
+        border-radius: 50px;
+        transition: .1s;
+        box-shadow: 50px 50px 0 50px white;
+    }
+    &_videoContainer:hover{
+
     }
     
     &_info{

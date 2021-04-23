@@ -50,8 +50,8 @@ export const Index: React.FC = () => {
             <div className={styles.wrapper_croppers}>
                 {
                     image ? <Cropper
-                        style={{ height: 300, width: '40%' }}
-                        zoomTo={1}
+                        className={styles.wrapper_cropper}
+                        zoomTo={0}
                         initialAspectRatio={1}
                         preview="#img-preview"
                         src={image}

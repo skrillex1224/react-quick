@@ -2,6 +2,12 @@
     width: 80%;
     margin: 0 auto;
 
+    &_cropper{
+        width: 40% !important;
+        height: 400px !important;
+        position: relative;
+    }
+
     &_ops{
         width: 100%;
         display: flex;
@@ -18,11 +24,11 @@
 
     &_cropResult{
         width: 40%;
-        height: 300px;
+        height: 400px;
 
         &_result{
             width: auto;
-            height: 300px;
+            height: 400px;
         }
     }
 }

@@ -47,9 +47,11 @@ a:hover:before{
     background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
     margin: 40px auto;
     background-size: 400% 100%;
+    text-align: center;
     transition: .4s;
     transform: translateX(0) scale(1);
     animation: flowSun 16s infinite;
+    cursor: pointer;
   }
 
     .index_btn::before{

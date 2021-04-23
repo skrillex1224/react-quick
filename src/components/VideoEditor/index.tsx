@@ -1,7 +1,7 @@
 import React from "react";
 import {observer} from "mobx-react";
 import styles from "./index.scss"
-import mp4 from '../../assets/clip.mp4'
+import mp4 from '../../assets/testResources/clip.mp4'
 
 function calcDotPosition(clientX,offsetLeft,width) {
     const offsetRight = offsetLeft + width;

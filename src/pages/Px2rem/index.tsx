@@ -3,14 +3,17 @@ import styles from './index.scss'
 import {Animated} from "react-animated-css";
 import {observer} from "mobx-react";
 import Polymerization from '../../components/PolymerizationVideo'
+import ImageClip from '../../components/ImageClip'
 import Preload from '../../components/Preload'
 
 @observer
 export default class  Index extends React.Component<any, any>{
 
-    state ={
+    state = {
         isLoading : true
     }
+
+
 
     componentDidMount(): void {
         setTimeout(()=>{
@@ -20,9 +23,8 @@ export default class  Index extends React.Component<any, any>{
 
     render() {
         return (
-           <Preload isLoading={this.state.isLoading}>
-               <Polymerization />
-           </Preload>
+               // <VideoEditor />
+            <ImageClip/>
         )
     }
 }

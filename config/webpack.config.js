@@ -41,6 +41,8 @@ const reactRefreshOverlayEntry = require.resolve(
   'react-dev-utils/refreshOverlayInterop'
 );
 
+const px2Rem = require('postcss-px2rem');
+
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
@@ -129,6 +131,8 @@ module.exports = function (webpackEnv) {
               },
               stage: 3,
             }),
+            // remUnit
+            px2Rem({remUnit: 192}) ,
             // Adds PostCSS Normalize as the reset css with default options,
             // so that it honors browserslist config in package.json
             // which in turn let's users customize the target behavior as per their needs.

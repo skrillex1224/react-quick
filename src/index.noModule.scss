@@ -39,14 +39,14 @@ a:hover:before{
 }
 
   .index_btn{
-    font-size: 40px;
+    font-size: 48px;
     width: 300px;
     line-height: 75px;
     height: 80px;
     color: #f0f0f0CC;
+    font-family: $baseChineseFontFamily;
     border-radius: 100px;
     background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
-    margin: 40px auto;
     background-size: 400% 100%;
     text-align: center;
     transition: .4s;

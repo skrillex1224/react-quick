@@ -3,16 +3,23 @@
     height: 600px;
     margin: 0 auto;
     background-color: #fffa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &_video{
-        width: 60%;
+        width: 75%;
         height: 100%;
         background-color: #bfa;
     }
 
     &_ops{
-        width: 40%;
+        width: 25%;
         height: 100%;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-content: space-evenly;
         background-color: pink;
     }
     

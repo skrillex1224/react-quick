@@ -19,8 +19,16 @@ export default class Index extends React.Component<any, any>{
 
                 <div className={styles.wrapper} >
                     <audio  id='my-audio' src={mp3} />
-
-                    <video className={styles.wrapper_videoCamera}  id="my-video" controls={false}  />
+                    <div className={styles.wrapper_video}>
+                        <video className={styles.wrapper_video_content}  id="my-video" controls={false}  />
+                    </div>
+                    <div className={styles.wrapper_ops}>
+                        <div className={'index_btn'}>开始录制</div>
+                        <div className={'index_btn'}>暂停录制</div>
+                        <div className={'index_btn'}>继续录制</div>
+                        <div className={'index_btn'}>结束录制</div>
+                        <div className={'index_btn'}>插入音乐</div>
+                    </div>
                 </div>
 
         )

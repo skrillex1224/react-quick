@@ -58,7 +58,14 @@
         border-radius: 20px;
         transition: 1s;
         cursor: pointer;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
 
+        &_title{
+            width: 100%;
+            margin-bottom: 20px;
+        }
     }
 
     &_footer{

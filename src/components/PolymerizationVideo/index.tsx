@@ -184,8 +184,8 @@ export default class Index extends React.Component<any, any>{
     }
 
     getUserMedia = async  ()=>{
-        /*使用constraints来指定获取摄像头视频流的高宽*/
-        const constraints = {video : {width:{},height:{exact:  500 }}}
+        /*使用constraints来指定获取摄像头视频流的高宽 {video : {width:{},height:{exact:  500 }}}*/
+        const constraints = {video : {height:500}}
         const videoContext = this.videoRefObject.current;
 
         try {
@@ -195,7 +195,7 @@ export default class Index extends React.Component<any, any>{
             this.videoStream = mediaStream;
 
             //创建录制对象
-            const options = { mimeType: "video/webm; codecs=vp9" };
+            const options = { mimeType: "video/webm" };
             //@ts-ignore
             const recorder = new MediaRecorder(mediaStream,options);
             this.videoRecorder = recorder;
@@ -222,12 +222,14 @@ export default class Index extends React.Component<any, any>{
 
     handleStart = ()=>{
         const state =this.videoRecorder.state;
-        message.warn('录制开始',1000);
+
 
         if(state === 'inactive'){
             this.videoRecorder.start();
             console.log('start...')
-
+            message.warn('录制开始',1000);
+        }else{
+            message.error('录制已经开始',1000);
         }
 
     }
@@ -236,8 +238,10 @@ export default class Index extends React.Component<any, any>{
         const state =this.videoRecorder.state;
         if(state === 'paused'){
             this.videoRecorder.resume();
-            message.warn('录制暂停',1000);
+            message.warn('录制继续',1000);
             console.log('resume.....')
+        }else{
+            message.error('录制已经开始',1000);
         }
 
     }
@@ -249,6 +253,9 @@ export default class Index extends React.Component<any, any>{
             //调用以下方法 将会截取一段ondataavailable
             // this.videoRecorder.requestData();
             console.log('pause.....')
+            message.warn('录制暂停',1000);
+        }else{
+            message.error('录制已经暂停',1000);
         }
     }
 
@@ -256,13 +263,16 @@ export default class Index extends React.Component<any, any>{
         const state =this.videoRecorder.state;
         if(state === 'recording'){
             this.videoRecorder.stop();
-            console.log('stop....')
+            message.warn('录制结束',1000);
+        }else{
+            message.error('录制已经结束',1000);
         }
     }
 
     mergeVideo =()=>{
         const {recordedChunks} = this.state;
-        console.log(URL.createObjectURL(new Blob(recordedChunks, { 'type' : 'video/webm' })))
+        const url  = URL.createObjectURL(new Blob(recordedChunks, { 'type' : 'video/webm' }))
+        message.warn('合并结果：' +  url ,10000);
     }
 
     render(): React.ReactNode {

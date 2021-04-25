@@ -3,6 +3,7 @@ import {observer} from "mobx-react";
 import styles from './index.scss'
 import ReactDOM from "react-dom";
 import {CheckCircleOutlined, CloseCircleOutlined, ExclamationCircleOutlined} from "@ant-design/icons/lib";
+import copy from "copy-to-clipboard";
 
 interface IProps {
     iconType : string,
@@ -91,13 +92,19 @@ export default class Index extends React.Component<IProps, IState>{
         })
     }
 
+    /*点击复制*/
+    handleClick = ()=>{
+        copy(this.props.message)
+    }
+
     render() {
         const {visible} = this.state;
         const {message,iconType}  = this.props;
 
+
         return (
             // @ts-ignore
-            <div style={visible  ? {transform:`translateY(20px)`} : {}} className={styles.wrapper}>
+            <div onClick={this.handleClick} style={visible  ? {transform:`translateY(20px)`} : {}} className={styles.wrapper}>
                 <div className={styles.wrapper_main}>
                     <span className={styles.wrapper_main_icon}>{Index.typeMapping[iconType]}</span>
                     <span>{message}</span>

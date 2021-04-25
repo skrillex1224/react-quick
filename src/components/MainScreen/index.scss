@@ -24,10 +24,14 @@
             color: transparent;
             background-image: linear-gradient(to right, #52c41a, #69c0ff,#ff4d4f,#9254de);
             -webkit-background-clip: text;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            flex-wrap: wrap;
             transition: .4s;
 
             &:hover{
-                transform: scale(1.2);
+                transform: scale(1.1);
                 cursor:pointer;
             }
 

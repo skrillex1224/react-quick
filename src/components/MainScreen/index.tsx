@@ -1,7 +1,10 @@
 import React from "react";
 import {observer} from "mobx-react";
 import styles from "./index.scss";
-import caseTestSet from '../../assets/caseSet_bg.png';
+import caseTestSet from '../../assets/caseSet.png';
+import algorithmSet from '../../assets/algorithmSet.png';
+import interviewSet from '../../assets/interviewSet.png';
+import projectSet from '../../assets/projectSet.png';
 
 interface IProps{
     title: string,
@@ -14,7 +17,10 @@ interface IState {
 }
 
 const bgMapping = {
-    'caseTestSet' : caseTestSet
+    'caseTestSet' : caseTestSet,
+    'algorithmCollectionSet' : algorithmSet,
+    'interviewProblemSet' : interviewSet,
+    'projectAllSet' : projectSet,
 }
 
 @observer

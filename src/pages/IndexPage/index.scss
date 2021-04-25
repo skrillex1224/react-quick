@@ -10,9 +10,14 @@
         top: 0;
         width: 200px;
         height: 100%;
-        background-image: linear-gradient(to right, #8c8c8c66, transparent);
         z-index: 999;
-
+        cursor: pointer;
+        background-image: linear-gradient(to right,#69BFFE22 20%,transparent );
+        opacity: 0;
+        transition: .4s;
+        &:hover{
+            opacity: 1;
+        }
     }
 
     &_rightShadow{
@@ -21,7 +26,13 @@
         position: absolute;
         width: 200px;
         height: 100%;
-        background-color: #fff;
+        background-image: linear-gradient(to left, #F94E5622 20%, transparent);
         z-index: 999;
+        cursor: pointer;
+        opacity: 0;
+        transition: .4s;
+        &:hover{
+            opacity: 1;
+        }
     }
 }

@@ -2,6 +2,8 @@
     width: 100%;
     min-height: 100vh;
     overflow: hidden;
+    position: absolute;
+    z-index: 100000;
 
     &_scaleUp{
         width: 300px;

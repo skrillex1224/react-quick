@@ -3,18 +3,26 @@
 export default [
     {
         title : '案例测试集',
-        imgName : 'caseTestSet'
+        subTitle : 'caseTestSet',
+        imgName : 'caseTestSet',
+        navUrl : '/caseTestSet'
     },
     {
         title : '算法收藏集',
-        imgName : 'algorithmCollectionSet'
+        imgName : 'algorithmCollectionSet',
+        subTitle : 'algorithmCollectionSet',
+        navUrl : '/algorithmCollectionSet'
     },
     {
         title : '项目总结集',
-        imgName : 'projectAllSet'
+        imgName : 'projectAllSet',
+        subTitle : 'projectAllSet',
+        navUrl : '/projectAllSet'
     },
     {
         title : '面试题目集',
-        imgName : 'interviewProblemSet'
+        imgName : 'interviewProblemSet',
+        subTitle : 'interviewProblemSet',
+        navUrl : '/interviewProblemSet'
     },
 ]

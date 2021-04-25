@@ -46,7 +46,7 @@ export default class Index extends React.Component<any, any>{
             <Preload isLoading={isLoading}>
                    <div className={styles.wrapper}>
                        <div onClick={this.handleLeft} className={styles.wrapper_leftShadow} />
-                       <Animated   animationIn={'zoomIn'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1200}
+                       <Animated   animationIn={'fadeIn'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1200}
                                    animationOutDuration={hiddenTime}>
                             <MainScreen title={title} subTitle={'Click To See'} imgName={imgName}/>
                        </Animated>

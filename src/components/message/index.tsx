@@ -73,9 +73,7 @@ export default class Index extends React.Component<IProps, IState>{
         setTimeout(()=>{
             //从页面上获取node
             ReactDOM.unmountComponentAtNode(divRenderedEle);
-            console.log(divRenderedEle)
             document.body.removeChild(divRenderedEle);
-            Index.queue--;
         },duration  + 1100)
     }
 

@@ -5,8 +5,6 @@ import ReactDOM from "react-dom";
 import {CheckCircleOutlined, CloseCircleOutlined, ExclamationCircleOutlined} from "@ant-design/icons/lib";
 
 interface IProps {
-    message : string,
-    icon :string
 }
 
 interface IState {
@@ -19,12 +17,12 @@ interface IState {
  */
 @observer
 export default class Index extends React.Component<IProps, IState>{
-    static defaultProps = {
-        message : '提示消息',
-        icon:'warn'
-    }
 
     private  static duration = 3000;
+
+    private static iconType = 'warn';
+
+    private static message = '提示消息';
 
     private static typeMapping = {
         'warn' : <ExclamationCircleOutlined />,
@@ -32,8 +30,28 @@ export default class Index extends React.Component<IProps, IState>{
         'error' : <CloseCircleOutlined />,
     }
 
-    public  static showMessage = (duration = 3000)=>{
+    /*
+     * 向外暴露的方法
+     */
+    public static warn = (message,duration)=>{
+        Index.iconType = 'warn'
+        Index.showMessage(message,duration);
+    }
+
+    public static error = (message,duration)=>{
+        Index.iconType = 'error'
+        Index.showMessage(message,duration)
+    }
+
+    public static success = (message,duration)=>{
+        Index.iconType = 'success'
+        Index.showMessage(message,duration)
+    }
+
+
+    private  static showMessage = (message,duration )=>{
         Index.duration = duration;
+        Index.message = message;
         const ele = <Index />
         const divEle = document.createElement('div');
         divEle.id = 'message';
@@ -73,11 +91,11 @@ export default class Index extends React.Component<IProps, IState>{
 
     render() {
         const {visible} = this.state;
-        const {icon,message} = this.props;
+        const {message,iconType,typeMapping}  = Index;
         return (
             <div style={visible  ? {transform:'translateY(20px)'} : {}} className={styles.wrapper}>
                 <div className={styles.wrapper_main}>
-                    <span className={styles.wrapper_main_icon}>{Index.typeMapping[icon]}</span>
+                    <span className={styles.wrapper_main_icon}>{typeMapping[iconType]}</span>
                     <span>{message}</span>
                 </div>
             </div>

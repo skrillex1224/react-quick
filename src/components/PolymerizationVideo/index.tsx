@@ -176,7 +176,7 @@ export default class Index extends React.Component<any, any>{
     videoRecorder : MediaRecorder = null;
 
     async componentDidMount(){
-        message.showMessage(30000);
+        message.warn('jidasdasdad',30000);
         await this.getUserMedia();
     }
 
@@ -186,7 +186,6 @@ export default class Index extends React.Component<any, any>{
 
     getUserMedia = async  ()=>{
         /*使用constraints来指定获取摄像头视频流的高宽*/
-        const rem  = parseInt(document.documentElement.style.fontSize);
         const constraints = {video : {width:{},height:{exact:  500 }}}
         const videoContext = this.videoRefObject.current;
 

@@ -176,7 +176,6 @@ export default class Index extends React.Component<any, any>{
     videoRecorder : MediaRecorder = null;
 
     async componentDidMount(){
-        message.warn('jidasdasdad',30000);
         await this.getUserMedia();
     }
 
@@ -223,10 +222,12 @@ export default class Index extends React.Component<any, any>{
 
     handleStart = ()=>{
         const state =this.videoRecorder.state;
+        message.warn('录制开始',1000);
 
         if(state === 'inactive'){
             this.videoRecorder.start();
-            console.log('start....')
+            console.log('start...')
+
         }
 
     }
@@ -235,6 +236,7 @@ export default class Index extends React.Component<any, any>{
         const state =this.videoRecorder.state;
         if(state === 'paused'){
             this.videoRecorder.resume();
+            message.warn('录制暂停',1000);
             console.log('resume.....')
         }
 

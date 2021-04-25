@@ -59,11 +59,11 @@ export default class Index extends React.Component<IProps, IState>{
 
         const divEle = document.createElement('div');
         divEle.id = `message${Index.queue}`;
-        divEle.style.position = 'absolute'
+        divEle.style.position = 'fixed'
         divEle.style.left = '0'
         divEle.style.top = '0'
         divEle.style.width ='100%';
-        divEle.style.zIndex = '999';
+        divEle.style.zIndex = `${Number.MAX_VALUE}`
 
         document.body.append(divEle);
 

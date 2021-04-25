@@ -7,9 +7,12 @@ import {Animated} from 'react-animated-css'
 import styles from './index.scss';
 import ImageClip from '../../components/ImageClip'
 import Polymerization from "../../components/PolymerizationVideo";
+import MainScreen from "../../components/MainScreen";
+import message from '../../components/message'
+import copy from "copy-to-clipboard";
 
 let arr = [];
-for (let i = 5; i < 10; i++) {
+for (let i = 6; i < 10; i++) {
     arr.push(i);
 }
 
@@ -48,6 +51,7 @@ export default class  Index extends React.Component<any, any>{
     state = {
         isLoading :true,
         suspend : new Array(10),
+        isVisible : true,
     }
 
 
@@ -75,26 +79,25 @@ export default class  Index extends React.Component<any, any>{
     }
 
     render() {
-        const {isLoading,suspend} =this.state;
+        const {isLoading,suspend,isVisible} =this.state;
     /**animationOut没啥用在这里*/
         return (
             <Preload  isLoading={isLoading} >
-               <Animated   animationIn={'zoomIn'} animationOut={'fadeOut'} isVisible={true} animationInDuration={1600}
+               <Animated   animationIn={'zoomIn'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1600}
                          animationOutDuration={600}>
-                   <div className={styles.wrapper}>
-                       <div className={styles.wrapper_mainScreen}>
-                           {/*根据padding撑开父元素, 容纳整个背景图片*/}
-                           <div className={styles.wrapper_mainScreen_extend}/>
-                           <div className={styles.wrapper_mainScreen_titleBox}>
-                              <div className={styles.wrapper_mainScreen_titleBox_title}>案例测试集</div>
-                              <div className={styles.wrapper_mainScreen_titleBox_subTitle}>Case Test Set</div>
-                          </div>
-                       </div>
+                   <MainScreen title={'案例测试集'} subTitle={'Case Test Set'} imgName={'caseTestSet'}/>
+                   <div onClick={()=>{
+                       this.setState({isVisible:false})
+                       setTimeout(()=>{
+                           this.props.history.push('/px2Rem')
+                       },600)
+                   }} className={styles.wrapper}>
                        <div style={!!suspend[0] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[0]} className={styles.wrapper_box} >
-                           <div className={styles.wrapper_box_title}>
-                               <a href={'https://github.com/xiangyuecn/Recorder'}>点击下方按钮唤醒本地.exe文件</a>
+                           <div className={styles.wrapper_box_title} >
+                               <a>点击下方按钮唤醒本地.exe文件</a>
                            </div>
                            <div className='index_btn' onClick={debounce(()=>{
+                               message.success('唤醒中，请稍等',3000)
                                window.location.href ='BoYiCap://'
                            },200)}>WakeUp</div>
                        </div>
@@ -128,6 +131,20 @@ export default class  Index extends React.Component<any, any>{
                                <a href={'https://developer.mozilla.org/zh-CN/docs/Web/API/MediaDevices/getUserMedia'}>视频合成</a>
                            </div>
                            <Polymerization />
+                       </div>
+
+                       <div style={!!suspend[5] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[5]}   className={styles.wrapper_box} >
+                           <div className={styles.wrapper_box_title}>
+                               <a href={'https://github.com/sudodoki/copy-to-clipboard'}>文本复制</a>
+                           </div>
+                           <p id={'copy-content'} className={styles.wrapper_box_content}>Robbert van de Corput (Dutch pronunciation: [ˈrɔbərt fɑn də ˈkɔrpʏt];[1] born 7 January 1988), known professionally as Hardwell, is a Dutch DJ, record producer, and remixer from Breda, North Brabant.[2] Hardwell was voted the world's number one DJ on DJ Mag in 2013 and again in 2014.[3] He was ranked at number twelve in the top 100 DJs 2019 poll by DJ Mag. Hardwell is best known for his sets at music festivals, including Ultra Music Festival, Sunburn and Tomorrowland.</p>
+                           <div className='index_btn' onClick={debounce(()=>{
+                               const copyContent = document.getElementById('copy-content').innerText;
+                               copy(copyContent);
+                               message.success('复制成功',1000)
+                           },200)}>复制文本</div>
+                           {/*补充高度*/}
+                           <div className={styles.wrapper_box_heightFiller} />
                        </div>
 
                        {

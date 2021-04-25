@@ -1,0 +1,47 @@
+.wrapper{
+    width: 100%;
+    &_mainScreen{
+        /*根据padding-bottom来撑开高度,因为它的百分比相对于父元素的高度*/
+        width: 100%;
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        text-align: center;
+        position: relative;
+
+        &_extend{
+            box-sizing: border-box;
+            padding:calc(100% * (1080 / 1920) /2)  0 ;
+        }
+
+        &_titleBox{
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            height: 450px;
+            margin: auto;
+            color: transparent;
+            background-image: linear-gradient(to right, #52c41a, #69c0ff,#ff4d4f,#9254de);
+            -webkit-background-clip: text;
+            transition: .4s;
+
+            &:hover{
+                transform: scale(1.2);
+                cursor:pointer;
+            }
+
+            &_title{
+                width: 100%;
+                font-size: 160px;
+                font-family: "kaiTi";
+            }
+
+            &_subTitle{
+                width: 100%;
+                font-size: 100px;
+                font-family: "Times New Roman";
+            }
+        }
+    }
+}

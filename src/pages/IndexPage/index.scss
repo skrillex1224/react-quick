@@ -1,0 +1,27 @@
+.wrapper{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+
+    &_leftShadow{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 200px;
+        height: 100%;
+        background-image: linear-gradient(to right, #8c8c8c66, transparent);
+        z-index: 999;
+
+    }
+
+    &_rightShadow{
+        right: 0;
+        top: 0;
+        position: absolute;
+        width: 200px;
+        height: 100%;
+        background-color: #fff;
+        z-index: 999;
+    }
+}

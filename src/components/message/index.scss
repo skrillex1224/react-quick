@@ -17,10 +17,16 @@
         color: #539BF5;
         text-align: center;
         box-shadow: 2px 2px 2px #121F4A;
+        transition: .2s;
         cursor: pointer;
         &_icon{
             margin-right: 10px;
         }
+
+        &:active{
+            color: white;
+        }
     }
+
 }   
 

@@ -34,6 +34,14 @@
         align-content: flex-start;
         flex-wrap: wrap;
 
+        &_empty{
+            flex: none;
+            width: 98%;
+            font-family: $baseChineseFontFamily;
+            height: 200px;
+            border-radius: 10px;
+        }
+
         &_videoItem{
             width: 200px;
             margin-right: 20px;
@@ -44,6 +52,7 @@
             align-items: flex-start;
             overflow: hidden;
             position: relative;
+
 
             &:hover > &_delete{
                 opacity: 1;

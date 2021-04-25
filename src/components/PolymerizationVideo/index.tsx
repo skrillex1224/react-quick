@@ -12,7 +12,7 @@
 // var recordedChunks = [];
 //
 // @observer
-// export default class Index extends React.Component<any, any>{
+// export default class CaseTestSet extends React.Component<any, any>{
 //
 //     handle = ()=>{
 //         var options = { mimeType: "video/webm; codecs=vp9" };
@@ -286,14 +286,17 @@ export default class Index extends React.Component<any, any>{
                     <div className={styles.wrapper_chunks}>
 
                         {
-                            recordedChunks.map((item,index)=> {
-                                //释放上一次的资源
-                                URL.revokeObjectURL(item);
-                                return (<div key={index} className={styles.wrapper_chunks_videoItem}>
-                                    <div className={styles.wrapper_chunks_videoItem_delete}><CloseCircleOutlined/></div>
-                                    <video className={styles.wrapper_chunks_videoItem_videoContent} controls={true} src={URL.createObjectURL(item)}/>
-                                </div>)
-                            })
+                            recordedChunks.length ?
+                                recordedChunks.map((item,index)=> {
+                                    //释放上一次的资源
+                                    URL.revokeObjectURL(item);
+                                    return (<div key={index} className={styles.wrapper_chunks_videoItem}>
+                                        <div className={styles.wrapper_chunks_videoItem_delete}><CloseCircleOutlined/></div>
+                                        <video className={styles.wrapper_chunks_videoItem_videoContent} controls={true} src={URL.createObjectURL(item)}/>
+                                    </div>)
+                                })
+                                :
+                                <div className={styles.wrapper_chunks_empty}>暂无数据 <br/> （待合成视频列表）</div>
                         }
                     </div>
                     <div className={styles.wrapper_ops}>

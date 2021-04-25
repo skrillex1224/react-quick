@@ -1,14 +1,18 @@
 import React from "react";
-import {BrowserRouter,Switch,Route,Redirect} from "react-router-dom";
+import {BrowserRouter,Switch,Route} from "react-router-dom";
 import './App.noModule.scss';
-import Px2Rem from "./pages/Px2rem";
-import Index from "./pages/Index";
+import TestPage from "./pages/TestPage";
+import CaseTestSet from "./pages/CaseTestSet";
+import MainHeader from "./components/MainHeader";
+import IndexPage from "./pages/IndexPage";
 
-function Demo() {
+function Index() {
     return (
         <>
-            <Route path={'/'} exact={true} component={Index} />
-            <Route path={'/Px2rem'} exact={true} component={Px2Rem} />
+            <MainHeader />
+            <Route path={'/'} exact={true} component={IndexPage} />
+            <Route path={'/CaseTestSet'} exact={true} component={CaseTestSet} />
+            <Route path={'/TestPage'} exact={true} component={TestPage} />
             {/*<Redirect path={'/'} to={'/'} />*/}
         </>
     )
@@ -20,7 +24,7 @@ export default function App() {
   return (
         <BrowserRouter>
             <Switch>
-                <Route path={'/'} exact={false} component={Demo}></Route>
+                <Route path={'/'} exact={false} component={Index} />
             </Switch>
         </BrowserRouter>
   );

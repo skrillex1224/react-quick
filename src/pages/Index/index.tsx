@@ -6,9 +6,10 @@ import VideoEditor from '../../components/VideoEditor'
 import {Animated} from 'react-animated-css'
 import styles from './index.scss';
 import ImageClip from '../../components/ImageClip'
+import Polymerization from "../../components/PolymerizationVideo";
 
 let arr = [];
-for (let i = 4; i < 10; i++) {
+for (let i = 5; i < 10; i++) {
     arr.push(i);
 }
 
@@ -120,6 +121,13 @@ export default class  Index extends React.Component<any, any>{
                                <a href={'https://github.com/react-cropper/react-cropper'}>图片裁剪</a>
                            </div>
                            <ImageClip/>
+                       </div>
+
+                       <div style={!!suspend[4] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[4]}   className={styles.wrapper_box} >
+                           <div className={styles.wrapper_box_title}>
+                               <a href={'https://developer.mozilla.org/zh-CN/docs/Web/API/MediaDevices/getUserMedia'}>视频合成</a>
+                           </div>
+                           <Polymerization />
                        </div>
 
                        {

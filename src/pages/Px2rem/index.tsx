@@ -2,7 +2,7 @@ import React from "react";
 import styles from './index.scss'
 import {Animated} from "react-animated-css";
 import {observer} from "mobx-react";
-import Polymerization from '../../components/PolymerizationVideo'
+import Polymerization from '../../components/PolymerizationVideo/index'
 import VideoEditor from '../../components/VideoEditor'
 import Preload from '../../components/Preload'
 

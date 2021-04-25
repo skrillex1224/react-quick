@@ -38,43 +38,6 @@ a:hover:before{
   content:'🎈';
 }
 
-  .index_btn{
-    font-size: 48px;
-    width: 300px;
-    line-height: 75px;
-    height: 80px;
-    color: #f0f0f0CC;
-    font-family: $baseChineseFontFamily;
-    border-radius: 100px;
-    background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
-    background-size: 400% 100%;
-    text-align: center;
-    transition: .4s;
-    transform: translateX(0) scale(1);
-    animation: flowSun 16s infinite;
-    cursor: pointer;
-  }
-
-    .index_btn::before{
-      content: "";
-      position: absolute;
-      animation: flowSun 16s infinite;
-      left: -3px;
-      right: -3px;
-      top: -3px;
-      bottom: -3px;
-      background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
-      background-size: 400%;
-      border-radius: 50px;
-      filter: blur(10px);
-      z-index: -1;
-    }
-
-  .index_btn:hover{
-    background-color: #5396E0AA;
-    transform: translateX(10px) scale(1);
-}
-  
 @keyframes flowSun {
    0%{
      background-position: 0 0 ;

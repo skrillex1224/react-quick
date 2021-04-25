@@ -1,0 +1,25 @@
+.wrapper{
+    height: 40px;
+    transform: translateY(-40px);
+    transition: 500ms;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &_main{
+        height: 100%;
+        font-size: 16px;
+        line-height: 38px;
+        background-color: #22272E;
+        border: 1px solid #444C56;
+        border-radius: 10px;
+        box-sizing: border-box;
+        padding: 0 20px;
+        color: #539BF5;
+        text-align: center;
+        //box-shadow: 2px 2px 5px #121F4A;
+        &_icon{
+            margin-right: 10px;
+        }
+    }
+}   
+

@@ -18,7 +18,24 @@ export default class Index extends React.Component<any, any>{
 
     componentDidMount(): void {
         setTimeout(()=>{
-            this.setState({isLoading:false})
+            let counter = 0;
+            /*图片预加载*/
+            IndexSet.forEach((item)=>{
+                const imgSrc = item.imgName;
+                const img  = document.createElement('img');
+                img.src = imgSrc;
+
+                const that = this;
+
+                img.onload=function(){
+                    // 加载后counter ++ ,直到所有图片加载,进入主页
+                    counter++;
+                    if(counter === IndexSet.length){
+                        that.setState({isLoading:false})
+                    }
+                }
+
+            })
         },600)
     }
 

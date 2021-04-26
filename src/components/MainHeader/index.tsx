@@ -20,11 +20,13 @@ function debounce (eventHandler,duration){
 
 interface IProps {
     chooseIndex : number,
+    switchRoute : (route)=>any
 }
 
 interface IState {
-    fixed : boolean
+    fixed: boolean,
 }
+
 
 
 @observer
@@ -32,7 +34,8 @@ class Index extends React.Component<IProps, IState>{
 
     defaultProps={
         //主页
-        chooseIndex : 0
+        chooseIndex : 0,
+        switchRoute : ()=>{}
     }
 
     state = {
@@ -57,13 +60,8 @@ class Index extends React.Component<IProps, IState>{
 
     handleNavTo = (item)=>{
         return ()=>{
-            // @ts-ignore
-            this.props.history.push(item.navUrl);
+            this.props.switchRoute(item.navUrl);
         }
-    }
-    handleToIndex = ()=>{
-        // @ts-ignore
-        this.props.history.push('/');
     }
 
     render(): React.ReactNode {
@@ -75,7 +73,7 @@ class Index extends React.Component<IProps, IState>{
 
                    {IndexSet.map((item,index )=>(
                        <div style={index === chooseIndex ?{ color: item.color}: {}} className={styles.wrapper_left_item} onClick={this.handleNavTo(item)}>
-                           {item.logo && <img onClick={this.handleToIndex} className={styles.wrapper_left_logo} src={reactLogo} />}
+                           {item.logo && <img onClick={this.handleNavTo} className={styles.wrapper_left_logo} src={reactLogo} />}
                            {item.logo || item.title}
                        </div>
                    ))}

@@ -46,6 +46,8 @@ function debounce(eventHandler : Function , internal = 200){
     }
 }
 
+const hiddenTime =600;
+
 @observer
 export default class  Index extends React.Component<any, any>{
 
@@ -67,7 +69,7 @@ export default class  Index extends React.Component<any, any>{
             const suspend = this.state.suspend;
             for (let i = 0; i < arrRef.length; i++) {
                 const currentRef = arrRef[i].current
-                if (currentRef?.offsetTop + 200<= window.scrollY + window.innerHeight) {
+                if (currentRef?.offsetTop + 300<= window.scrollY + window.innerHeight) {
                     suspend[i] = true;
                 }else{
                     suspend[i] = false;
@@ -79,23 +81,25 @@ export default class  Index extends React.Component<any, any>{
 
     }
 
+    switchRoute = (route)=>{
+        this.setState({isVisible:false})
+        setTimeout(()=>{
+            this.props.history.push(route);
+        },hiddenTime)
+    }
+
     render() {
         const {isLoading,suspend,isVisible} =this.state;
         const {title,subTitle,imgName} = IndexSet[1];
 
     /**animationOut没啥用在这里*/
         return (
-            <Preload chooseIndex={1}  isLoading={isLoading} >
+            <Preload switchRoute={this.switchRoute}  chooseIndex={1}  isLoading={isLoading} >
                <Animated   animationIn={'zoomIn'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1600}
-                         animationOutDuration={600}>
+                         animationOutDuration={hiddenTime}>
                    <MainScreen title={title} subTitle={subTitle} imgName={imgName}/>
-                   <div onClick={()=>{
-                       this.setState({isVisible:false})
-                       setTimeout(()=>{
-                           this.props.history.push('/px2Rem')
-                       },600)
-                   }} className={styles.wrapper}>
-                       <div style={!!suspend[0] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[0]} className={styles.wrapper_box} >
+                   <div  className={styles.wrapper}>
+                       <div style={!!suspend[0] ? {transform:'translateY(0px)',opacity:1,width:'98%'} : {}} ref={arrRef[0]} className={styles.wrapper_box} >
                            <div className={styles.wrapper_box_title} >
                                <a>点击下方按钮唤醒本地.exe文件</a>
                            </div>
@@ -106,7 +110,7 @@ export default class  Index extends React.Component<any, any>{
                        </div>
 
 
-                       <div style={!!suspend[1] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[1]}   className={styles.wrapper_box} >
+                       <div style={!!suspend[1] ? {transform:'translateY(0px)',opacity:1,width:'98%'} : {}} ref={arrRef[1]}   className={styles.wrapper_box} >
                            <div className={styles.wrapper_box_title}>
                                <a href={'https://github.com/xiangyuecn/Recorder'}>自定义音乐播放波纹</a>
                            </div>
@@ -115,28 +119,28 @@ export default class  Index extends React.Component<any, any>{
                            </div>
                        </div>
 
-                       <div style={!!suspend[2] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[2]}   className={styles.wrapper_box} >
+                       <div style={!!suspend[2] ? {transform:'translateY(0px)',opacity:1,width:'98%'} : {}} ref={arrRef[2]}   className={styles.wrapper_box} >
                            <div className={styles.wrapper_box_title}>
                                <a>视频截取</a>
                            </div>
                             <VideoEditor/>
                        </div>
 
-                       <div style={!!suspend[3] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[3]}   className={styles.wrapper_box} >
+                       <div style={!!suspend[3] ? {transform:'translateY(0px)',opacity:1,width:'98%'} : {}} ref={arrRef[3]}   className={styles.wrapper_box} >
                            <div className={styles.wrapper_box_title}>
                                <a href={'https://github.com/react-cropper/react-cropper'}>图片裁剪</a>
                            </div>
                            <ImageClip/>
                        </div>
 
-                       <div style={!!suspend[4] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[4]}   className={styles.wrapper_box} >
+                       <div style={!!suspend[4] ? {transform:'translateY(0px)',opacity:1,width:'98%'} : {}} ref={arrRef[4]}   className={styles.wrapper_box} >
                            <div className={styles.wrapper_box_title}>
                                <a href={'https://developer.mozilla.org/zh-CN/docs/Web/API/MediaDevices/getUserMedia'}>视频合成</a>
                            </div>
                            <Polymerization />
                        </div>
 
-                       <div style={!!suspend[5] ? {transform:'translateY(0px)',opacity:1} : {}} ref={arrRef[5]}   className={styles.wrapper_box} >
+                       <div style={!!suspend[5] ? {transform:'translateY(0px)',opacity:1,width:'98%'} : {}} ref={arrRef[5]}   className={styles.wrapper_box} >
                            <div className={styles.wrapper_box_title}>
                                <a href={'https://github.com/sudodoki/copy-to-clipboard'}>文本复制</a>
                            </div>

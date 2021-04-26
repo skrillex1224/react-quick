@@ -38,16 +38,30 @@ export default class Index extends React.Component<any, any>{
         })
     }
 
+    /*路由切换时渐渐消失的特效*/
+
+    switchRoute = (route)=>{
+        //当是本页面时不执行跳转
+        if(route === IndexSet[0].navUrl) return ;
+
+        this.setState({isVisible:false})
+         setTimeout(()=>{
+             this.props.history.push(route);
+             // 这个会重新挂载所有组件
+             // window.location.href = route
+         },hiddenTime)
+    }
+
     render(): React.ReactNode {
         const {isLoading,isVisible,current} = this.state;
         const {title,imgName} = IndexSet[current];
         return (
-            <Preload chooseIndex={current} isLoading={isLoading}>
-                   <div className={styles.wrapper}>
-                       <div onClick={this.handleLeft} className={styles.wrapper_leftShadow} />
+            <Preload switchRoute={this.switchRoute} chooseIndex={current} isLoading={isLoading}>
+                   <div className={styles.wrapper}>                       <div onClick={this.handleLeft} className={styles.wrapper_leftShadow} />
+
                        <Animated   animationIn={'fadeIn'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1200}
                                    animationOutDuration={hiddenTime}>
-                            <MainScreen title={title} subTitle={current ? 'Click To See' : 'Start'} imgName={imgName}/>
+                            <MainScreen switchRoute={this.switchRoute} title={title} subTitle={current ? 'Click To See' : 'Start'} imgName={imgName}/>
                        </Animated>
                        <div onClick={this.handleRight} className={styles.wrapper_rightShadow} />
                    </div>

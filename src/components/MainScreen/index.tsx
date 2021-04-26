@@ -4,10 +4,11 @@ import styles from "./index.scss";
 import IndexSet from "../../utils/IndexSet";
 import { withRouter } from 'react-router-dom';
 
-interface IProps{
+interface IProps {
     title: string,
     subTitle: string,
-    imgName : string,
+    imgName: string,
+    switchRoute: (route : string) => any
 }
 
 interface IState {
@@ -21,12 +22,12 @@ class Index extends React.Component<IProps, IState>{
         title : '',
         subTitle:'',
         imgName : '',
+        switchRoute  : ()=>{}
     }
 
     handleNavTo = ()=>{
         const finder = IndexSet.find(item=>item.title === this.props.title);
-        //@ts-ignore
-        this.props.history.push(finder.navUrl);
+        this.props.switchRoute(finder.navUrl);
     }
 
     render(): React.ReactNode {

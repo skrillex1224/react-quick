@@ -17,7 +17,8 @@ function Suspender({isLoading}){
 interface IProps {
     isLoading : boolean,
     //MainHeader组件的props
-    chooseIndex : number
+    chooseIndex : number,
+    switchRoute :(route)=>any
 }
 
 interface IState {
@@ -30,7 +31,8 @@ interface IState {
 export default class Index extends React.Component<IProps, IState>{
     static defaultProps = {
         isLoading : true,
-        chooseIndex: 0
+        chooseIndex: 0,
+        switchRoute : ()=>{}
     }
 
     state = {
@@ -51,7 +53,7 @@ export default class Index extends React.Component<IProps, IState>{
         const {timeOutHide} = this.state;
         return (
             <Suspense fallback={  <Animated animationIn={'fadeIn'} animationOut={'fadeOut'} isVisible={isLoading} animationInDuration={1600}
-                                            animationOutDuration={600} >
+                                            animationOutDuration={800} >
                 <div  className={styles.wrapper}>
                     <div className={styles.wrapper_blinkWrapper} />
                     <div className={styles.wrapper_scaleUp} style={isLoading ? {}: {transform:'scale(4)'}} >
@@ -59,7 +61,7 @@ export default class Index extends React.Component<IProps, IState>{
                     </div>
                 </div>
             </Animated>}>
-                <MainHeader chooseIndex={chooseIndex}/>
+                <MainHeader switchRoute={this.props.switchRoute} chooseIndex={chooseIndex}/>
                 {children}
                 <Suspender isLoading={timeOutHide} />
             </Suspense>

@@ -62,7 +62,7 @@ export default class  Index extends React.Component<any, any>{
     componentDidMount(): void {
         setTimeout(()=>{
             this.setState({isLoading:false})
-        })
+        },600)
 
         //节流
         window.addEventListener('scroll',throttle(()=>{

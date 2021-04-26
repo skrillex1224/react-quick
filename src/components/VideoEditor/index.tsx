@@ -45,7 +45,7 @@ export default class Index extends React.Component<any, any>{
                 return ;
             }
             this.setState({parentWidth})
-        },200)
+        },500)
     }
 
     componentDidMount(): void {
@@ -139,7 +139,7 @@ export default class Index extends React.Component<any, any>{
                    当video时间变化时 onTimeUpdate
                    video的宽高width height 属性也是css像素
                 */}
-                <video onTimeUpdate={this.handleVideoPlaying} onLoadedData={this.handleVideoOnload} ref={this.videoRef} className={styles.wrapper_videoContainer} autoPlay={false} src={mp4}   controls={true} />
+                <video onTimeUpdate={this.handleVideoPlaying} onLoadedData={this.handleVideoOnload} ref={this.videoRef} className={styles.wrapper_videoContainer} autoPlay={false} src={mp4}   controls={false} />
                 <div className={styles.wrapper_info}>
                     <span>视频总长为：{duration}s</span>
                     <span>您截取的视频区域为：{calcVideoCurrent(left,parentWidth,duration)}s 至 {calcVideoCurrent(right,parentWidth,duration)}s </span>

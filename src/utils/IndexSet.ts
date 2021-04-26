@@ -1,4 +1,7 @@
 import CaseTestSet from '../pages/CaseTestSet'
+import AlgorithmSet from '../pages/AlgorithmSet'
+import InterviewSet from '../pages/InterviewSet'
+import ProjectSet from '../pages/ProjectSet'
 import IndexSet from '../pages/IndexPage'
 
 import caseTestSet from '../assets/caseSet.png';
@@ -33,7 +36,7 @@ export default [
         subTitle : 'algorithmCollectionSet',
         navUrl : '/algorithmCollectionSet',
         color:'#f441a5aa',
-        component: CaseTestSet
+        component: AlgorithmSet
     },
     {
         title : '项目总结集',
@@ -41,7 +44,7 @@ export default [
         subTitle : 'projectAllSet',
         navUrl : '/projectAllSet',
         color:'#ffeb3baa',
-        component: CaseTestSet
+        component: ProjectSet
     },
     {
         title : '面试题目集',
@@ -49,6 +52,6 @@ export default [
         subTitle : 'interviewProblemSet',
         navUrl : '/interviewProblemSet',
         color: '#03a9f4aa',
-        component: CaseTestSet
+        component: InterviewSet
     },
 ]

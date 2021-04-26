@@ -109,6 +109,7 @@ export default class  Index extends React.Component<any, any>{
                <Animated   animationIn={'zoomIn'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1600}
                          animationOutDuration={hiddenTime}>
                    <MainScreen title={title} subTitle={subTitle} imgName={imgName}/>
+               </Animated>
                    <div  className={styles.wrapper}>
                        <div style={!!suspend[0] ? {transform:'translateY(0px)',opacity:1,width:'98%'} : {}} ref={arrRef[0]} className={styles.wrapper_box} >
                            <div className={styles.wrapper_box_title} >
@@ -178,7 +179,6 @@ export default class  Index extends React.Component<any, any>{
                        </div>
                    </div>
 
-               </Animated>
             </Preload>
         )
     }

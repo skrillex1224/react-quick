@@ -82,7 +82,7 @@ export default class  Index extends React.Component<any, any>{
         const {isLoading,suspend,isVisible} =this.state;
     /**animationOut没啥用在这里*/
         return (
-            <Preload  isLoading={isLoading} >
+            <Preload chooseIndex={1}  isLoading={isLoading} >
                <Animated   animationIn={'zoomIn'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1600}
                          animationOutDuration={600}>
                    <MainScreen title={'案例测试集'} subTitle={'Case Test Set'} imgName={'caseTestSet'}/>

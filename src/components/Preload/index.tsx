@@ -3,6 +3,7 @@ import {observer} from "mobx-react";
 import {Animated} from "react-animated-css";
 import ReactLogo from "../../assets/react.png";
 import styles from './index.scss'
+import MainHeader from "../MainHeader";
 
 function Suspender({isLoading}){
     if(isLoading){
@@ -14,7 +15,9 @@ function Suspender({isLoading}){
 }
 
 interface IProps {
-    isLoading : boolean
+    isLoading : boolean,
+    //MainHeader组件的props
+    chooseIndex : number
 }
 
 interface IState {
@@ -26,7 +29,8 @@ interface IState {
 @observer
 export default class Index extends React.Component<IProps, IState>{
     static defaultProps = {
-        isLoading : true
+        isLoading : true,
+        chooseIndex: 0
     }
 
     state = {
@@ -43,7 +47,7 @@ export default class Index extends React.Component<IProps, IState>{
     }
 
     render(): React.ReactNode {
-        const {children,isLoading} = this.props
+        const {children,isLoading,chooseIndex} = this.props
         const {timeOutHide} = this.state;
         return (
             <Suspense fallback={  <Animated animationIn={'fadeIn'} animationOut={'fadeOut'} isVisible={isLoading} animationInDuration={1600}
@@ -55,6 +59,7 @@ export default class Index extends React.Component<IProps, IState>{
                     </div>
                 </div>
             </Animated>}>
+                <MainHeader chooseIndex={chooseIndex}/>
                 {children}
                 <Suspender isLoading={timeOutHide} />
             </Suspense>

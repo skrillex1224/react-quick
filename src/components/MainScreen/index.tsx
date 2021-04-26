@@ -5,6 +5,7 @@ import caseTestSet from '../../assets/caseSet.png';
 import algorithmSet from '../../assets/algorithmSet.png';
 import interviewSet from '../../assets/interviewSet.png';
 import projectSet from '../../assets/projectSet.png';
+import startSet from '../../assets/startSet.png';
 import IndexSet from "../../utils/IndexSet";
 import { withRouter } from 'react-router-dom';
 
@@ -23,6 +24,7 @@ const bgMapping = {
     'algorithmCollectionSet' : algorithmSet,
     'interviewProblemSet' : interviewSet,
     'projectAllSet' : projectSet,
+    'startSet' : startSet
 }
 
 @observer

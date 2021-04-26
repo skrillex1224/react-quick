@@ -38,17 +38,16 @@ export default class Index extends React.Component<any, any>{
         })
     }
 
-
     render(): React.ReactNode {
         const {isLoading,isVisible,current} = this.state;
         const {title,imgName} = IndexSet[current];
         return (
-            <Preload isLoading={isLoading}>
+            <Preload chooseIndex={current} isLoading={isLoading}>
                    <div className={styles.wrapper}>
                        <div onClick={this.handleLeft} className={styles.wrapper_leftShadow} />
                        <Animated   animationIn={'fadeIn'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1200}
                                    animationOutDuration={hiddenTime}>
-                            <MainScreen title={title} subTitle={'Click To See'} imgName={imgName}/>
+                            <MainScreen title={title} subTitle={current ? 'Click To See' : 'Start'} imgName={imgName}/>
                        </Animated>
                        <div onClick={this.handleRight} className={styles.wrapper_rightShadow} />
                    </div>

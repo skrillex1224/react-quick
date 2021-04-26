@@ -10,14 +10,12 @@ import IndexSet from "./utils/IndexSet";
 function Index() {
     return (
         <>
-            <MainHeader />
-            <Route path={'/'} exact={true} component={IndexPage} />
-            <Route path={IndexSet[0].navUrl} exact={true} component={CaseTestSet} />
-            <Route path={IndexSet[1].navUrl} exact={true} component={CaseTestSet} />
-            <Route path={IndexSet[2].navUrl} exact={true} component={CaseTestSet} />
-            <Route path={IndexSet[3].navUrl} exact={true} component={CaseTestSet} />
+            {
+                IndexSet.map((item,index)=>(
+                    <Route key={index} path={item.navUrl} exact={true} component={item.component} />
+                ))
+            }
             <Route path={'/TestPage'} exact={true} component={TestPage} />
-            {/*<Redirect path={'/'} to={'/'} />*/}
         </>
     )
 }

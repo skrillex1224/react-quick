@@ -6,25 +6,77 @@ import IndexSet from "../../utils/IndexSet";
 import {withRouter} from 'react-router-dom'
 import {GithubOutlined} from "@ant-design/icons/lib";
 
+function debounce (eventHandler,duration){
+    let timer ;
+    return ()=>{
+        if(timer) return ;
+
+        timer = setTimeout(()=>{
+            eventHandler()
+            timer = null;
+        },duration)
+    }
+}
+
+interface IProps {
+    chooseIndex : number,
+}
+
+interface IState {
+    fixed : boolean
+}
+
+
 @observer
-class Index extends React.Component<any, any>{
+class Index extends React.Component<IProps, IState>{
+
+    defaultProps={
+        //主页
+        chooseIndex : 0
+    }
+
+    state = {
+        fixed : false
+    }
+
+    componentDidMount(): void {
+        window.addEventListener('scroll',debounce(()=>{
+            const scrollTop = window.scrollY;
+
+            const targetVal = document.body.clientWidth / 1920 * 1080
+
+            if(targetVal < scrollTop){
+                this.setState({fixed :true })
+                return
+            }
+
+            this.setState({fixed:false})
+
+        },400),false);
+    }
+
     handleNavTo = (item)=>{
         return ()=>{
+            // @ts-ignore
             this.props.history.push(item.navUrl);
         }
     }
     handleToIndex = ()=>{
+        // @ts-ignore
         this.props.history.push('/');
     }
 
     render(): React.ReactNode {
+        const {chooseIndex} = this.props
+
         return (
-            <div className={styles.wrapper}>
+            <div className={styles.wrapper} style={this.state.fixed?{position:'fixed'}:{}}>
                <div className={styles.wrapper_left}>
-                   <img onClick={this.handleToIndex} className={styles.wrapper_left_logo} src={reactLogo} />
-                   {IndexSet.map((item,key)=>(
-                       <div className={styles.wrapper_left_item} onClick={this.handleNavTo(item)}>
-                           {item.title}
+
+                   {IndexSet.map((item,index )=>(
+                       <div style={index === chooseIndex ?{ color: item.color}: {}} className={styles.wrapper_left_item} onClick={this.handleNavTo(item)}>
+                           {item.logo && <img onClick={this.handleToIndex} className={styles.wrapper_left_logo} src={reactLogo} />}
+                           {item.logo || item.title}
                        </div>
                    ))}
                </div>

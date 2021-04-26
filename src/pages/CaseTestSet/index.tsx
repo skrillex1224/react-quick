@@ -151,7 +151,7 @@ export default class  Index extends React.Component<any, any>{
                            <Polymerization />
                        </div>
 
-                       <div style={!!suspend[5] ? {transform:'translateY(0px)',opacity:1,width:'98%'} : {}} ref={arrRef[5]}   className={styles.wrapper_box} >
+                       <div style={!!suspend[5] ? {transform:'translateY(0px) scale(1)',opacity:1} : {}} ref={arrRef[5]}   className={styles.wrapper_box} >
                            <div className={styles.wrapper_box_title}>
                                <a href={'https://github.com/sudodoki/copy-to-clipboard'}>文本复制</a>
                            </div>

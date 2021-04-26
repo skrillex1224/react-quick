@@ -10,6 +10,7 @@ import Polymerization from "../../components/PolymerizationVideo";
 import MainScreen from "../../components/MainScreen";
 import message from '../../components/message'
 import copy from "copy-to-clipboard";
+import IndexSet from "../../utils/IndexSet";
 
 let arr = [];
 for (let i = 6; i < 10; i++) {
@@ -80,12 +81,14 @@ export default class  Index extends React.Component<any, any>{
 
     render() {
         const {isLoading,suspend,isVisible} =this.state;
+        const {title,subTitle,imgName} = IndexSet[1];
+
     /**animationOut没啥用在这里*/
         return (
             <Preload chooseIndex={1}  isLoading={isLoading} >
                <Animated   animationIn={'zoomIn'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1600}
                          animationOutDuration={600}>
-                   <MainScreen title={'案例测试集'} subTitle={'Case Test Set'} imgName={'caseTestSet'}/>
+                   <MainScreen title={title} subTitle={subTitle} imgName={imgName}/>
                    <div onClick={()=>{
                        this.setState({isVisible:false})
                        setTimeout(()=>{

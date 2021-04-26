@@ -1,13 +1,19 @@
 import CaseTestSet from '../pages/CaseTestSet'
 import IndexSet from '../pages/IndexPage'
 
+import caseTestSet from '../assets/caseSet.png';
+import algorithmCollectionSet from '../assets/algorithmSet.png';
+import interviewSet from '../assets/interviewSet.png';
+import projectSet from '../assets/projectSet.png';
+import startSet from '../assets/startSet.png';
+
 // 首页导航栏大对象
 export default [
     //左上角的react标志
     {
         title : '开始',
         subTitle : 'start',
-        imgName : 'startSet',
+        imgName : startSet,
         navUrl : '/',
         color:'#03a9f4aa',
         logo : true,
@@ -16,14 +22,14 @@ export default [
     {
         title : '案例测试集',
         subTitle : 'caseTestSet',
-        imgName : 'caseTestSet',
+        imgName : caseTestSet,
         navUrl : '/caseTestSet',
         color:'#03a9f4aa',
         component: CaseTestSet
     },
     {
         title : '算法收藏集',
-        imgName : 'algorithmCollectionSet',
+        imgName : algorithmCollectionSet,
         subTitle : 'algorithmCollectionSet',
         navUrl : '/algorithmCollectionSet',
         color:'#f441a5aa',
@@ -31,7 +37,7 @@ export default [
     },
     {
         title : '项目总结集',
-        imgName : 'projectAllSet',
+        imgName : projectSet,
         subTitle : 'projectAllSet',
         navUrl : '/projectAllSet',
         color:'#ffeb3baa',
@@ -39,7 +45,7 @@ export default [
     },
     {
         title : '面试题目集',
-        imgName : 'interviewProblemSet',
+        imgName : interviewSet,
         subTitle : 'interviewProblemSet',
         navUrl : '/interviewProblemSet',
         color: '#03a9f4aa',

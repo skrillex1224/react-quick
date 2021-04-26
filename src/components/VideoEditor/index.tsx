@@ -15,10 +15,16 @@ function calcVideoCurrent(dotPosition,width,duration){
     return Math.floor(duration *  (dotPosition / width))
 }
 
-//解决初始化获取元素宽度为undefined的问题
+/*使用window.mutationObserver监听元素的变化*/
+
 
 @observer
 export default class Index extends React.Component<any, any>{
+
+    static defaultProps = {
+        fetchChildMethod : ()=>{}
+    }
+
     videoRef :any = React.createRef();
 
     positionEle : any = React.createRef();
@@ -33,20 +39,22 @@ export default class Index extends React.Component<any, any>{
 
     askTillNotNull= ()=>{
         setTimeout(()=>{
-            const parentWidth = this.positionEle.current?.offsetWidth
-
+            const parentWidth = this.positionEle.current?.clientWidth
             if(!parentWidth){
                 this.askTillNotNull();
                 return ;
             }
             this.setState({parentWidth})
-        },10)
+        },200)
     }
 
     componentDidMount(): void {
+        // 将修改clientWidth的方法传给父类，当transitionEnd结束调用
+        this.props.fetchChildMethod(this.askTillNotNull);
+
         /*使用react Suspend 和 lazy  在页面刚挂载时直接获取数据为undefined 所以要改成异步*/
         this.askTillNotNull();
-    }n
+    }
 
     handleDrag =(event)=>{
         const parent = this.positionEle?.current;
@@ -126,12 +134,12 @@ export default class Index extends React.Component<any, any>{
         //
         // console.log(width,this.positionEle.current?.clientWidth)
         return (
-            <div className={styles.wrapper}>
+            <div  id={'dragger_wrapper'}  className={styles.wrapper}>
                 {/*当video加载完后 ,用的是onloadData
                    当video时间变化时 onTimeUpdate
                    video的宽高width height 属性也是css像素
                 */}
-                <video onTimeUpdate={this.handleVideoPlaying} onLoadedData={this.handleVideoOnload} ref={this.videoRef} className={styles.wrapper_videoContainer} autoPlay={true} src={mp4}   controls={false} />
+                <video onTimeUpdate={this.handleVideoPlaying} onLoadedData={this.handleVideoOnload} ref={this.videoRef} className={styles.wrapper_videoContainer} autoPlay={false} src={mp4}   controls={true} />
                 <div className={styles.wrapper_info}>
                     <span>视频总长为：{duration}s</span>
                     <span>您截取的视频区域为：{calcVideoCurrent(left,parentWidth,duration)}s 至 {calcVideoCurrent(right,parentWidth,duration)}s </span>

@@ -48,6 +48,7 @@ function debounce(eventHandler : Function , internal = 200){
 
 const hiddenTime =600;
 
+
 @observer
 export default class  Index extends React.Component<any, any>{
 
@@ -56,7 +57,6 @@ export default class  Index extends React.Component<any, any>{
         suspend : new Array(10),
         isVisible : true,
     }
-
 
 
     componentDidMount(): void {
@@ -79,6 +79,17 @@ export default class  Index extends React.Component<any, any>{
             this.setState({suspend})
         },200),false)
 
+    }
+
+    childVideoEditorMethod = ()=>{}
+
+    handleVideoCutResize = ()=>{
+        this.childVideoEditorMethod()
+    }
+
+    //子类方法调用父类
+    fetchChildMethod = (receiver) =>{
+        this.childVideoEditorMethod = receiver
     }
 
     switchRoute = (route)=>{
@@ -119,11 +130,11 @@ export default class  Index extends React.Component<any, any>{
                            </div>
                        </div>
 
-                       <div style={!!suspend[2] ? {transform:'translateY(0px)',opacity:1,width:'98%'} : {}} ref={arrRef[2]}   className={styles.wrapper_box} >
+                       <div  onTransitionEnd={this.handleVideoCutResize} style={!!suspend[2] ? {transform:'translateY(0px)',opacity:1,width:'98%'} : {}} ref={arrRef[2]}   className={styles.wrapper_box} >
                            <div className={styles.wrapper_box_title}>
                                <a>视频截取</a>
                            </div>
-                            <VideoEditor/>
+                            <VideoEditor fetchChildMethod={this.fetchChildMethod}/>
                        </div>
 
                        <div style={!!suspend[3] ? {transform:'translateY(0px)',opacity:1,width:'98%'} : {}} ref={arrRef[3]}   className={styles.wrapper_box} >

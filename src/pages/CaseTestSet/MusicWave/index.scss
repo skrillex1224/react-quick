@@ -1,7 +1,11 @@
 .wrapper{
     width: 100%;
-    min-height: 400px;
-    &_container{
-        width: 100%;
+    position: relative;
+    &_btn{
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        margin: auto;
     }
 }

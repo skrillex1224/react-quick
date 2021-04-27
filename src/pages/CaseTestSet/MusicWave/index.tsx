@@ -1,92 +1,149 @@
 import React from "react";
 import styles from './index.scss'
-import Recorder from 'recorder-core'
-import 'recorder-core/src/engine/mp3.js'
-import 'recorder-core/src/engine/mp3-engine.js'
-import 'recorder-core/src/extensions/frequency.histogram.view.js'
-import 'recorder-core/src/extensions/waveview.js'
-import 'recorder-core/src/extensions/lib.fft.js'
 import {observer} from "mobx-react";
+import classNames from "classnames";
 
 
-const  set={
-    // elem:"#container" //自动显示到dom，并以此dom大小为显示大小
-    //或者配置显示大小，手动把frequencyObj.elem显示到别的地方
-    //以上配置二选一
-
-    width: document.body.clientWidth -100,
-    height: 400
-    ,scale:1 //缩放系数，应为正整数，使用2(3? no!)倍宽高进行绘制，避免移动端绘制模糊
-
-    ,fps:20 //绘制帧率，不可过高
-
-    ,lineCount:10000  //直方图柱子数量，数量的多少对性能影响不大，密集运算集中在FFT算法中
-    ,widthRatio: 1 //柱子线条宽度占比，为所有柱子占用整个视图宽度的比例，剩下的空白区域均匀插入柱子中间；默认值也基本相当于一根柱子占0.6，一根空白占0.4；设为1不留空白，当视图不足容下所有柱子时也不留空白
-    ,spaceWidth: 0 //柱子间空白固定基础宽度，柱子宽度自适应，当不为0时widthRatio无效，当视图不足容下所有柱子时将不会留空白，允许为负数，让柱子发生重叠
-    ,minHeight:0 //柱子保留基础高度，position不为±1时应该保留点高度
-    ,position:0 //绘制位置，取值-1到1，-1为最底下，0为中间，1为最顶上，小数为百分比
-    ,mirrorEnable:true //是否启用镜像，如果启用，视图宽度会分成左右两块，右边这块进行绘制，左边这块进行镜像（以中间这根柱子的中心进行镜像）
-
-    ,stripeEnable:false //是否启用柱子顶上的峰值小横条，position不是-1时应当关闭，否则会很丑
-    ,stripeHeight:3 //峰值小横条基础高度
-    ,stripeMargin:6 //峰值小横条和柱子保持的基础距离
-
-    ,fallDuration:1000 //柱子从最顶上下降到最底部最长时间ms
-    ,stripeFallDuration:3500 //峰值小横条从最顶上下降到底部最长时间ms
-
-    //柱子颜色配置：[位置，css颜色，...] 位置: 取值0.0-1.0之间
-    ,linear:[0,"#9254de",0.5,"#40a9ff",1,"#bae637"]
-    //峰值小横条渐变颜色配置，取值格式和linear一致，留空为柱子的渐变颜色
-    ,stripeLinear: null
-
-    ,shadowBlur: 0 //柱子阴影基础大小，设为0不显示阴影，如果柱子数量太多时请勿开启，非常影响性能
-    ,shadowColor:"#bbb" //柱子阴影颜色
-    ,stripeShadowBlur:-1 //峰值小横条阴影基础大小，设为0不显示阴影，-1为柱子的大小，如果柱子数量太多时请勿开启，非常影响性能
-    ,stripeShadowColor:"" //峰值小横条阴影颜色，留空为柱子的阴影颜色
-    //当发生绘制时会回调此方法，参数为当前绘制的频率数据和采样率，可实现多个直方图同时绘制，只消耗一个input输入和计算时间
-    ,onDraw:function(frequencyData,sampleRate){}
-}
-
-let  wave;
-let  rec;
-
-//开始录音
-function start(){
-    rec=Recorder({
-        onProcess:function(buffers,powerLevel,bufferDuration,bufferSampleRate){
-            wave.input(buffers,powerLevel,bufferSampleRate);//输入音频数据，更新显示波形
-        }
-    });
-    rec.open(function(){
-        wave=Recorder.FrequencyHistogramView(set); //创建wave对象，写这里面浏览器妥妥的
-        const container = document.querySelector("#container");
-        container.append(wave.canvas)
-        rec.start();
-    });
-}
-
-function stop (){
-    rec.stop();
-}
+const colorSet = [
+    '#E647A9AA',
+    '#886FC8AA',
+    '#6081D6AA',
+    '#FDD14BAA',
+    '#AD60BCAA',
+    '#0AA6F2AA',
+    '#6AC4A8AA',
+    '#34B6D1AA',
+    '#7379CFAA'
+]
 
 @observer
 export default class Index extends React.Component<any, any>{
+
+    state = {
+        isPlaying : false
+    }
+    //canvas
+    canvasCtx : any = React.createRef();
+
+    //canvasContext  2d
+    canvasContext  ;
+
+    //audioContext
+    audioCtx ;
+    // 分析器
+    analyser;
+    //TypedArray
+    dataArray ;
+
+    handleClick = ()=>{
+        this.setState({isPlaying:true})
+
+        //创建AudioContext
+        const AudioContext = window.AudioContext;
+        const ctx = new AudioContext();
+        this.audioCtx = ctx;
+        //创建AnalyserNode
+        const analyser = ctx.createAnalyser();
+
+        this.analyser = analyser;
+        analyser.fftSize = 512;
+
+        //获取音频源
+        const audio : any  = document.getElementById('audio');
+        audio.play();
+
+        const source = ctx.createMediaElementSource(audio);
+
+        // 将音频源关联到分析器
+        source.connect(analyser);
+
+        // 将分析器关联到输出设备（耳机、扬声器）
+        analyser.connect(ctx.destination);
+
+        //播放音频
+        window.document.documentElement.onclick = ()=>audio.play();
+
+        //获取频率数组
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+        this.dataArray = dataArray;
+
+
+        this.renderFrame();
+    }
+
+    /*初始化canvas*/
     componentDidMount(): void {
-        start()
+        // canvas
+        const  canvasRef = this.canvasCtx.current;
+        const canvasContext = canvasRef.getContext('2d');
+         this.canvasContext = canvasContext;
+
+        for (let i = 0, x = 0; i < 256; i++) {
+            // 根据每个矩形高度映射一个背景色
+            // 绘制一个矩形，并填充背景色
+            const barHeight = Math.floor(Math.random() *240);
+            const barWidth = canvasRef.width / 256 * 1.5;
+
+            // 根据每个矩形高度映射一个背景色
+            const r = barHeight + 25 *  (i / 256);
+            const g = 250 * (i / 256);
+            const  b = 50;
+            // 绘制一个矩形，并填充背景色
+            this.canvasContext.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+            this.canvasContext.fillRect(x, canvasRef.height - barHeight , barWidth, barHeight);
+
+
+            x += barWidth + 2;
+        }
     }
 
-    componentWillUnmount(): void {
-        stop()
-    }
 
-    render() {
+    /*renderCanvas*/
+   renderFrame = ()=> {
+       //https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame
+        requestAnimationFrame(this.renderFrame);
+
+       const  canvasRef = this.canvasCtx.current;
+
+       this.canvasContext.clearRect(0, 0, canvasRef.width, canvasRef.height);
+
+        // 更新频率数据
+       this.analyser.getByteFrequencyData(this.dataArray);
+
+       let barWidth = canvasRef.width / this.dataArray.length * 1.5;
+       let barHeight;
+
+        // bufferLength表示柱形图中矩形的个数
+        for (let i = 0, x = 0; i < this.dataArray.length; i++) {
+            // 根据频率映射一个矩形高度
+            barHeight = this.dataArray[i];
+
+            // 根据每个矩形高度映射一个背景色
+            const r = barHeight + 25 * (i / this.dataArray.length);
+            const g = 250 * (i / this.dataArray.length);
+            const  b = 50;
+            // 绘制一个矩形，并填充背景色
+            this.canvasContext.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+            this.canvasContext.fillRect(x, canvasRef.height - barHeight, barWidth, barHeight);
+
+
+            x += barWidth + 2;
+        }
+    }
+    render(): React.ReactNode {
+       const {isPlaying} = this.state;
+
         return (
-            <div className={styles.wrapper}>
-                <div id='container' className={styles.wrapper_container}>
-
-                </div>
+            <div className={styles.wrapper} >
+                <canvas  width={document.documentElement.clientWidth / 1920  * 1800 } height={400} ref={this.canvasCtx} id={'canvas'}> </canvas>
+                {/*使用classnames定义多个class*/}
+                {!isPlaying && <div   className={classNames({
+                    'index_btn' : true,
+                    [`${styles.wrapper_btn}`] : true
+                })} onClick={this.handleClick}>Play</div>}
+                <audio hidden id={'audio'} controls crossOrigin={'anonymous'} src="//m8.music.126.net/21180815163607/04976f67866d4b4d11575ab418904467/ymusic/515a/5508/520b/f0cf47930abbbb0562c9ea61707c4c0b.mp3?infoId=92001" />
             </div>
         )
     }
 }
-

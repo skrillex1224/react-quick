@@ -92,12 +92,12 @@ export default class  Index extends React.Component<any, any>{
             href: '',
             onTransitionEnd : null ,
         },
-        // {
-        //     title: '自定义音乐播放波纹',
-        //     href: 'https://github.com/xiangyuecn/Recorder',
-        //     component : <MusicWave />,
-        //     onTransitionEnd : null ,
-        // },
+        {
+            title: '自定义音乐播放波纹',
+            href: 'https://juejin.cn/post/6844903953130323976',
+            component : <MusicWave />,
+            onTransitionEnd : null ,
+        },
         {
             title: '视频截取',
             href: '',
@@ -110,12 +110,12 @@ export default class  Index extends React.Component<any, any>{
             component : <ImageClip />,
             onTransitionEnd : null
         },
-        {
-            title: '视频合成',
-            href:'https://developer.mozilla.org/zh-CN/docs/Web/API/MediaDevices/getUserMedia',
-            component : <Polymerization />,
-            onTransitionEnd : null,
-        },
+        // {
+        //     title: '视频合成',
+        //     href:'https://developer.mozilla.org/zh-CN/docs/Web/API/MediaDevices/getUserMedia',
+        //     component : <Polymerization />,
+        //     onTransitionEnd : null,
+        // },
         {
             title: '文本复制',
             href: 'https://github.com/sudodoki/copy-to-clipboard',
@@ -140,7 +140,7 @@ export default class  Index extends React.Component<any, any>{
                                return    (
                                    <div onTransitionEnd={onTransitionEnd} style={suspend[index] ? {transform:'translateY(0px)  scale(1)',opacity:1} : {}} ref={arrRef[index]} className={styles.wrapper_box} >
                                       <div className={styles.wrapper_box_title} >
-                                          <a href={href}>{title}</a>
+                                          <a target={'_blank'} href={href}>{title}</a>
                                       </div>
                                       {component}
                                   </div>

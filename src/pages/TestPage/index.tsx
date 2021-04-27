@@ -1,8 +1,7 @@
 import React from "react";
-import styles from './index.scss'
 import {Animated} from "react-animated-css";
 import {observer} from "mobx-react";
-import ScrollView from '../CaseTestSet/ScrollView'
+import MusicWave from '../CaseTestSet/MusicWave'
 import Preload from '../../components/Preload'
 
 @observer
@@ -20,11 +19,11 @@ export default class  Index extends React.Component<any, any>{
 
     render() {
         return (
-            <Preload isLoading={this.state.isLoading}>
-               <Animated animationIn={'rollIn'} isVisible={true} animationInDuration={1600} animationOut={'fadeOut'} animationOutDuration={600}>
-                   <ScrollView />
-               </Animated>
-            </Preload>
+            // <Preload isLoading={this.state.isLoading}>
+            //    <Animated animationIn={'rollIn'} isVisible={true} animationInDuration={1600} animationOut={'fadeOut'} animationOutDuration={600}>
+                   <MusicWave />
+               // </Animated>
+            // </Preload>
         )
     }
 }

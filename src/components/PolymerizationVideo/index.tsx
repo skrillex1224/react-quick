@@ -204,7 +204,9 @@ export default class Index extends React.Component<any, any>{
                 const chunk = event.data;
                 this.setState((state)=>{
                     /*注意: 单单使用包含已经录制好媒体切片的Blobs 将大可不能单独播放. 媒体在重放之前需要重新组装 .
-                    * 所以要进行视频裁剪,但是视频剪辑又不太能写, 所以可以通过控制video标签的进度条来实现*/
+                    * 所以要进行视频裁剪,但是视频剪辑又不太能写, 所以可以通过控制video标签的进度条来实现
+                    *
+                    * 但是目前实现的是录制多段blob,将多端blob进行合并, 虽然blob不能分割, 但是合并总是可以的*/
                     return {recordedChunks: [...state.recordedChunks,chunk]}
                 })
             }

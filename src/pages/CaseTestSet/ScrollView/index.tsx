@@ -88,8 +88,6 @@ export default class Index extends React.Component<any, any>{
         //和初始位置的差值,即要改变的值
         let minx = x - this.onMouseDownX
 
-
-        console.log(this.onMouseDownTranslateX +  minx,  )
         //防止越界
         //这个值this.onMouseDownTranslateX +  minx  就是 改变后的translateX , 所以判定这个值
         if(this.onMouseDownTranslateX +  minx > 0) return ;
@@ -105,7 +103,6 @@ export default class Index extends React.Component<any, any>{
     handleScrollEnd = (e)=>{
         this.isMouseDown = false;
         e.preventDefault()
-        console.log('up')
     }
 
     preventDefaultMethod = (e)=>e.preventDefault();
@@ -122,7 +119,7 @@ export default class Index extends React.Component<any, any>{
                         <div style={{transform:`translateX(${this.translateX}px)`}} ref={this.scrollContainer}
                              className={styles.wrapper_drawWrapper_drawList} >
                             {srcList.map((item,index)=>(
-                                <img onDrag={()=>alert('sadasd')}  draggable  src={item}  className={styles.wrapper_drawWrapper_drawList_waterMark} key={index} />
+                                <img  src={item}  className={styles.wrapper_drawWrapper_drawList_waterMark} key={index} />
                             ))}
                         </div>
                     </div>

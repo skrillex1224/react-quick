@@ -60,9 +60,6 @@ export default class Index extends React.Component<any, any>{
         // 将分析器关联到输出设备（耳机、扬声器）
         analyser.connect(ctx.destination);
 
-        //播放音频
-        window.document.documentElement.onclick = ()=>audio.play();
-
         //获取频率数组
         const bufferLength = analyser.frequencyBinCount;
         const dataArray = new Uint8Array(bufferLength);
@@ -82,15 +79,16 @@ export default class Index extends React.Component<any, any>{
         for (let i = 0, x = 0; i < 256; i++) {
             // 根据每个矩形高度映射一个背景色
             // 绘制一个矩形，并填充背景色
-            const barHeight = Math.floor(Math.random() *240);
-            const barWidth = canvasRef.width / 256 * 1.5;
+            const barHeight = 120 + Math.floor(Math.random() * 100);
+            // const barWidth = canvasRef.width / 256 * 1.5;
+            const barWidth = canvasRef &&  canvasRef.width / 256 * 1.5;
 
             // 根据每个矩形高度映射一个背景色
             const r = barHeight + 25 *  (i / 256);
             const g = 250 * (i / 256);
             const  b = 50;
             // 绘制一个矩形，并填充背景色
-            this.canvasContext.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+            this.canvasContext.fillStyle = "rgba(" + r + "," + g + "," + b +  ",.8)";
             this.canvasContext.fillRect(x, canvasRef.height - barHeight , barWidth, barHeight);
 
 

@@ -271,6 +271,21 @@ export default class Index extends React.Component<any, any>{
         }
     }
 
+    componentWillUnmount(): void {
+        //暂停视频
+        this.videoRefObject.current.pause()
+
+        //关闭录像
+        const state =this.videoRecorder.state;
+        if(state === 'recording'){
+            this.videoRecorder.stop();
+        }
+
+        //停止mediaStream流
+        /*关闭视频流*/
+        this.videoStream.getTracks().forEach(item=>item.stop())
+    }
+
     mergeVideo =()=>{
         const {recordedChunks} = this.state;
         const url  = URL.createObjectURL(new Blob(recordedChunks, { 'type' : 'video/webm' }))
@@ -280,7 +295,14 @@ export default class Index extends React.Component<any, any>{
     render(): React.ReactNode {
         const {recordedChunks} = this.state;
         return (
-                <div className={styles.wrapper} >
+                <div onClick={()=>{
+                    this.videoRefObject.current.pause()
+
+                    const state =this.videoRecorder.state;
+                    if(state === 'recording'){
+                        this.videoRecorder.stop();
+                    }
+                }} className={styles.wrapper} >
                     <audio  id='my-audio' src={mp3} />
                     <div className={styles.wrapper_video}>
                         <video ref={this.videoRefObject} className={styles.wrapper_video_content}  id="my-video" controls={false}  />

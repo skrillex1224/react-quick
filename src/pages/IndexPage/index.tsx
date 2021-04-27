@@ -71,14 +71,14 @@ export default class Index extends React.Component<any, any>{
 
     render(): React.ReactNode {
         const {isLoading,isVisible,current} = this.state;
-        const {title,imgName} = IndexSet[current];
+        const {title,imgName,subTitle} = IndexSet[current];
         return (
             <Preload switchRoute={this.switchRoute} chooseIndex={current} isLoading={isLoading}>
                    <div className={styles.wrapper}>
                        <div onClick={this.handleLeft} className={styles.wrapper_leftShadow} />
                        <Animated   animationIn={'zoomIn'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1200}
                                    animationOutDuration={hiddenTime}>
-                            <MainScreen switchRoute={this.switchRoute} title={title} subTitle={current ? 'Click To See' : 'Start'} imgName={imgName}/>
+                            <MainScreen switchRoute={this.switchRoute} title={title} subTitle={subTitle} imgName={imgName}/>
                        </Animated>
                        <div onClick={this.handleRight} className={styles.wrapper_rightShadow} />
                    </div>

@@ -14,8 +14,8 @@ import startSet from '../assets/startSet.png';
 export default [
     //左上角的react标志
     {
-        title : '开始',
-        subTitle : 'start',
+        title : '←欢迎→',
+        subTitle : 'Welcome',
         imgName : startSet,
         navUrl : '/',
         color:'#03a9f4aa',
@@ -24,7 +24,7 @@ export default [
     },
     {
         title : '案例测试集',
-        subTitle : 'caseTestSet',
+        subTitle : 'CaseTestSet',
         imgName : caseTestSet,
         navUrl : '/caseTestSet',
         color:'#03a9f4aa',
@@ -33,7 +33,7 @@ export default [
     {
         title : '算法收藏集',
         imgName : algorithmCollectionSet,
-        subTitle : 'algorithmCollectionSet',
+        subTitle : 'AlgorithmCollectionSet',
         navUrl : '/algorithmCollectionSet',
         color:'#f441a5aa',
         component: AlgorithmSet
@@ -41,7 +41,7 @@ export default [
     {
         title : '项目总结集',
         imgName : projectSet,
-        subTitle : 'projectAllSet',
+        subTitle : 'ProjectAllSet',
         navUrl : '/projectAllSet',
         color:'#ffeb3baa',
         component: ProjectSet
@@ -49,7 +49,7 @@ export default [
     {
         title : '面试题目集',
         imgName : interviewSet,
-        subTitle : 'interviewProblemSet',
+        subTitle : 'InterviewProblemSet',
         navUrl : '/interviewProblemSet',
         color: '#03a9f4aa',
         component: InterviewSet

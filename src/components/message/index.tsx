@@ -63,7 +63,7 @@ export default class Index extends React.Component<IProps, IState>{
         divEle.style.left = '0'
         divEle.style.top = '0'
         divEle.style.width ='100%';
-        divEle.style.zIndex = `${Number.MAX_VALUE}`
+        divEle.style.zIndex = '2000'
 
         document.body.append(divEle);
 

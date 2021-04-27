@@ -2,9 +2,6 @@ import React from "react";
 import {BrowserRouter,Switch,Route} from "react-router-dom";
 import './App.noModule.scss';
 import TestPage from "./pages/TestPage";
-import CaseTestSet from "./pages/CaseTestSet";
-import MainHeader from "./components/MainHeader";
-import IndexPage from "./pages/IndexPage";
 import IndexSet from "./utils/IndexSet";
 
 function Index() {

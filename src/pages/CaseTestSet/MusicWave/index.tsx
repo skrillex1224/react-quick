@@ -1,5 +1,5 @@
 import React from "react";
-import PreLoad from '../Preload'
+import PreLoad from '../../../components/Preload'
 import styles from './index.scss'
 import Recorder from 'recorder-core'
 import 'recorder-core/src/engine/mp3.js'

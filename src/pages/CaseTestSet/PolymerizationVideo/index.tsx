@@ -1,8 +1,8 @@
 // import React from "react";
 // import {observer} from "mobx-react";
 // import styles from './index.scss'
-// import mp3 from '../../assets/testResources/467015.mp3'
-// import mp4 from '../../assets/testResources/clip.mp4'
+// import mp3 from '../../assets/mediaResources/467015.mp3'
+// import mp4 from '../../assets/mediaResources/clip.mp4'
 //
 //
 // var video : HTMLVideoElement
@@ -141,11 +141,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {observer} from "mobx-react";
 import styles from './index.scss'
-import mp3 from '../../assets/testResources/467015.mp3'
-import mp4 from '../../assets/testResources/clip.mp4'
-import Preload from '../../components/Preload'
+import mp3 from '../../../assets/mediaResources/467015.mp3'
+import mp4 from '../../../assets/mediaResources/clip.mp4'
+import Preload from '../../../components/Preload'
 import {CloseCircleOutlined} from '@ant-design/icons'
-import message from '../message'
+import message from '../../../components/message'
 
 /*视频未加载完成前加锁*/
 let  lock  = true;

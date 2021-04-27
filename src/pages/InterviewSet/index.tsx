@@ -39,7 +39,7 @@ export default class  Index extends React.Component<any, any>{
         /**animationOut没啥用在这里*/
         return (
             <Preload switchRoute={this.switchRoute}  chooseIndex={4}  isLoading={isLoading} >
-                <Animated   animationIn={'zoomInUp'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1600}
+                <Animated   animationIn={'fadeInLeft'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1600}
                             animationOutDuration={hiddenTime}>
                     <MainScreen title={title} subTitle={subTitle} imgName={imgName}/>
                 </Animated>

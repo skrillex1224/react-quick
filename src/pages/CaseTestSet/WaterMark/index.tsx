@@ -76,7 +76,7 @@ export default class Index extends React.Component<any, any>{
         const imgComponent =(
                 <div  style={{left:`${trueX}px`,top:`${trueY}px`}} className={styles.imgComponent} >
                     {/*传入对应元素在数组的下标*/}
-                    <div data-index={waterMarkList.length} onClick={this.handleDeleteClick} className={styles.imgComponent_delete}>×</div>
+                    <div  onClick={this.handleDeleteClick(waterMarkList.length)} className={styles.imgComponent_delete}>×</div>
                     <img src={imgSrc} className={styles.imgComponent_img}  />
                 </div>
         )
@@ -88,13 +88,13 @@ export default class Index extends React.Component<any, any>{
         this.setState({waterMarkList})
     }
 
-    handleDeleteClick = (e)=>{
-         const index = e.target['data-index'];
-         const waterMarkList = this.state.waterMarkList;
-         console.log(index,waterMarkList)
-         waterMarkList.splice(index,1);
-
-         this.setState({waterMarkList})
+    handleDeleteClick = (index)=>{
+         /*闭包*/
+         return ()=>{
+             const waterMarkList = this.state.waterMarkList;
+             waterMarkList.splice(index,1);
+             this.setState({waterMarkList})
+         }
     }
 
     handleDragEnd = (e)=>{

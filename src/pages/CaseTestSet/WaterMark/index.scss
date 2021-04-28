@@ -1,3 +1,20 @@
+@mixin btn(){
+    cursor: pointer;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #D0D1D4;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #66696B;
+    z-index: 1;
+    transition: 200ms;
+}
+
 .wrapper{
     width: 100%;
     display: flex;
@@ -53,24 +70,37 @@
     align-items: center;
 
     &_delete{
-        cursor: pointer;
-        position: absolute;
+        @include btn;
         right: -10px;
         top: -10px;
-        width: 20px;
-        height: 20px;
-        background-color: #D0D1D4;
-        border-radius: 50%;
-        font-size: 20px;
-        text-align: center;
-        line-height: 16px;
-        font-weight: 600;
-        color: #66696B;
-        z-index: 1;
-        transition: 200ms;
+        transform: rotateZ(0deg) scale(1);
+        &:hover{
+            background-color: white;
+            transform: rotateZ(180deg) scale(1.1);
+        }
+    }
+
+    &_resize {
+        @include btn;
+        right: -10px;
+        bottom: -10px;
+        transform: rotateZ(90deg) scale(1);
 
         &:hover{
             background-color: white;
+            transform: rotateZ(90deg) scale(1.1);
+        }
+    }
+
+    &_rotate {
+        @include btn;
+        bottom: -10px;
+        left: -10px;
+        transform: rotateZ(0deg) scale(1);
+
+        &:hover{
+            background-color: white;
+            transform: rotateZ(90deg) scale(1.1);
         }
     }
 

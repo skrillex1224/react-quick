@@ -5,6 +5,7 @@ import markBg from '../../../assets/caseTestSet/waterMark_bg.png'
 import message from '../../../components/message'
 import reactLogo from '../../../assets/react.png'
 import {Animated} from 'react-animated-css'
+import {ArrowsAltOutlined, CloseOutlined, DeleteOutlined, RotateRightOutlined} from "@ant-design/icons/lib";
 
 /*
 拖拽上传
@@ -83,7 +84,9 @@ export default class Index extends React.Component<any, any>{
         const imgComponent =(
                 <div  style={{left:`${trueX}px`,top:`${trueY}px`}} className={styles.imgComponent} >
                     {/*传入对应元素在数组的下标*/}
-                    <div  onClick={this.handleDeleteClick(waterMarkList.length)} className={styles.imgComponent_delete}>×</div>
+                    <div  onClick={this.handleDeleteClick(waterMarkList.length)} className={styles.imgComponent_delete}><CloseOutlined /></div>
+                    <div  onClick={this.handleResizeClick(waterMarkList.length)} className={styles.imgComponent_resize}><ArrowsAltOutlined /></div>
+                    <div  onClick={this.handleRotateClick(waterMarkList.length)} className={styles.imgComponent_rotate}> <RotateRightOutlined /></div>
                     <img src={imgSrc} className={styles.imgComponent_img}  />
                 </div>
         )
@@ -93,6 +96,18 @@ export default class Index extends React.Component<any, any>{
         e.preventDefault();
 
         this.setState({waterMarkList})
+    }
+
+    handleResizeClick = (index)=>{
+         return ()=>{
+
+         }
+    }
+
+    handleRotateClick = (index)=>{
+         return (e)=>{
+            console.log(e.target)
+         }
     }
 
     handleDeleteClick = (index)=>{
@@ -130,7 +145,6 @@ export default class Index extends React.Component<any, any>{
                 <div id={'img-container'} onDragEnter={this.handleDragEnter} onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave} onDrop={this.handleDrop}
                      style={dragEntered ?{border:'2px dashed #fffa',filter:'blur(1px) opacity(.8)'} : {}}  className={styles.wrapper_imgContainer} >
                     <img id={'lander'} className={styles.wrapper_imgContainer_imgBg} src={markBg}/>
-
                     {
                         waterMarkList.map((item)=>(
                             item

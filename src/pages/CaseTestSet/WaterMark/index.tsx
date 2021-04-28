@@ -2,6 +2,7 @@ import React from "react";
 import {observer} from "mobx-react";
 import styles from './index.scss'
 import markBg from '../../../assets/caseTestSet/waterMark_bg.png'
+import message from '../../../components/message'
 import reactLogo from '../../../assets/react.png'
 import {Animated} from 'react-animated-css'
 
@@ -53,12 +54,18 @@ export default class Index extends React.Component<any, any>{
     }
 
     handleDrop = (e)=>{
-         let {waterMarkList} = this.state;
-
          //获取src
          const imgSrc = e.dataTransfer.getData('image/png');
-
          if(!imgSrc) return ;
+
+         //判断着陆位置是图片而非其他的waterMark
+        //如果不是lander 则return
+        if(!e.target.id){
+            message.error('放置位置重叠，请重试', 1000)
+            return ;
+        }
+
+        let {waterMarkList} = this.state;
 
         //获取鼠标的最后位置
         const offsetX = e.nativeEvent.offsetX ;
@@ -122,7 +129,7 @@ export default class Index extends React.Component<any, any>{
             <div  className={styles.wrapper}>
                 <div id={'img-container'} onDragEnter={this.handleDragEnter} onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave} onDrop={this.handleDrop}
                      style={dragEntered ?{border:'2px dashed #fffa',filter:'blur(1px) opacity(.8)'} : {}}  className={styles.wrapper_imgContainer} >
-                    <img className={styles.wrapper_imgContainer_imgBg} src={markBg}/>
+                    <img id={'lander'} className={styles.wrapper_imgContainer_imgBg} src={markBg}/>
 
                     {
                         waterMarkList.map((item)=>(

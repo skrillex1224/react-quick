@@ -32,7 +32,7 @@ interface IState {
 @observer
 class Index extends React.Component<IProps, IState>{
 
-    defaultProps={
+    static defaultProps={
         //主页
         chooseIndex : 0,
         switchRoute : ()=>{}
@@ -72,7 +72,7 @@ class Index extends React.Component<IProps, IState>{
                <div className={styles.wrapper_left}>
 
                    {IndexSet.map((item,index )=>(
-                       <div style={index === chooseIndex ?{ color: item.color}: {}} className={styles.wrapper_left_item} onClick={this.handleNavTo(item)}>
+                       <div key={index} style={index === chooseIndex ?{ color: item.color}: {}} className={styles.wrapper_left_item} onClick={this.handleNavTo(item)}>
                            {item.logo && <img onClick={this.handleNavTo} className={styles.wrapper_left_logo} src={reactLogo} />}
                            {item.logo || item.title}
                        </div>

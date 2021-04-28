@@ -52,7 +52,7 @@ export default class Index extends React.Component<any, any>{
 
     componentDidMount(): void {
         const srcList = [];
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 200; i++) {
             srcList.push(reactLogo);
         }
         this.setState({srcList});
@@ -80,7 +80,6 @@ export default class Index extends React.Component<any, any>{
         //设置鼠标被按下
         this.isMouseDown = true;
         e.preventDefault()
-        console.log('dsadasd')
     }
 
     handleScrolling = (e)=>{

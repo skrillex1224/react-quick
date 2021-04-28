@@ -9,32 +9,21 @@ import ImageClip from './ImageClip'
 import Polymerization from "./PolymerizationVideo";
 import WakeUpExe from "./WakeUpExe";
 import MainScreen from "../../components/MainScreen";
-import message from '../../components/message'
 import CopyText from './CopyText'
+import ScrollView from './ScrollView'
 import IndexSet from "../../utils/IndexSet";
 import {debounce, throttle} from "../../utils/throttle";
 
 /*本屏幕的下标*/
 const IndexSetOfThisIndex = 1;
 
-
-const arr =[]
-
-for (let i = 6; i < 10; i++) {
-    arr.push(i);
-}
-
-const arrRef = new Array<any>()
-
-for (let i = 0; i < 10; i++) {
-    arrRef[i] = React.createRef();
-}
-
 const hiddenTime =600;
 
 
 @observer
 export default class  Index extends React.Component<any, any>{
+
+    arrRef = new Array<any>();
 
     state = {
         isLoading :true,
@@ -43,6 +32,10 @@ export default class  Index extends React.Component<any, any>{
     }
 
     componentDidMount(): void {
+        for (let i = 0; i < 10; i++) {
+            this.arrRef[i] = React.createRef();
+        }
+
         setTimeout(()=>{
             this.setState({isLoading:false})
         },600)
@@ -50,8 +43,8 @@ export default class  Index extends React.Component<any, any>{
         //节流
         window.addEventListener('scroll',throttle(()=>{
             const suspend = this.state.suspend;
-            for (let i = 0; i < arrRef.length; i++) {
-                const currentRef = arrRef[i].current
+            for (let i = 0; i < this.arrRef.length; i++) {
+                const currentRef = this.arrRef[i].current
                 if (currentRef?.offsetTop + 300<= window.scrollY + window.innerHeight) {
                     suspend[i] = true;
                 }else{
@@ -110,16 +103,22 @@ export default class  Index extends React.Component<any, any>{
             component : <ImageClip />,
             onTransitionEnd : null
         },
-        // {
-        //     title: '视频合成',
-        //     href:'https://developer.mozilla.org/zh-CN/docs/Web/API/MediaDevices/getUserMedia',
-        //     component : <Polymerization />,
-        //     onTransitionEnd : null,
-        // },
+        {
+            title: '视频合成',
+            href:'https://developer.mozilla.org/zh-CN/docs/Web/API/MediaDevices/getUserMedia',
+            component : <Polymerization />,
+            onTransitionEnd : null,
+        },
         {
             title: '文本复制',
             href: 'https://github.com/sudodoki/copy-to-clipboard',
             component : <CopyText />,
+            onTransitionEnd : null ,
+        },
+        {
+            title: '滚动视图',
+            href: '',
+            component : <ScrollView />,
             onTransitionEnd : null ,
         }
     ]
@@ -138,7 +137,7 @@ export default class  Index extends React.Component<any, any>{
                            this.componentList.map((item,index)=>{
                                const {component,title,href,onTransitionEnd} = item;
                                return    (
-                                   <div onTransitionEnd={onTransitionEnd} style={suspend[index] ? {transform:'translateY(0px)  scale(1)',opacity:1} : {}} ref={arrRef[index]} className={styles.wrapper_box} >
+                                   <div key={index} onTransitionEnd={onTransitionEnd} style={suspend[index] ? {transform:'translateY(0px)  scale(1)',opacity:1} : {}} ref={this.arrRef[index]} className={styles.wrapper_box} >
                                       <div className={styles.wrapper_box_title} >
                                           <a target={'_blank'} href={href}>{title}</a>
                                       </div>

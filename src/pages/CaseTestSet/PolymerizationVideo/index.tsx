@@ -223,11 +223,12 @@ export default class Index extends React.Component<any, any>{
     }
 
     handleStart = ()=>{
-        const state =this.videoRecorder.state;
+        const state = this.videoRecorder.state;
 
 
         if(state === 'inactive'){
             this.videoRecorder.start();
+            console.log(this.videoRecorder)
             console.log('start...')
             message.warn('录制开始',1000);
         }else{
@@ -295,14 +296,7 @@ export default class Index extends React.Component<any, any>{
     render(): React.ReactNode {
         const {recordedChunks} = this.state;
         return (
-                <div onClick={()=>{
-                    this.videoRefObject.current.pause()
-
-                    const state =this.videoRecorder.state;
-                    if(state === 'recording'){
-                        this.videoRecorder.stop();
-                    }
-                }} className={styles.wrapper} >
+                <div  className={styles.wrapper} >
                     <audio  id='my-audio' src={mp3} />
                     <div className={styles.wrapper_video}>
                         <video ref={this.videoRefObject} className={styles.wrapper_video_content}  id="my-video" controls={false}  />

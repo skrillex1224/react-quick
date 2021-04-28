@@ -1,7 +1,7 @@
 import React from "react";
 import {Animated} from "react-animated-css";
 import {observer} from "mobx-react";
-import MusicWave from '../CaseTestSet/MusicWave'
+import PolymerizationVideo from '../CaseTestSet/PolymerizationVideo'
 import Preload from '../../components/Preload'
 
 @observer
@@ -21,7 +21,7 @@ export default class  Index extends React.Component<any, any>{
         return (
             // <Preload isLoading={this.state.isLoading}>
             //    <Animated animationIn={'rollIn'} isVisible={true} animationInDuration={1600} animationOut={'fadeOut'} animationOutDuration={600}>
-                   <MusicWave />
+                   <PolymerizationVideo />
                // </Animated>
             // </Preload>
         )

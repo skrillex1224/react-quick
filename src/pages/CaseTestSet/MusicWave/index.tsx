@@ -65,7 +65,6 @@ export default class Index extends React.Component<any, any>{
         const dataArray = new Uint8Array(bufferLength);
         this.dataArray = dataArray;
 
-
         this.renderFrame();
     }
 
@@ -80,7 +79,6 @@ export default class Index extends React.Component<any, any>{
             // 根据每个矩形高度映射一个背景色
             // 绘制一个矩形，并填充背景色
             const barHeight = 120 + Math.floor(Math.random() * 100);
-            // const barWidth = canvasRef.width / 256 * 1.5;
             const barWidth = canvasRef &&  canvasRef.width / 256 * 1.5;
 
             // 根据每个矩形高度映射一个背景色
@@ -88,19 +86,22 @@ export default class Index extends React.Component<any, any>{
             const g = 250 * (i / 256);
             const  b = 50;
             // 绘制一个矩形，并填充背景色
-            this.canvasContext.fillStyle = "rgba(" + r + "," + g + "," + b +  ",.8)";
+            this.canvasContext.fillStyle = "rgba(" + r + "," + g + "," + b +  ",1)";
             this.canvasContext.fillRect(x, canvasRef.height - barHeight , barWidth, barHeight);
-
 
             x += barWidth + 2;
         }
     }
 
+   //取消animationFrame
+    animationFrameID ;
 
     /*renderCanvas*/
    renderFrame = ()=> {
        //https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame
-        requestAnimationFrame(this.renderFrame);
+        this.animationFrameID = requestAnimationFrame(this.renderFrame);
+
+
 
        const  canvasRef = this.canvasCtx.current;
 
@@ -129,6 +130,12 @@ export default class Index extends React.Component<any, any>{
             x += barWidth + 2;
         }
     }
+
+    componentWillUnmount(): void {
+       /*取消animationFrame*/
+       cancelAnimationFrame(this.animationFrameID)
+    }
+
     render(): React.ReactNode {
        const {isPlaying} = this.state;
 

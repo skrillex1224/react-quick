@@ -14,7 +14,7 @@ import startSet from '../assets/startSet.png';
 export default [
     //左上角的react标志
     {
-        title : '←欢迎→',
+        title : '欢迎',
         subTitle : 'Welcome',
         imgName : startSet,
         navUrl : '/',

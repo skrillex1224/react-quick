@@ -12,9 +12,9 @@ export default class  Index extends React.Component<any, any>{
     }
 
     componentDidMount(): void {
-        setTimeout(()=>{
-            this.setState({isLoading:false})
-        },800)
+        // setTimeout(()=>{
+        //     this.setState({isLoading:false})
+        // },800)
     }
 
     render() {

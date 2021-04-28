@@ -7,10 +7,9 @@
     &_imgContainer{
         width: 1200px;
         border-radius: 20px;
-        margin-top: 20px;
         margin-bottom: 40px;
-        overflow: hidden;
         position: relative;
+        overflow: hidden;
         &_imgBg{
             width: 1200px;
             display: block;
@@ -24,7 +23,7 @@
 
     &_drawWrapper{
         width: 1200px;
-        height: 160px;
+        height: 140px;
         box-sizing: border-box;
         display: flex;
         justify-content: center;
@@ -32,13 +31,52 @@
 
         &_waterMark {
             cursor: pointer;
-            width: 150px;
-            height: 150px;
+            width: 132px;
+            height: 132px;
             flex: none;
             margin:0 20px;
             border: 2px solid #444C56;
             background-color: #2D333B;
             border-radius: 10px;
         }
+    }
+}
+
+.imgComponent{
+    position: absolute;
+    width: 132px;
+    height: 132px;
+    border-radius: 4px;
+    border: 2px dashed #fffa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &_delete{
+        cursor: pointer;
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        width: 20px;
+        height: 20px;
+        background-color: #D0D1D4;
+        border-radius: 50%;
+        font-size: 20px;
+        text-align: center;
+        line-height: 16px;
+        font-weight: 600;
+        color: #66696B;
+        z-index: 1;
+        transition: 200ms;
+
+        &:hover{
+            background-color: white;
+        }
+    }
+
+    &_img{
+        width: 132px;
+        height: 132px;
+        display: block;
     }
 }

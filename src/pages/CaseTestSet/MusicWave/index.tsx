@@ -4,17 +4,6 @@ import {observer} from "mobx-react";
 import classNames from "classnames";
 
 
-const colorSet = [
-    '#E647A9AA',
-    '#886FC8AA',
-    '#6081D6AA',
-    '#FDD14BAA',
-    '#AD60BCAA',
-    '#0AA6F2AA',
-    '#6AC4A8AA',
-    '#34B6D1AA',
-    '#7379CFAA'
-]
 
 @observer
 export default class Index extends React.Component<any, any>{
@@ -46,7 +35,7 @@ export default class Index extends React.Component<any, any>{
         const analyser = ctx.createAnalyser();
 
         this.analyser = analyser;
-        analyser.fftSize = 512;
+        analyser.fftSize = 1024;
 
         //获取音频源
         const audio : any  = document.getElementById('audio');
@@ -74,22 +63,22 @@ export default class Index extends React.Component<any, any>{
         const  canvasRef = this.canvasCtx.current;
         const canvasContext = canvasRef.getContext('2d');
          this.canvasContext = canvasContext;
-
-        for (let i = 0, x = 0; i < 256; i++) {
+        const barWidth = canvasRef.width / 512 * 1.5 * 1.4;
+        for (let i = 0, x = 0; i < 512; i++) {
             // 根据每个矩形高度映射一个背景色
             // 绘制一个矩形，并填充背景色
-            const barHeight = 120 + Math.floor(Math.random() * 100);
-            const barWidth = canvasRef &&  canvasRef.width / 256 * 1.5;
-
+            const barHeight = 100 + Math.floor(Math.random() * 80);
             // 根据每个矩形高度映射一个背景色
-            const r = barHeight + 25 *  (i / 256);
-            const g = 250 * (i / 256);
-            const  b = 50;
+            const  linearGradient = canvasContext.createLinearGradient(x,canvasRef.height,x,0);
+            linearGradient.addColorStop(0,'#03a9f4');
+            linearGradient.addColorStop(0.25,'#f441a5');
+            linearGradient.addColorStop(0.5,'#ffeb3b');
+            linearGradient.addColorStop(1,'#03a9f4');
+
             // 绘制一个矩形，并填充背景色
-            this.canvasContext.fillStyle = "rgba(" + r + "," + g + "," + b +  ",1)";
+            this.canvasContext.fillStyle = linearGradient;
             this.canvasContext.fillRect(x, canvasRef.height - barHeight , barWidth, barHeight);
-
-            x += barWidth + 2;
+            x += barWidth -1;
         }
     }
 
@@ -101,8 +90,6 @@ export default class Index extends React.Component<any, any>{
        //https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame
         this.animationFrameID = requestAnimationFrame(this.renderFrame);
 
-
-
        const  canvasRef = this.canvasCtx.current;
 
        this.canvasContext.clearRect(0, 0, canvasRef.width, canvasRef.height);
@@ -110,24 +97,30 @@ export default class Index extends React.Component<any, any>{
         // 更新频率数据
        this.analyser.getByteFrequencyData(this.dataArray);
 
-       let barWidth = canvasRef.width / this.dataArray.length * 1.5;
+       let barWidth = canvasRef.width / this.dataArray.length  * 1.5  * 1.4 ;
+
        let barHeight;
 
         // bufferLength表示柱形图中矩形的个数
-        for (let i = 0, x = 0; i < this.dataArray.length; i++) {
+        for (let i = 0, x = 0; i < this.dataArray.length ; i++) {
             // 根据频率映射一个矩形高度
             barHeight = this.dataArray[i];
 
             // 根据每个矩形高度映射一个背景色
-            const r = barHeight + 25 * (i / this.dataArray.length);
-            const g = 250 * (i / this.dataArray.length);
-            const  b = 50;
+            // 根据每个矩形高度映射一个背景色
+            const  linearGradient = this.canvasContext.createLinearGradient(x,canvasRef.height,x,0);
+
+            linearGradient.addColorStop(0,'#03a9f4');
+            linearGradient.addColorStop(0.25,'#f441a5');
+            linearGradient.addColorStop(0.5,'#ffeb3b');
+            linearGradient.addColorStop(1,'#03a9f4');
             // 绘制一个矩形，并填充背景色
-            this.canvasContext.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-            this.canvasContext.fillRect(x, canvasRef.height - barHeight, barWidth, barHeight);
+            this.canvasContext.fillStyle = linearGradient;
+            this.canvasContext.fillRect(x, canvasRef.height - barHeight, barWidth , barHeight);
 
 
-            x += barWidth + 2;
+            //负数叠起来了
+            x += barWidth -1;
         }
     }
 
@@ -141,7 +134,7 @@ export default class Index extends React.Component<any, any>{
 
         return (
             <div className={styles.wrapper} >
-                <canvas  width={document.documentElement.clientWidth / 1920  * 1800 } height={400} ref={this.canvasCtx} id={'canvas'}> </canvas>
+                <canvas  width={document.documentElement.clientWidth / 1920  * 1800  } height={400} ref={this.canvasCtx} id={'canvas'}> </canvas>
                 {/*使用classnames定义多个class*/}
                 {!isPlaying && <div   className={classNames({
                     'index_btn' : true,

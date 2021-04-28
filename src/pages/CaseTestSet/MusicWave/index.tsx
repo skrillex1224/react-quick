@@ -24,12 +24,15 @@ export default class Index extends React.Component<any, any>{
     //TypedArray
     dataArray ;
 
+    //source
+    source;
+
     handleClick = ()=>{
         this.setState({isPlaying:true})
 
         //创建AudioContext
-        const AudioContext = window.AudioContext;
-        const ctx = new AudioContext();
+        const AudioContext =  window.AudioContext;
+        const ctx = this.audioCtx || new AudioContext();
         this.audioCtx = ctx;
         //创建AnalyserNode
         const analyser = ctx.createAnalyser();
@@ -41,16 +44,16 @@ export default class Index extends React.Component<any, any>{
         const audio : any  = document.getElementById('audio');
         audio.play();
 
-        const source = ctx.createMediaElementSource(audio);
-
+        const source = this.source || this.audioCtx.createMediaElementSource(audio);
+        this.source = source;
         // 将音频源关联到分析器
-        source.connect(analyser);
+        source.connect(this.analyser);
 
         // 将分析器关联到输出设备（耳机、扬声器）
-        analyser.connect(ctx.destination);
+        this.analyser.connect(this.audioCtx.destination);
 
         //获取频率数组
-        const bufferLength = analyser.frequencyBinCount;
+        const bufferLength = this.analyser.frequencyBinCount;
         const dataArray = new Uint8Array(bufferLength);
         this.dataArray = dataArray;
 
@@ -59,7 +62,8 @@ export default class Index extends React.Component<any, any>{
 
     /*初始化canvas*/
     componentDidMount(): void {
-        // canvas
+
+        // canvas初始化绘制
         const  canvasRef = this.canvasCtx.current;
         const canvasContext = canvasRef.getContext('2d');
          this.canvasContext = canvasContext;
@@ -87,15 +91,15 @@ export default class Index extends React.Component<any, any>{
 
     /*renderCanvas*/
    renderFrame = ()=> {
+       // 更新频率数据
+       this.analyser.getByteFrequencyData(this.dataArray);
+
        //https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame
         this.animationFrameID = requestAnimationFrame(this.renderFrame);
 
        const  canvasRef = this.canvasCtx.current;
 
        this.canvasContext.clearRect(0, 0, canvasRef.width, canvasRef.height);
-
-        // 更新频率数据
-       this.analyser.getByteFrequencyData(this.dataArray);
 
        let barWidth = canvasRef.width / this.dataArray.length  * 1.5  * 1.4 ;
 
@@ -124,6 +128,16 @@ export default class Index extends React.Component<any, any>{
         }
     }
 
+    handleAudioFinished = ()=>{
+       /*解除绑定*/
+        this.setState({isPlaying:false})
+        this.source.disconnect(this.analyser);
+        this.analyser.disconnect(this.audioCtx.destination);
+
+        /*取消animationFrame*/
+        cancelAnimationFrame(this.animationFrameID)
+    }
+
     componentWillUnmount(): void {
        /*取消animationFrame*/
        cancelAnimationFrame(this.animationFrameID)
@@ -140,7 +154,7 @@ export default class Index extends React.Component<any, any>{
                     'index_btn' : true,
                     [`${styles.wrapper_btn}`] : true
                 })} onClick={this.handleClick}>Play</div>}
-                <audio hidden id={'audio'} controls crossOrigin={'anonymous'} src="//m8.music.126.net/21180815163607/04976f67866d4b4d11575ab418904467/ymusic/515a/5508/520b/f0cf47930abbbb0562c9ea61707c4c0b.mp3?infoId=92001" />
+                <audio hidden id={'audio'} onEnded={this.handleAudioFinished} controls crossOrigin={'anonymous'} src="//m8.music.126.net/21180815163607/04976f67866d4b4d11575ab418904467/ymusic/515a/5508/520b/f0cf47930abbbb0562c9ea61707c4c0b.mp3?infoId=92001" />
             </div>
         )
     }

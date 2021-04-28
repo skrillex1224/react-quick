@@ -91,6 +91,8 @@ export default class Index extends React.Component<any, any>{
                 </div>
         )
 
+        console.log(imgComponent)
+
         waterMarkList = [...waterMarkList,imgComponent];
 
         e.preventDefault();

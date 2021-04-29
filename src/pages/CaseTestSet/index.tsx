@@ -86,9 +86,9 @@ export default class  Index extends React.Component<any, any>{
      * */
     componentList = [
         {
-            title: '点击下方按钮唤醒exe',
+            title: '点击下方按钮唤醒Steam.exe',
             component : <WakeUpExe />,
-            href: '',
+            href: 'https://juejin.cn/post/6844903989155217421',
             onTransitionEnd : null ,
         },
         {

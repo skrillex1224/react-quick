@@ -275,6 +275,7 @@ export default class Index extends React.Component<any, any>{
     }
 
     componentWillUnmount(): void {
+        if(!this.state.isStart) return
         //暂停视频
         this.videoRefObject.current.pause()
 

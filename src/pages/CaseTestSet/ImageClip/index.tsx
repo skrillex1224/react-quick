@@ -4,7 +4,6 @@ import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import styles from './index.scss'
 
-
 export const Index: React.FC = () => {
     const inputEle :any = useRef(null);
 

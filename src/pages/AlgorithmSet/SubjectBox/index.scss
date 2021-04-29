@@ -5,6 +5,7 @@
     padding: 20px;
     border: 2px solid #373E47;
     border-radius: 10px;
+    margin: 40px 0;
     &_title{
         width: 100%;
         display: flex;
@@ -20,11 +21,13 @@
                 color: #CDD9E5;
             }
             & > p{
-                text-indent: 2em;
+                box-sizing: border-box;
+                padding-left: 2em;
                 width: 100%;
                 font-size: 16px;
                 color: #CDD9E5;
                 font-family: $baseChineseFontFamily;
+                line-height: 1.5em;
             }
         }
 
@@ -38,6 +41,8 @@
 
         ::-webkit-scrollbar{
             height: 8px;
+            position: relative;
+            top: -20px;
         }
 
     }

@@ -4,5 +4,9 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-content: flex-start;
+    margin-top: 40px;
 
+    &_column{
+        width: 550px;
+    }
 }

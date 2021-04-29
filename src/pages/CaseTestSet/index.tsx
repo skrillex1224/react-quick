@@ -7,6 +7,7 @@ import {Animated} from 'react-animated-css'
 import styles from './index.scss';
 import ImageClip from './ImageClip'
 import Polymerization from "./PolymerizationVideo";
+import WaterMark from "./WaterMark";
 import WakeUpExe from "./WakeUpExe";
 import MainScreen from "../../components/MainScreen";
 import CopyText from './CopyText'
@@ -77,7 +78,12 @@ export default class  Index extends React.Component<any, any>{
         },hiddenTime)
     }
 
-    /**@组件列表*/
+    /**@组件列表
+     *  @param title 标题
+     *  @param component  组件
+     *  @param href 可以链接相关的知识点或者组件
+     *  @param onTransitionEnd 可以获取过渡执行完成时的宽度
+     * */
     componentList = [
         {
             title: '点击下方按钮唤醒exe',
@@ -111,6 +117,7 @@ export default class  Index extends React.Component<any, any>{
         },
         {
             title: '文本复制',
+            //https://www.cnblogs.com/wisewrong/p/7473978.html  原生实现
             href: 'https://github.com/sudodoki/copy-to-clipboard',
             component : <CopyText />,
             onTransitionEnd : null ,
@@ -119,6 +126,12 @@ export default class  Index extends React.Component<any, any>{
             title: '滚动视图',
             href: '',
             component : <ScrollView />,
+            onTransitionEnd : null ,
+        },
+        {
+            title: '添加水印',
+            href: '',
+            component : <WaterMark />,
             onTransitionEnd : null ,
         }
     ]

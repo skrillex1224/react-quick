@@ -5,4 +5,10 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+
+    &_textarea{
+        position: absolute;
+        left: -5000px;
+        top: -5000px;
+    }
 }

@@ -39,15 +39,15 @@ export default class Index extends React.Component<IProps, IState>{
     /*
      * 向外暴露的方法
      */
-    public static warn = (message,duration)=>{
+    public static warn = (message,duration = 2000)=>{
         Index.showMessage(message,duration,'warn');
     }
 
-    public static error = (message,duration)=>{
+    public static error = (message,duration = 2000)=>{
         Index.showMessage(message,duration,'error')
     }
 
-    public static success = (message,duration)=>{
+    public static success = (message,duration = 2000)=>{
         Index.showMessage(message,duration,'success')
     }
 

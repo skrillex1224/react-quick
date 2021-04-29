@@ -30,6 +30,7 @@
         &_imgBg{
             width: 1200px;
             display: block;
+            user-select: none;
         }
     }
 
@@ -68,6 +69,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition:400ms;
+    transition-delay: 0ms;
 
     &_delete{
         @include btn;
@@ -105,9 +108,12 @@
     }
 
     &_img{
-        width: 132px;
-        height: 132px;
+        width: 100%;
+        height: 100%;
         transform: rotateZ(0);
+        transition: 200ms;
         display: block;
+        /*禁用选中该元素*/
+        user-select: none;
     }
 }

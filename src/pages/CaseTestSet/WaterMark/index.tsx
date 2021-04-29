@@ -3,9 +3,10 @@ import {observer} from "mobx-react";
 import styles from './index.scss'
 import markBg from '../../../assets/caseTestSet/waterMark_bg.png'
 import message from '../../../components/message'
-import reactLogo from '../../../assets/projectSet.png'
+import reactLogo from '../../../assets/react.png'
 import {Animated} from 'react-animated-css'
 import {ArrowsAltOutlined, CloseOutlined, DeleteOutlined, RotateRightOutlined} from "@ant-design/icons/lib";
+import {throttle} from "../../../utils/throttle";
 
 /*
 拖拽上传
@@ -27,6 +28,18 @@ export default class Index extends React.Component<any, any>{
          offsetX:0,
          offsetY:0,
      }
+
+     //缩放时,鼠标开始的位置
+    onResizeStartOffsets = {
+        offsetX:0,
+        offsetY:0,
+    }
+    //缩放开始时,初始高宽
+    onResizeStartWidthAndHeight = {
+        initWidth :0,
+        initHeight :0,
+    }
+
 
      /*水印组件全局ID*/
      private static ID = 0;
@@ -69,6 +82,9 @@ export default class Index extends React.Component<any, any>{
             return ;
         }
 
+
+        /*相对位置是waterMark列表中的一个item的offsetX 和放置入图片内的容器的offsetX做减法
+        * 所以要保证imgContainer 的宽高等同于waterMark列表的item*/
         let {waterMarkList} = this.state;
 
         //获取鼠标的最后位置
@@ -109,20 +125,87 @@ export default class Index extends React.Component<any, any>{
         this.setState({waterMarkList})
     }
 
-    handleResizeClick = (index)=>{
-         return ()=>{
+    handleResizeStart = (itemId)=>{
+         return (e)=>{
+             //不可设置,否则拖动事件无效
+             // e.preventDefault();
+
+             e.dataTransfer.setDragImage(new Image(),0,0);
+             e.dataTransfer.effectAllowed = "move" // 设置drag类型
+
+             //获取当前的鼠标位置
+             const offsetX = e.pageX;
+             const offsetY = e.pageY;
+
+             this.onResizeStartOffsets = {
+                 offsetX,
+                 offsetY
+             }
+
+             const {waterMarkList} = this.state;
+             const index = waterMarkList.findIndex(item=>item.id === itemId);
+
+             const initWidth = waterMarkList[index].width
+             const initHeight = waterMarkList[index].height
+             //获取初始高宽
+             this.onResizeStartWidthAndHeight = {
+                 initWidth ,
+                 initHeight
+             }
+
+             console.log(this.onResizeStartOffsets)
 
          }
     }
 
+    handleResizeing = (itemId) =>{
+         //闭包
+        let timer ;
+        return (e)=>{
+            //通过定时器来执行动画
+            if(timer) clearInterval(timer);
+
+            const {waterMarkList} = this.state;
+            const index = waterMarkList.findIndex(item=>item.id === itemId);
+
+            //获取当前的鼠标位置
+            const curX = e.pageX;
+            const curY = e.pageY;
+
+            const {offsetX,offsetY} =  this.onResizeStartOffsets;
+            const {initWidth,initHeight} =  this.onResizeStartWidthAndHeight;
+
+            const trueX = curX - offsetX;
+
+            const trueY = curY - offsetY;
+
+            //修改宽高, 目标的高宽
+            const current = waterMarkList[index];
+
+            current.width = initWidth +  trueX
+            current.height = initHeight +  trueY
+
+            this.setState({waterMarkList})
+
+        }
+    }
+
+    handleResizeEnd = (itemId)=>{
+        return (e)=>{
+            e.preventDefault();
+            const {waterMarkList} = this.state;
+            const index = waterMarkList.findIndex(item=>item.id === itemId);
+        }
+    }
+
     handleRotateClick = (itemId)=>{
-         return (e)=>{
-             const {waterMarkList} = this.state;
+         return ()=>{
+              const {waterMarkList} = this.state;
               const index = waterMarkList.findIndex(item=>item.id === itemId);
 
-              console.log(index)
+              //修改旋转值
+              waterMarkList[index].rotateAngle = (waterMarkList[index].rotateAngle + 45) % 360
 
-              waterMarkList[index].rotateAngle = (waterMarkList[index].rotateAngle + 90) % 360
               this.setState({waterMarkList})
          }
     }
@@ -134,6 +217,7 @@ export default class Index extends React.Component<any, any>{
 
              const index = waterMarkList.findIndex(item=>item.id === itemId);
 
+             waterMarkList.splice(index,1)
 
              this.setState({waterMarkList})
          }
@@ -158,6 +242,10 @@ export default class Index extends React.Component<any, any>{
          e.dataTransfer.setData('image/png',reactLogo)
     }
 
+    preventDefault = (e)=>{
+         e.preventDefault()
+    }
+
     render(): React.ReactNode {
         const {srcList,dragEntered,waterMarkList} = this.state;
         return (
@@ -170,11 +258,11 @@ export default class Index extends React.Component<any, any>{
                             <div key={item.id} style={ {left:`${item.trueX}px`,top:`${item.trueY}px`,width : item.width,height : item.height}}
                                  className={styles.imgComponent} >
                                 {/*传入对应元素在数组的下标*/}
-                                {console.log('--------------')}
                                 <div  onClick={this.handleDeleteClick(item.id)} className={styles.imgComponent_delete}><CloseOutlined /></div>
-                                <div  onClick={this.handleResizeClick(item.id)} className={styles.imgComponent_resize}><ArrowsAltOutlined /></div>
+                                <div draggable onDragStart={this.handleResizeStart(item.id)} onDrag={throttle(this.handleResizeing(item.id))} onDragEnd={this.handleResizeEnd(item.id)} className={styles.imgComponent_resize}><ArrowsAltOutlined /></div>
                                 <div  onClick={this.handleRotateClick(item.id)} className={styles.imgComponent_rotate}> <RotateRightOutlined /></div>
-                                <img style={ {transform:`rotateZ(${item.rotateAngle}deg)`}} src={item.imgSrc} className={styles.imgComponent_img}  />
+                                {/*禁用图片拖拽*/}
+                                <img onDragStart={this.preventDefault} style={{transform:`rotateZ(${item.rotateAngle}deg)`}} src={item.imgSrc} className={styles.imgComponent_img}  />
                             </div>
                         ))
                     }
@@ -183,7 +271,7 @@ export default class Index extends React.Component<any, any>{
                     {/*overflow:hidden 如果设置内边距,内边距上的内容依旧会显示,所以为了有padding效果,加格这个  https://segmentfault.com/q/1010000021907068*/}
                     {/*禁用默认行为一禁用就要禁用一整套方法*/}
                     {srcList.map((item,index)=>(
-                        <img  onDragStart={this.handleDragStart} onDragEnd={this.handleDragEnd}
+                        <img onDragStart={this.handleDragStart} onDragEnd={this.handleDragEnd}
                              draggable  src={item}  className={styles.wrapper_drawWrapper_waterMark} key={index} />
                     ))}
                 </div>

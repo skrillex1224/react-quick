@@ -2,7 +2,7 @@ import React from "react";
 import styles from './index.scss'
 import {observer} from "mobx-react";
 import classNames from "classnames";
-
+import mp3 from '../../../assets/mediaResources/HOA.mp3'
 
 
 @observer
@@ -154,7 +154,8 @@ export default class Index extends React.Component<any, any>{
                     'index_btn' : true,
                     [`${styles.wrapper_btn}`] : true
                 })} onClick={this.handleClick}>Play</div>}
-                <audio hidden id={'audio'} onEnded={this.handleAudioFinished} controls crossOrigin={'anonymous'} src="//m8.music.126.net/21180815163607/04976f67866d4b4d11575ab418904467/ymusic/515a/5508/520b/f0cf47930abbbb0562c9ea61707c4c0b.mp3?infoId=92001" />
+                <audio hidden id={'audio'} onEnded={this.handleAudioFinished} controls crossOrigin={'anonymous'}
+                    src={mp3}/>
             </div>
         )
     }

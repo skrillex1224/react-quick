@@ -1,7 +1,7 @@
 // import React from "react";
 // import {observer} from "mobx-react";
 // import styles from './index.scss'
-// import mp3 from '../../assets/mediaResources/467015.mp3'
+// import mp3 from '../../assets/mediaResources/HOA.mp3'
 // import mp4 from '../../assets/mediaResources/clip.mp4'
 //
 //
@@ -141,11 +141,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {observer} from "mobx-react";
 import styles from './index.scss'
-import mp3 from '../../../assets/mediaResources/467015.mp3'
-import mp4 from '../../../assets/mediaResources/clip.mp4'
-import Preload from '../../../components/Preload'
+import mp3 from '../../../assets/mediaResources/HOA.mp3'
 import {CloseCircleOutlined} from '@ant-design/icons'
 import message from '../../../components/message'
+import classNames from "classnames";
 
 /*视频未加载完成前加锁*/
 let  lock  = true;
@@ -175,12 +174,15 @@ export default class Index extends React.Component<any, any>{
     //@ts-ignore
     videoRecorder : MediaRecorder = null;
 
-    async componentDidMount(){
-        await this.getUserMedia();
+    /*开始录像*/
+    handleMountThisModule =async  ()=>{
+        this.setState({isStart:true})
+        await  this.getUserMedia();
     }
 
     state = {
-        recordedChunks : []
+        recordedChunks : [],
+        isStart : false
     }
 
     getUserMedia = async  ()=>{
@@ -294,9 +296,19 @@ export default class Index extends React.Component<any, any>{
     }
 
     render(): React.ReactNode {
-        const {recordedChunks} = this.state;
-        return (
+        const {recordedChunks,isStart} = this.state;
+
+            return (
                 <div  className={styles.wrapper} >
+                    {/*蒙层*/}
+                    {isStart ||  <div className={styles.isStartWrapper}>
+                        <div onClick={this.handleMountThisModule} className={classNames({
+                            'index_btn': true,
+                            [`${styles.isStartWrapper_btn}`]: true
+                        })}>Start
+                        </div>
+                    </div>}
+
                     <audio  id='my-audio' src={mp3} />
                     <div className={styles.wrapper_video}>
                         <video ref={this.videoRefObject} className={styles.wrapper_video_content}  id="my-video" controls={false}  />
@@ -325,6 +337,6 @@ export default class Index extends React.Component<any, any>{
                         <div onClick={this.mergeVideo} className={styles.wrapper_ops_btn}>合并录制结果</div>
                     </div>
                 </div>
-        )
-    }
+            )
+        }
 }

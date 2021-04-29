@@ -29,7 +29,14 @@ export default class Index extends React.Component<any, any>{
          offsetY:0,
      }
 
-     //缩放时,鼠标开始的位置
+     //当拖拽水印组件时开始的位置
+     onDragWaterMarkStartOffsets ={
+         offsetX:0,
+         offsetY:0,
+     }
+
+
+    //缩放时,鼠标开始的位置
     onResizeStartOffsets = {
         offsetX:0,
         offsetY:0,
@@ -74,7 +81,6 @@ export default class Index extends React.Component<any, any>{
          //获取src
          const imgSrc = e.dataTransfer.getData('image/png');
          if(!imgSrc) return ;
-
          //判断着陆位置是图片而非其他的waterMark
         //如果不是lander 则return
         if(!e.target.id){
@@ -127,6 +133,7 @@ export default class Index extends React.Component<any, any>{
 
     handleResizeStart = (itemId)=>{
          return (e)=>{
+             e.stopPropagation()
              //不可设置,否则拖动事件无效
              // e.preventDefault();
 
@@ -162,6 +169,7 @@ export default class Index extends React.Component<any, any>{
          //闭包
         let timer ;
         return (e)=>{
+            e.stopPropagation()
             //通过定时器来执行动画
             if(timer) clearInterval(timer);
 
@@ -190,13 +198,6 @@ export default class Index extends React.Component<any, any>{
         }
     }
 
-    handleResizeEnd = (itemId)=>{
-        return (e)=>{
-            e.preventDefault();
-            const {waterMarkList} = this.state;
-            const index = waterMarkList.findIndex(item=>item.id === itemId);
-        }
-    }
 
     handleRotateClick = (itemId)=>{
          return ()=>{
@@ -242,8 +243,46 @@ export default class Index extends React.Component<any, any>{
          e.dataTransfer.setData('image/png',reactLogo)
     }
 
-    preventDefault = (e)=>{
-         e.preventDefault()
+    handleWaterMarkDragStart = (itemId)=>{
+         return (e)=> {
+             e.dataTransfer.dropEffect='move'
+             const offsetX = e.nativeEvent.offsetX;
+             const offsetY = e.nativeEvent.offsetY;
+             //设置初始偏移
+             this.onDragWaterMarkStartOffsets = {
+                 offsetX,
+                 offsetY
+             }
+             console.log(this.onDragWaterMarkStartOffsets)
+        }
+    }
+
+    handleWaterMarkDragEnd = (itemId)=>{
+        return (e)=> {
+            // 获取鼠标的最后位置
+            const offsetX = e.nativeEvent.offsetX;
+            const offsetY = e.nativeEvent.offsetY;
+            //根据初始偏移和现在鼠标的位置，计算图片增量
+            let creaseX = offsetX - this.onDragWaterMarkStartOffsets.offsetX;
+            let creaseY = offsetY - this.onDragWaterMarkStartOffsets.offsetY;
+            const {waterMarkList} = this.state;
+            const index = waterMarkList.findIndex(item=>item.id === itemId);
+
+            const currentComponent = waterMarkList[index];
+
+            //原有基础上计算增量
+            currentComponent.trueX += creaseX;
+            currentComponent.trueY += creaseY;
+            //防止越界
+            const imgContainer = document.getElementById('img-container');
+
+            if(currentComponent.trueY < 0) currentComponent.trueY = 0;
+            if(currentComponent.trueX < 0) currentComponent.trueX = 0;
+            if(currentComponent.trueX > imgContainer.clientWidth - currentComponent.width) currentComponent.trueX = imgContainer.clientWidth - currentComponent.width;
+            if(currentComponent.trueY > imgContainer.clientHeight - currentComponent.height) currentComponent.trueY = imgContainer.clientHeight - currentComponent.height;
+
+            this.setState({waterMarkList})
+        }
     }
 
     render(): React.ReactNode {
@@ -252,17 +291,20 @@ export default class Index extends React.Component<any, any>{
             <div  className={styles.wrapper}>
                 <div id={'img-container'} onDragEnter={this.handleDragEnter} onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave} onDrop={this.handleDrop}
                      style={dragEntered ?{border:'2px dashed #fffa',filter:'blur(1px) opacity(.8)'} : {}}  className={styles.wrapper_imgContainer} >
-                    <img id={'lander'} className={styles.wrapper_imgContainer_imgBg} src={markBg}/>
+                    <img onDragStart={(e)=>e.preventDefault()} id={'lander'} className={styles.wrapper_imgContainer_imgBg} src={markBg}/>
                     {
                         waterMarkList.map((item)=>(
-                            <div key={item.id} style={ {left:`${item.trueX}px`,top:`${item.trueY}px`,width : item.width,height : item.height}}
+                            <div draggable onDragStart={this.handleWaterMarkDragStart(item.id)}
+                                            onDrag={()=>{}}
+                                            onDragEnd={this.handleWaterMarkDragEnd(item.id)}
+                                 key={item.id} style={ {left:`${item.trueX}px`,top:`${item.trueY}px`,width : item.width,height : item.height}}
                                  className={styles.imgComponent} >
                                 {/*传入对应元素在数组的下标*/}
                                 <div  onClick={this.handleDeleteClick(item.id)} className={styles.imgComponent_delete}><CloseOutlined /></div>
-                                <div draggable onDragStart={this.handleResizeStart(item.id)} onDrag={throttle(this.handleResizeing(item.id))} onDragEnd={this.handleResizeEnd(item.id)} className={styles.imgComponent_resize}><ArrowsAltOutlined /></div>
+                                <div draggable onDragStart={this.handleResizeStart(item.id)} onDrag={throttle(this.handleResizeing(item.id))} onDragEnd={(e)=>{e.stopPropagation()}} className={styles.imgComponent_resize}><ArrowsAltOutlined /></div>
                                 <div  onClick={this.handleRotateClick(item.id)} className={styles.imgComponent_rotate}> <RotateRightOutlined /></div>
                                 {/*禁用图片拖拽*/}
-                                <img onDragStart={this.preventDefault} style={{transform:`rotateZ(${item.rotateAngle}deg)`}} src={item.imgSrc} className={styles.imgComponent_img}  />
+                                <img  style={{transform:`rotateZ(${item.rotateAngle}deg)`}} src={item.imgSrc} className={styles.imgComponent_img}  />
                             </div>
                         ))
                     }

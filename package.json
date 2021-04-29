@@ -74,6 +74,7 @@
     "react-refresh": "^0.8.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
+    "react-syntax-highlighter": "^15.4.3",
     "recorder-core": "^1.1.21021500",
     "redux": "^4.0.5",
     "resolve": "1.18.1",

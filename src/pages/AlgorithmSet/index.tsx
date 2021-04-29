@@ -5,6 +5,8 @@ import {Animated} from 'react-animated-css'
 import MainScreen from "../../components/MainScreen";
 import IndexSet from "../../utils/IndexSet";
 
+/*本屏幕的下标*/
+const IndexSetOfThisIndex = 2;
 
 const hiddenTime =600;
 
@@ -34,14 +36,15 @@ export default class  Index extends React.Component<any, any>{
 
     render() {
         const {isLoading,isVisible} =this.state;
-        const {title,subTitle,imgName} = IndexSet[2];
+        const {title,subTitle,imgName} = IndexSet[IndexSetOfThisIndex];
 
     /**animationOut没啥用在这里*/
         return (
-            <Preload switchRoute={this.switchRoute}  chooseIndex={2}  isLoading={isLoading} >
+            <Preload switchRoute={this.switchRoute}  chooseIndex={IndexSetOfThisIndex}  isLoading={isLoading} >
                <Animated   animationIn={'rollIn'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1600}
                          animationOutDuration={hiddenTime}>
                    <MainScreen title={title} subTitle={subTitle} imgName={imgName}/>
+
                </Animated>
             </Preload>
         )

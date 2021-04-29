@@ -1,8 +1,9 @@
 import React from "react";
 import {Animated} from "react-animated-css";
 import {observer} from "mobx-react";
-import Example from '../CaseTestSet/WakeUpExe'
+import Example from '../AlgorithmSet/SubjectBox'
 import Preload from '../../components/Preload'
+import styles from './index.scss'
 
 @observer
 export default class  Index extends React.Component<any, any>{
@@ -21,7 +22,11 @@ export default class  Index extends React.Component<any, any>{
         return (
             // <Preload isLoading={this.state.isLoading}>
             //    <Animated animationIn={'rollIn'} isVisible={true} animationInDuration={1600} animationOut={'fadeOut'} animationOutDuration={600}>
-                   <Example />
+                  <div className={styles.wrapper}>
+                      <Example />
+                      <Example />
+                      <Example />
+                  </div>
                // </Animated>
             // </Preload>
         )

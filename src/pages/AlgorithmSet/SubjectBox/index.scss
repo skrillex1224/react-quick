@@ -1,0 +1,44 @@
+.wrapper{
+    width: 550px;
+    flex: none;
+    box-sizing: border-box;
+    padding: 20px;
+    border: 2px solid #373E47;
+    border-radius: 10px;
+    &_title{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        &_desc{
+            width: 100%;
+
+            & > h3 {
+                font-size: 24px;
+                font-family: $baseChineseFontFamily;
+                color: #CDD9E5;
+            }
+            & > p{
+                text-indent: 2em;
+                width: 100%;
+                font-size: 16px;
+                color: #CDD9E5;
+                font-family: $baseChineseFontFamily;
+            }
+        }
+
+
+    }
+
+    &_content{
+        width: 100%;
+        font-size: 12px;
+        overflow: hidden;
+
+        ::-webkit-scrollbar{
+            height: 8px;
+        }
+
+    }
+}

@@ -11,7 +11,7 @@ export default class Index extends React.Component<any, any>{
             <div className={styles.wrapper}>
                 <div className='index_btn' onClick={debounce(()=>{
                     message.success('唤醒中，请稍等',3000)
-                    window.location.href ='BoYiCap://'
+                    window.location.href ='wyy://'
                 },200)}>WakeUp</div>
             </div>
         )

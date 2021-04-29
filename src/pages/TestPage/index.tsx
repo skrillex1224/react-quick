@@ -1,7 +1,7 @@
 import React from "react";
 import {Animated} from "react-animated-css";
 import {observer} from "mobx-react";
-import Example from '../CaseTestSet/PolymerizationVideo'
+import Example from '../CaseTestSet/WaterMark'
 import Preload from '../../components/Preload'
 
 @observer

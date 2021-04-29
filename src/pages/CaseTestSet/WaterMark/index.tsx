@@ -3,7 +3,7 @@ import {observer} from "mobx-react";
 import styles from './index.scss'
 import markBg from '../../../assets/caseTestSet/waterMark_bg.png'
 import message from '../../../components/message'
-import reactLogo from '../../../assets/react.png'
+import reactLogo from '../../../assets/projectSet.png'
 import {Animated} from 'react-animated-css'
 import {ArrowsAltOutlined, CloseOutlined, DeleteOutlined, RotateRightOutlined} from "@ant-design/icons/lib";
 
@@ -28,11 +28,14 @@ export default class Index extends React.Component<any, any>{
          offsetY:0,
      }
 
+     /*水印组件全局ID*/
+     private static ID = 0;
+
      state = {
          srcList :[],
          dragEntered : false,
-         //所有水印小组件
-         waterMarkList : [ ]
+         //所有水印小组件React组件属性集合
+         waterMarkList : [ ],
      }
     componentDidMount(): void {
          const srcList = this.state.srcList;
@@ -80,18 +83,24 @@ export default class Index extends React.Component<any, any>{
         if(trueX <0) trueX = 0;
         if(trueY <0) trueY = 0;
 
+        /*waterMarkList.length是当前imgContainer即将放入所有相关数组的下标*/
 
-        const imgComponent =(
-                <div  style={{left:`${trueX}px`,top:`${trueY}px`}} className={styles.imgComponent} >
-                    {/*传入对应元素在数组的下标*/}
-                    <div  onClick={this.handleDeleteClick(waterMarkList.length)} className={styles.imgComponent_delete}><CloseOutlined /></div>
-                    <div  onClick={this.handleResizeClick(waterMarkList.length)} className={styles.imgComponent_resize}><ArrowsAltOutlined /></div>
-                    <div  onClick={this.handleRotateClick(waterMarkList.length)} className={styles.imgComponent_rotate}> <RotateRightOutlined /></div>
-                    <img src={imgSrc} className={styles.imgComponent_img}  />
-                </div>
-        )
+        const rotateAngle = 0;
+        const height = document.documentElement.clientWidth / 1920 * 132;
+        const width = document.documentElement.clientWidth / 1920 * 132;
 
-        console.log(imgComponent)
+        const id = Index.ID++;
+
+         //构造image水印组件的对象
+        const imgComponent ={
+            id, // 唯一标识
+            trueX ,
+            trueY,
+            imgSrc,
+            width ,
+            height ,
+            rotateAngle,
+        }
 
         waterMarkList = [...waterMarkList,imgComponent];
 
@@ -106,17 +115,26 @@ export default class Index extends React.Component<any, any>{
          }
     }
 
-    handleRotateClick = (index)=>{
+    handleRotateClick = (itemId)=>{
          return (e)=>{
-            console.log(e.target)
+             const {waterMarkList} = this.state;
+              const index = waterMarkList.findIndex(item=>item.id === itemId);
+
+              console.log(index)
+
+              waterMarkList[index].rotateAngle = (waterMarkList[index].rotateAngle + 90) % 360
+              this.setState({waterMarkList})
          }
     }
 
-    handleDeleteClick = (index)=>{
+    handleDeleteClick = (itemId)=>{
          /*闭包*/
          return ()=>{
-             const waterMarkList = this.state.waterMarkList;
-             waterMarkList.splice(index,1);
+             const {waterMarkList} = this.state;
+
+             const index = waterMarkList.findIndex(item=>item.id === itemId);
+
+
              this.setState({waterMarkList})
          }
     }
@@ -149,7 +167,15 @@ export default class Index extends React.Component<any, any>{
                     <img id={'lander'} className={styles.wrapper_imgContainer_imgBg} src={markBg}/>
                     {
                         waterMarkList.map((item)=>(
-                            item
+                            <div key={item.id} style={ {left:`${item.trueX}px`,top:`${item.trueY}px`,width : item.width,height : item.height}}
+                                 className={styles.imgComponent} >
+                                {/*传入对应元素在数组的下标*/}
+                                {console.log('--------------')}
+                                <div  onClick={this.handleDeleteClick(item.id)} className={styles.imgComponent_delete}><CloseOutlined /></div>
+                                <div  onClick={this.handleResizeClick(item.id)} className={styles.imgComponent_resize}><ArrowsAltOutlined /></div>
+                                <div  onClick={this.handleRotateClick(item.id)} className={styles.imgComponent_rotate}> <RotateRightOutlined /></div>
+                                <img style={ {transform:`rotateZ(${item.rotateAngle}deg)`}} src={item.imgSrc} className={styles.imgComponent_img}  />
+                            </div>
                         ))
                     }
                 </div>

@@ -37,23 +37,138 @@ export default class  Index extends React.Component<any, any>{
             this.setState({isLoading:false})
         // },600)
 
-        this.initializeAlgorithmList();
-            console.log(this.state)
+        //初始化方法
+        //参数方法:  调整三列的高度直到他们高度相近
+        this.initializeAlgorithmList(this.adjustColumnHeights);
+
     }
 
     /*初始化列表,先将三列填满后再比较高低,然后再动态进行平衡,这样可以避免多次setState()*/
-    initializeAlgorithmList = ()=>{
+    initializeAlgorithmList = (callback)=>{
         const {colThreeList,colTwoList,colOneList} = this.state;
         for (let i = 0; i < algorithmList.length; i++) {
             i % 3 === 0  &&  colOneList.push(algorithmList[i]);
             i % 3 === 1  &&  colTwoList.push(algorithmList[i]);
             i % 3 === 2  &&   colThreeList.push(algorithmList[i]);
         }
-
-        this.setState({colThreeList,colTwoList,colOneList})
-
+        this.setState({colThreeList,colTwoList,colOneList},()=>{
+            setTimeout(()=>{
+                callback()
+            },1000)
+        })
     }
 
+    /*调整三列的高度*/
+    adjustColumnHeights = ()=>{
+        const colOneRef = this.column1.current;
+        const colTwoRef = this.column2.current;
+        const colThreeRef = this.column3.current;
+        const {colOneList,colTwoList,colThreeList} = this.state;
+
+        /**@建立映射对象
+        * stateList 是 状态数组
+        *ref 是对应的refObj
+        * height 当前高度,这个高度会在后面不停计算,
+        * lastIndex 当前正在操作倒数第几个节点*/
+        const mappingColumnOne = {
+            stateList : colOneList,
+            ref : colOneRef,
+            height : colOneRef.clientHeight,
+            lastIndex : 1,
+        }
+        const mappingColumnTwo = {
+            stateList : colTwoList,
+            ref : colTwoRef,
+            height : colTwoRef.clientHeight,
+            lastIndex : 1,
+        }
+        const mappingColumnThree = {
+            stateList : colThreeList,
+            ref : colThreeRef,
+            height : colThreeRef.clientHeight,
+            lastIndex : 1,
+        }
+        let connt = 0;
+        while(true) {
+            //拿到最大列和最小列
+            let maxMapping = getMax();
+            let minMapping = getMin();
+            //计算移动之前最大列和最小列两者的高度差
+            const beforeDiff = maxMapping.height - minMapping.height;
+
+            const maxChildNode = maxMapping.ref.children[maxMapping.ref.children.length - maxMapping.lastIndex];
+
+            // 操作的子元素向上移动一位
+            maxMapping.lastIndex += 1;
+
+            //移动(假移动,只是计算高度)
+            minMapping.height += maxChildNode.clientHeight;
+            maxMapping.height -=  maxChildNode.clientHeight;
+
+
+            //重新拿到最大列和最小列
+            let  afterMaxMapping = getMax();
+            let  afterMinMapping = getMin();
+
+            //计算移动之后最大列和最小列两者的高度差
+            const afterDiff = afterMaxMapping.height - afterMinMapping.height;
+
+
+            //退出条件, 当移动后最大列和最小列两者的高度差 反而变大了
+            if(beforeDiff < afterDiff ){
+                break;
+            }
+            //否则将该元素移动到最小高度的state数组
+            minMapping.stateList.push(maxMapping.stateList.pop());
+        }
+
+        //获取三列最长对象
+        function getMax() {
+            const one = mappingColumnOne.height;
+            const two = mappingColumnTwo.height;
+            const three = mappingColumnThree.height;
+
+            if(one > two){
+                if(one > three){
+                    return mappingColumnOne;
+                }else{
+                    return mappingColumnThree;
+                }
+            }else{
+                if(two > three){
+                    return mappingColumnTwo;
+                }else{
+                    return mappingColumnThree;
+                }
+            }
+
+        }
+
+        //获取三列最短对象
+        function getMin(){
+            const one = mappingColumnOne.height;
+            const two = mappingColumnTwo.height;
+            const three = mappingColumnThree.height;
+
+            if(one < two){
+                if(one < three){
+                    return mappingColumnOne;
+                }else{
+                    return mappingColumnThree;
+                }
+            }else{
+                if(two < three){
+                    return mappingColumnTwo;
+                }else{
+                    return mappingColumnThree;
+                }
+            }
+
+        }
+
+        /*更新state*/
+        this.setState({colOneList,colTwoList,colThreeList})
+    }
 
     switchRoute = (route)=>{
         this.setState({isVisible:false})
@@ -139,7 +254,7 @@ function createModule(str1, str2) {
                         [`${styles.wrapper_column2}`]: true,
                         [`${styles.wrapper_column}`]: true,
                     })}>{
-                        colOneList.map((item,index)=>(
+                        colTwoList.map((item,index)=>(
                             <Animated   animationIn={'rollIn'} animationOut={'fadeOut'} isVisible={true} animationInDuration={1600}
                                         animationOutDuration={hiddenTime} >
                                 <SubjectBox title={'获取URL'} index={index} desc={'完成函数 createModule，调用之后满足如下要求：\n' +
@@ -154,7 +269,7 @@ function createModule(str1, str2) {
                         [`${styles.wrapper_column2}`]: true,
                         [`${styles.wrapper_column}`]: true,
                     })}>{
-                        colOneList.map((item,index)=>(
+                        colThreeList.map((item,index)=>(
                             <Animated   animationIn={'rollIn'} animationOut={'fadeOut'} isVisible={true} animationInDuration={1600}
                                         animationOutDuration={hiddenTime} >
                                 <SubjectBox title={'获取URL'} index={index} desc={'完成函数 createModule，调用之后满足如下要求：\n' +

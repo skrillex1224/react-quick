@@ -53,9 +53,9 @@ export default class  Index extends React.Component<any, any>{
 
 
     componentDidMount(): void {
-        // setTimeout(()=>{
+        setTimeout(()=>{
             this.setState({isLoading:false})
-        // },600)
+        },600)
 
         //初始化方法
         //参数方法:  调整三列的高度直到他们高度相近

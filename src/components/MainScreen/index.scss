@@ -3,10 +3,10 @@
     &_mainScreen{
         /*根据padding-bottom来撑开高度,因为它的百分比相对于父元素的高度*/
         width: 100%;
-        background-size: 100% auto;
         background-repeat: no-repeat;
         text-align: center;
         position: relative;
+        background-size: 100% 100%;
 
         &_extend{
             box-sizing: border-box;

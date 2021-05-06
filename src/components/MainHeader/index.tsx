@@ -78,8 +78,11 @@ class Index extends React.Component<IProps, IState>{
                        </div>
                    ))}
                </div>
-                <div onClick={()=>window.location.href='https://github.com/skrillex1224'} className={styles.wrapper_right}>
-                    <GithubOutlined/> <span className={styles.wrapper_right_name}>skrillex1224</span>
+
+
+                <div className={styles.wrapper_right}>
+                    <div className={styles.wrapper_right_react}>React源码分析</div>
+                    <div className={styles.wrapper_right_github} onClick={()=>window.location.href='https://github.com/skrillex1224'} ><GithubOutlined/> <span>skrillex1224</span></div>
                 </div>
             </div>
         )

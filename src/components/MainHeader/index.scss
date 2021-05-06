@@ -48,7 +48,7 @@
                 color:#ffeb3baa;
             }
             &:nth-child(5):hover{
-                color:#03a9f4aa;
+                color:#FF4D4Faa;
             }
 
         }
@@ -60,21 +60,29 @@
         align-items: center;
         cursor:pointer;
         color : #ffffffdd;
-        font-family: $baseChineseFontFamily;
-        transition: .2s;
-        font-size: 30px;
 
-        &_name{
-            margin-left: 20px;
-            font-size: 24px;
+        &_react{
+            font-size: 20px;
+            margin-right: 50px;
+            transition: .2s;
+            font-family: $baseChineseFontFamily;
+
+            &:hover{
+                transform: scale(1.05);
+                color: white;
+            }
+        }
+
+        &_github{
+            font-size: 20px;
+            transition: .2s;
             font-family: "Comic Sans MS";
-
+            &:hover{
+                transform: scale(1.05);
+                color: white;
+            }
         }
 
-        &:hover{
-            transform: scale(1.05);
-            color: white;
-        }
     }
 }
 

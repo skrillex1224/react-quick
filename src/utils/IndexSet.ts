@@ -14,8 +14,8 @@ import startSet from '../assets/startSet.png';
 export default [
     //左上角的react标志
     {
-        title : '欢迎',
-        subTitle : 'Welcome',
+        title : 'React前端学习汇总',
+        subTitle : 'www.react-quick.com',
         imgName : startSet,
         navUrl : '/',
         color:'#03a9f4aa',
@@ -51,7 +51,7 @@ export default [
         imgName : interviewSet,
         subTitle : 'InterviewProblemSet',
         navUrl : '/interviewProblemSet',
-        color: '#03a9f4aa',
+        color: '#FF4D4Faa',
         component: InterviewSet
     },
 ]

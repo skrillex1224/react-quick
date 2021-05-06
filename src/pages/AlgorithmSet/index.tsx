@@ -40,6 +40,10 @@ export default class  Index extends React.Component<any, any>{
         colOneList : [],
         colTwoList : [],
         colThreeList : [],
+        //isVisible,
+        suspendColOne : [],
+        suspendColTwo : [],
+        suspendColThree : [],
     }
 
 
@@ -56,13 +60,23 @@ export default class  Index extends React.Component<any, any>{
 
     /*初始化列表,先将三列填满后再比较高低,然后再动态进行平衡,这样可以避免多次setState()*/
     initializeAlgorithmList = (callback)=>{
-        const {colThreeList,colTwoList,colOneList} = this.state;
+        let {colThreeList,colTwoList,colOneList,suspendColOne,suspendColTwo,suspendColThree} = this.state;
         for (let i = 0; i < algorithmList.length; i++) {
             i % 3 === 0  &&  colOneList.push(algorithmList[i]);
             i % 3 === 1  &&  colTwoList.push(algorithmList[i]);
             i % 3 === 2  &&   colThreeList.push(algorithmList[i]);
         }
-        this.setState({colThreeList,colTwoList,colOneList},()=>{
+
+        suspendColOne = new Array(colOneList.length);
+        suspendColOne.fill(false);
+
+        suspendColTwo = new Array(colTwoList.length);
+        suspendColTwo.fill(false);
+
+        suspendColThree = new Array(colThreeList.length);
+        suspendColThree.fill(false);
+
+        this.setState({colThreeList,colTwoList,colOneList,suspendColOne,suspendColTwo,suspendColThree},()=>{
             queryUtilNotZero(callback)
         })
     }

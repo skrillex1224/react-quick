@@ -5,6 +5,7 @@ import reactLogo from '../../assets/react.png'
 import IndexSet from "../../utils/IndexSet";
 import {withRouter} from 'react-router-dom'
 import {GithubOutlined} from "@ant-design/icons/lib";
+import {Animated} from 'react-animated-css'
 
 function debounce (eventHandler,duration){
     let timer ;
@@ -25,6 +26,7 @@ interface IProps {
 
 interface IState {
     fixed: boolean,
+    isVisible : boolean
 }
 
 
@@ -39,7 +41,8 @@ class Index extends React.Component<IProps, IState>{
     }
 
     state = {
-        fixed : false
+        fixed : false,
+        isVisible: true
     }
 
     componentDidMount(): void {
@@ -49,11 +52,27 @@ class Index extends React.Component<IProps, IState>{
             const targetVal = document.body.clientWidth / 1920 * 1080
 
             if(targetVal < scrollTop){
-                this.setState({fixed :true })
+                //如果已经固定,则return
+                if(this.state.fixed) return ;
+
+                this.setState({fixed :true ,isVisible:false},()=>{
+                       setTimeout(()=>{
+                           this.setState({isVisible:true })
+                       },200)
+                })
                 return
+            }else{
+                //如果没有固定,则return
+                if(!this.state.fixed) return ;
+
+                this.setState({fixed :false ,isVisible:false},()=>{
+                      setTimeout(()=>{
+                          this.setState({isVisible:true })
+                      },200)
+                })
             }
 
-            this.setState({fixed:false})
+
 
         },400),false);
     }
@@ -68,23 +87,22 @@ class Index extends React.Component<IProps, IState>{
         const {chooseIndex} = this.props
 
         return (
-            <div className={styles.wrapper} style={this.state.fixed?{position:'fixed'}:{}}>
-               <div className={styles.wrapper_left}>
+            <Animated className={styles.wrapper} style={this.state.fixed?{position:'fixed'}:{}} animationIn={'fadeInDown'} animationOut={'fadeOutUp'} animationInDuration={1000} animationOutDuration={0} isVisible={this.state.isVisible}>
+                    <div className={styles.wrapper_left}>
 
-                   {IndexSet.map((item,index )=>(
-                       <div key={index} style={index === chooseIndex ?{ color: item.color}: {}} className={styles.wrapper_left_item} onClick={this.handleNavTo(item)}>
-                           {item.logo && <img onClick={this.handleNavTo} className={styles.wrapper_left_logo} src={reactLogo} />}
-                           {item.logo || item.title}
-                       </div>
-                   ))}
-               </div>
+                        {IndexSet.map((item,index )=>(
+                            <div key={index} style={index === chooseIndex ?{ color: item.color}: {}} className={styles.wrapper_left_item} onClick={this.handleNavTo(item)}>
+                                {item.logo && <img onClick={this.handleNavTo} className={styles.wrapper_left_logo} src={reactLogo} />}
+                                {item.logo || item.title}
+                            </div>
+                        ))}
+                    </div>
 
 
-                <div className={styles.wrapper_right}>
-                    <div className={styles.wrapper_right_react}>React源码分析</div>
-                    <div className={styles.wrapper_right_github} onClick={()=>window.location.href='https://github.com/skrillex1224'} ><GithubOutlined/> <span>skrillex1224</span></div>
-                </div>
-            </div>
+                    <div className={styles.wrapper_right}>
+                        <div className={styles.wrapper_right_github} onClick={()=>window.location.href='https://github.com/skrillex1224'} ><GithubOutlined/> <span style={{marginLeft:'10px'}}>skrillex1224</span></div>
+                    </div>
+            </Animated>
         )
     }
 }

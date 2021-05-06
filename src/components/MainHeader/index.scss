@@ -66,6 +66,7 @@
             margin-right: 50px;
             transition: .2s;
             font-family: $baseChineseFontFamily;
+            font-weight: bolder;
 
             &:hover{
                 transform: scale(1.05);
@@ -74,7 +75,7 @@
         }
 
         &_github{
-            font-size: 20px;
+            font-size: 24px;
             transition: .2s;
             font-family: "Comic Sans MS";
             &:hover{

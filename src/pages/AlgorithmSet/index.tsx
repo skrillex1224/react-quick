@@ -9,11 +9,16 @@ import algorithmList, {code} from './configList'
 
 import styles from './index.scss'
 import classNames from "classnames";
+import {debounce, throttle} from "../../utils/throttle";
 
 /*本屏幕的下标*/
 const IndexSetOfThisIndex = 2;
 
+/*消失时间*/
 const hiddenTime =600;
+
+/*进场动画*/
+const animationIn = 'fadeInDown';
 
 /*轮循直到高度不为0*/
 const queryUtilNotZero = (callback)=>{
@@ -48,35 +53,81 @@ export default class  Index extends React.Component<any, any>{
 
 
     componentDidMount(): void {
-        setTimeout(()=>{
+        // setTimeout(()=>{
             this.setState({isLoading:false})
-        },600)
+        // },600)
 
         //初始化方法
         //参数方法:  调整三列的高度直到他们高度相近
         this.initializeAlgorithmList(this.adjustColumnHeights);
 
+
+
+        window.addEventListener('scroll',throttle(()=>{
+            const {suspendColOne,suspendColTwo,suspendColThree} = this.state;
+
+            const colOneDomList = document.getElementsByClassName('colOneDom');
+            const colTwoDomList = document.getElementsByClassName('colTwoDom');
+            const colThreeDomList = document.getElementsByClassName('colThreeDom');
+
+            for (let i = 0; i < colOneDomList.length; i++) {
+                const ele = colOneDomList.item(i);
+
+                const ClientY = ele.getBoundingClientRect().y;
+
+                /*使用getBoundingRect*/
+                if(ClientY > 0 && ClientY < window.innerHeight){
+                    suspendColOne[i] = true;
+                }
+
+                if(ClientY > window.innerHeight){
+                    suspendColOne[i] = false;
+                }
+            }
+
+            for (let i = 0; i < colTwoDomList.length; i++) {
+                const ele = colTwoDomList.item(i);
+                const ClientY = ele.getBoundingClientRect().y;
+
+                /*使用getBoundingRect*/
+                if(ClientY > 0 && ClientY < window.innerHeight){
+                    suspendColTwo[i] = true;
+                }
+
+                if(ClientY > window.innerHeight){
+                    suspendColTwo[i] = false;
+                }
+            }
+
+            for (let i = 0; i < colThreeDomList.length; i++) {
+                const ele = colThreeDomList.item(i);
+                const ClientY = ele.getBoundingClientRect().y;
+
+                /*使用getBoundingRect*/
+                if(ClientY > 0 && ClientY < window.innerHeight){
+                    suspendColThree[i] = true;
+                }
+
+                if(ClientY > window.innerHeight){
+                    suspendColThree[i] = false;
+                }
+            }
+
+            this.setState({suspendColOne,suspendColTwo,suspendColThree})
+        }),false)
+
     }
 
     /*初始化列表,先将三列填满后再比较高低,然后再动态进行平衡,这样可以避免多次setState()*/
     initializeAlgorithmList = (callback)=>{
-        let {colThreeList,colTwoList,colOneList,suspendColOne,suspendColTwo,suspendColThree} = this.state;
+        let {colThreeList,colTwoList,colOneList} = this.state;
         for (let i = 0; i < algorithmList.length; i++) {
             i % 3 === 0  &&  colOneList.push(algorithmList[i]);
             i % 3 === 1  &&  colTwoList.push(algorithmList[i]);
             i % 3 === 2  &&   colThreeList.push(algorithmList[i]);
         }
 
-        suspendColOne = new Array(colOneList.length);
-        suspendColOne.fill(false);
-
-        suspendColTwo = new Array(colTwoList.length);
-        suspendColTwo.fill(false);
-
-        suspendColThree = new Array(colThreeList.length);
-        suspendColThree.fill(false);
-
-        this.setState({colThreeList,colTwoList,colOneList,suspendColOne,suspendColTwo,suspendColThree},()=>{
+        this.setState({colThreeList,colTwoList,colOneList},()=>{
             queryUtilNotZero(callback)
         })
     }
@@ -111,7 +162,6 @@ export default class  Index extends React.Component<any, any>{
             height : colThreeRef.clientHeight,
             lastIndex : 1,
         }
-        let connt = 0;
         while(true) {
             //拿到最大列和最小列
             let maxMapping = getMax();
@@ -188,9 +238,18 @@ export default class  Index extends React.Component<any, any>{
             }
 
         }
+        /*填充状态数组是否visible*/
+        const suspendColOne = new Array(colOneList.length);
+        suspendColOne.fill(false);
+
+        const suspendColTwo = new Array(colTwoList.length);
+        suspendColTwo.fill(false);
+
+        const suspendColThree = new Array(colThreeList.length);
+        suspendColThree.fill(false);
 
         /*更新state*/
-        this.setState({colOneList,colTwoList,colThreeList})
+        this.setState({colOneList,colTwoList,colThreeList,suspendColOne,suspendColTwo,suspendColThree})
     }
 
     switchRoute = (route)=>{
@@ -203,13 +262,13 @@ export default class  Index extends React.Component<any, any>{
 
 
     render() {
-        const {isLoading,isVisible,colTwoList,colOneList,colThreeList} =this.state;
+        const {isLoading,isVisible,colTwoList,colOneList,colThreeList,suspendColThree,suspendColOne,suspendColTwo} =this.state;
         const {title,subTitle,imgName} = IndexSet[IndexSetOfThisIndex];
 
     /**animationOut没啥用在这里*/
         return (
             <Preload switchRoute={this.switchRoute}  chooseIndex={IndexSetOfThisIndex}  isLoading={isLoading} >
-               <Animated   animationIn={'rollIn'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1600}
+               <Animated   animationIn={animationIn} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1600}
                          animationOutDuration={hiddenTime}>
                    <MainScreen title={title} subTitle={subTitle} imgName={imgName}/>
                </Animated>
@@ -219,7 +278,7 @@ export default class  Index extends React.Component<any, any>{
                         [`${styles.wrapper_column}`]: true,
                     })}>{
                         colOneList.map((item,index)=>(
-                            <Animated   animationIn={'rollIn'} animationOut={'fadeOut'} isVisible={true} animationInDuration={1600}
+                            <Animated  className={'colOneDom'} animationIn={animationIn} animationOut={'fadeOut'} isVisible={suspendColOne[index]} animationInDuration={1600}
                                         animationOutDuration={hiddenTime} >
                                 <SubjectBox title={'获取URL'} index={index} desc={'完成函数 createModule，调用之后满足如下要求：\n' +
                                 '1、返回一个对象\n' +
@@ -278,7 +337,7 @@ function createModule(str1, str2) {
                         [`${styles.wrapper_column}`]: true,
                     })}>{
                         colTwoList.map((item,index)=>(
-                            <Animated   animationIn={'rollIn'} animationOut={'fadeOut'} isVisible={true} animationInDuration={1600}
+                            <Animated className={'colTwoDom'}  animationIn={animationIn} animationOut={'fadeOut'} isVisible={suspendColTwo[index]} animationInDuration={1600}
                                         animationOutDuration={hiddenTime} >
                                 <SubjectBox title={'获取URL'} index={index} desc={'完成函数 createModule，调用之后满足如下要求：\n' +
                                 '1、返回一个对象\n' +
@@ -293,7 +352,7 @@ function createModule(str1, str2) {
                         [`${styles.wrapper_column}`]: true,
                     })}>{
                         colThreeList.map((item,index)=>(
-                            <Animated   animationIn={'rollIn'} animationOut={'fadeOut'} isVisible={true} animationInDuration={1600}
+                            <Animated className={'colThreeDom'}  animationIn={animationIn} animationOut={'fadeOut'} isVisible={suspendColThree[index]} animationInDuration={1600}
                                         animationOutDuration={hiddenTime} >
                                 <SubjectBox title={'获取URL'} index={index} desc={'完成函数 createModule，调用之后满足如下要求：\n' +
                                 '1、返回一个对象\n' +

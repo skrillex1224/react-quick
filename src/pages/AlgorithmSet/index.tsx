@@ -15,6 +15,17 @@ const IndexSetOfThisIndex = 2;
 
 const hiddenTime =600;
 
+/*轮循直到高度不为0*/
+const queryUtilNotZero = (callback)=>{
+    if(document.getElementById('wrapper').clientHeight){
+            callback();
+        return ;
+    }
+    setTimeout(()=>{
+        queryUtilNotZero(callback);
+    },100)
+}
+
 
 @observer
 export default class  Index extends React.Component<any, any>{
@@ -33,9 +44,9 @@ export default class  Index extends React.Component<any, any>{
 
 
     componentDidMount(): void {
-        // setTimeout(()=>{
+        setTimeout(()=>{
             this.setState({isLoading:false})
-        // },600)
+        },600)
 
         //初始化方法
         //参数方法:  调整三列的高度直到他们高度相近
@@ -52,9 +63,7 @@ export default class  Index extends React.Component<any, any>{
             i % 3 === 2  &&   colThreeList.push(algorithmList[i]);
         }
         this.setState({colThreeList,colTwoList,colOneList},()=>{
-            setTimeout(()=>{
-                callback()
-            },1000)
+            queryUtilNotZero(callback)
         })
     }
 
@@ -190,7 +199,7 @@ export default class  Index extends React.Component<any, any>{
                          animationOutDuration={hiddenTime}>
                    <MainScreen title={title} subTitle={subTitle} imgName={imgName}/>
                </Animated>
-                <div className={styles.wrapper}>
+                <div id={'wrapper'} className={styles.wrapper}>
                     <div ref={this.column1} className={classNames({
                         [`${styles.wrapper_column1}`]: true,
                         [`${styles.wrapper_column}`]: true,

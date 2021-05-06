@@ -20,6 +20,9 @@ const hiddenTime =600;
 /*进场动画*/
 const animationIn = 'fadeInDown';
 
+/*出场动画*/
+const animationOut = 'fadeOut';
+
 /*轮循直到高度不为0*/
 const queryUtilNotZero = (callback)=>{
     if(document.getElementById('wrapper').clientHeight){
@@ -253,7 +256,12 @@ export default class  Index extends React.Component<any, any>{
     }
 
     switchRoute = (route)=>{
-        this.setState({isVisible:false})
+        const {suspendColThree,suspendColOne,suspendColTwo} = this.state;
+        suspendColOne.fill(false)
+        suspendColTwo.fill(false)
+        suspendColThree.fill(false)
+
+        this.setState({isVisible:false,suspendColOne,suspendColTwo,suspendColThree})
         setTimeout(()=>{
             this.props.history.push(route);
         },hiddenTime)
@@ -268,7 +276,7 @@ export default class  Index extends React.Component<any, any>{
     /**animationOut没啥用在这里*/
         return (
             <Preload switchRoute={this.switchRoute}  chooseIndex={IndexSetOfThisIndex}  isLoading={isLoading} >
-               <Animated   animationIn={animationIn} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1600}
+               <Animated   animationIn={animationIn} animationOut={animationOut} isVisible={isVisible} animationInDuration={1600}
                          animationOutDuration={hiddenTime}>
                    <MainScreen title={title} subTitle={subTitle} imgName={imgName}/>
                </Animated>
@@ -278,7 +286,7 @@ export default class  Index extends React.Component<any, any>{
                         [`${styles.wrapper_column}`]: true,
                     })}>{
                         colOneList.map((item,index)=>(
-                            <Animated  className={'colOneDom'} animationIn={animationIn} animationOut={'fadeOut'} isVisible={suspendColOne[index]} animationInDuration={1600}
+                            <Animated  className={'colOneDom'} animationIn={animationIn} animationOut={animationOut} isVisible={suspendColOne[index]} animationInDuration={1000}
                                         animationOutDuration={hiddenTime} >
                                 <SubjectBox title={'获取URL'} index={index} desc={'完成函数 createModule，调用之后满足如下要求：\n' +
                                 '1、返回一个对象\n' +
@@ -337,7 +345,7 @@ function createModule(str1, str2) {
                         [`${styles.wrapper_column}`]: true,
                     })}>{
                         colTwoList.map((item,index)=>(
-                            <Animated className={'colTwoDom'}  animationIn={animationIn} animationOut={'fadeOut'} isVisible={suspendColTwo[index]} animationInDuration={1600}
+                            <Animated className={'colTwoDom'}  animationIn={animationIn} animationOut={animationOut} isVisible={suspendColTwo[index]} animationInDuration={1000}
                                         animationOutDuration={hiddenTime} >
                                 <SubjectBox title={'获取URL'} index={index} desc={'完成函数 createModule，调用之后满足如下要求：\n' +
                                 '1、返回一个对象\n' +
@@ -352,7 +360,7 @@ function createModule(str1, str2) {
                         [`${styles.wrapper_column}`]: true,
                     })}>{
                         colThreeList.map((item,index)=>(
-                            <Animated className={'colThreeDom'}  animationIn={animationIn} animationOut={'fadeOut'} isVisible={suspendColThree[index]} animationInDuration={1600}
+                            <Animated className={'colThreeDom'}  animationIn={animationIn} animationOut={animationOut} isVisible={suspendColThree[index]} animationInDuration={1000}
                                         animationOutDuration={hiddenTime} >
                                 <SubjectBox title={'获取URL'} index={index} desc={'完成函数 createModule，调用之后满足如下要求：\n' +
                                 '1、返回一个对象\n' +

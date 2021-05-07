@@ -4,9 +4,18 @@ import Preload from '../../components/Preload'
 import {Animated} from 'react-animated-css'
 import MainScreen from "../../components/MainScreen";
 import IndexSet from "../../utils/IndexSet";
+import styles from './index.scss'
 
+/*当前的Index*/
+const currentPageIndex = 4;
 
+/*隐藏时间*/
 const hiddenTime =600;
+
+/*显示时间*/
+const showTime = 1600;
+
+const animateIn = 'bounceInRight'
 
 @observer
 export default class  Index extends React.Component<any, any>{
@@ -18,13 +27,14 @@ export default class  Index extends React.Component<any, any>{
 
 
     componentDidMount(): void {
-        setTimeout(()=>{
+        // setTimeout(()=>{
             this.setState({isLoading:false})
-        },600)
+        // },600)
     }
 
 
     switchRoute = (route)=>{
+        if(route === '/interviewProblemSet') return ;
         this.setState({isVisible:false})
         setTimeout(()=>{
             this.props.history.push(route);
@@ -34,15 +44,20 @@ export default class  Index extends React.Component<any, any>{
 
     render() {
         const {isLoading,isVisible} =this.state;
-        const {title,subTitle,imgName} = IndexSet[4];
+        const {title,subTitle,imgName} = IndexSet[currentPageIndex];
 
         /**animationOut没啥用在这里*/
         return (
-            <Preload switchRoute={this.switchRoute}  chooseIndex={4}  isLoading={isLoading} >
-                <Animated   animationIn={'fadeInLeft'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1600}
+            <Preload switchRoute={this.switchRoute}  chooseIndex={currentPageIndex}  isLoading={isLoading} >
+                <Animated   animationIn={'slideInLeft'} animationOut={'fadeOut'} isVisible={isVisible} animationInDuration={1600}
                             animationOutDuration={hiddenTime}>
                     <MainScreen title={title} subTitle={subTitle} imgName={imgName}/>
                 </Animated>
+
+                <div className={styles.wrapper}>
+
+                </div>
+
             </Preload>
         )
     }

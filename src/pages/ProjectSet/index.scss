@@ -10,9 +10,9 @@
         text-align: center;
         line-height: 100px;
 
-        &:hover + div > div {
-            animation-play-state: paused;
-        }
+        //&:hover + div > div {
+        //    animation-play-state: paused;
+        //}
     }
 
     &_carousel{

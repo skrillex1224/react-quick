@@ -17,42 +17,41 @@ const hiddenTime =600;
 /*显示时间*/
 const showTime = 1400;
 
+/*数据*/
+const dataList = [0,1,2,3,4,5];
+
 @observer
 export default class  Index extends React.Component<any, any>{
-    refList = [];
-
+    //state
     constructor(props) {
         super(props);
 
-        this.refList = new Array(5);
-        this.refList.fill(React.createRef());
-    }
+        /*设置state*/
+        this.state = {
+            isLoading :true,
+            isVisible : true,
+            isVisibleCarousel: false,
+        }
 
-    state = {
-        isLoading :true,
-        isVisible : true,
-        isVisibleCarousel: false,
     }
 
 
     componentDidMount(): void {
-        setTimeout(()=>{
+
+        // setTimeout(()=>{
             this.setState({isLoading:false})
-        },600)
-
-        /**/
-
+        // },600)
 
         /*滚动监听*/
         const carouselDiv = document.getElementById('carousel');
         window.addEventListener('scroll',throttle(()=>{
             const currentY = carouselDiv.getBoundingClientRect().y;
-            console.log(currentY)
-            if(currentY < window.innerHeight){
+            if(currentY < window.innerHeight - 200 ){
                 this.setState({isVisibleCarousel:true})
             }
 
         }),false)
+
     }
 
 
@@ -67,7 +66,7 @@ export default class  Index extends React.Component<any, any>{
 
 
     render() {
-        const {isLoading,isVisible,isVisibleCarousel} =this.state;
+        const {isLoading,isVisible,isVisibleCarousel,translateZArr,translateXArr,translateYArr,rotateArr} =this.state;
         const {title,subTitle,imgName} = IndexSet[currentPageIndex];
 
         /**animationOut没啥用在这里*/
@@ -83,9 +82,9 @@ export default class  Index extends React.Component<any, any>{
                     <div className={styles.wrapper}>
                         <div id={'carousel'} className={styles.wrapper_carousel}>
                             {
-                                [1,2,3,4,5].map((item,index)=>{
+                                dataList.map((item,index)=>{
                                     return (
-                                        <div ref={this.refList[index]} className={classNames({
+                                        <div  className={classNames({
                                             [`${styles.wrapper_carousel_item}`]:true
                                         })}>{item}</div>
                                     )
@@ -98,3 +97,4 @@ export default class  Index extends React.Component<any, any>{
         )
     }
 }
+

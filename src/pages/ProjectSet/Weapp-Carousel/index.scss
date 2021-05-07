@@ -1,0 +1,95 @@
+.wrapper{
+    width: 600px;
+    height: 600px;
+    position: relative;
+    perspective: 2000px;
+
+    &_container{
+        width: 400px;
+        height: 500px;
+        transform-style: preserve-3d;
+        animation:   photoRotate 36s ease-in-out infinite running ;
+
+        &:hover{
+            animation-play-state: paused;
+        }
+    }
+
+    &_aspect{
+        transform-origin: center center;
+        cursor: pointer;
+        width: 240px;
+        height: 400px;
+        background-color: #bfaa;
+        position: absolute;
+    }
+
+}
+
+@keyframes photoRotate {
+    0% {
+        transform: rotateY(0deg);
+    }
+    8.33% {
+        transform: rotateY(30deg);
+    }
+    16.67% {
+        transform: rotateY(60deg);
+    }
+    24.99% {
+        transform: rotateY(90deg);
+    }
+    33.33% {
+        transform: rotateY(120deg);
+    }
+    41.66% {
+        transform: rotateY(150deg);
+    }
+    50% {
+        transform: rotateY(180deg);
+    }
+    58.33% {
+        transform: rotateY(210deg);
+    }
+    66.7% {
+        transform: rotateY(240deg);
+    }
+    74.99% {
+        transform: rotateY(270deg);
+    }
+    83.3% {
+        transform: rotateY(300deg);
+    }
+    91.66% {
+        transform: rotateY(330deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+
+//@keyframes photoRotate {
+//    0% {
+//        transform: rotateY(0deg);
+//    }
+//    16.7% {
+//        transform: rotateY(60deg);
+//    }
+//    33.3% {
+//        transform: rotateY(120deg);
+//    }
+//    50% {
+//        transform: rotateY(180deg);
+//    }
+//    66.7% {
+//        transform: rotateY(240deg);
+//    }
+//    83.3% {
+//        transform: rotateY(300deg);
+//    }
+//    100% {
+//        transform: rotateY(360deg);
+//    }
+//}
+

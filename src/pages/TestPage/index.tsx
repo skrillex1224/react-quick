@@ -1,7 +1,9 @@
 import React from "react";
 import {Animated} from "react-animated-css";
 import {observer} from "mobx-react";
-import Example from '../AlgorithmSet/SubjectBox'
+import Example from '../ProjectSet/Weapp-Carousel'
+import Example1 from '../ProjectSet/BigScreen-Carousel'
+import Example2 from '../ProjectSet/Web-Carousel'
 import Preload from '../../components/Preload'
 import styles from './index.scss'
 
@@ -24,8 +26,8 @@ export default class  Index extends React.Component<any, any>{
             //    <Animated animationIn={'rollIn'} isVisible={true} animationInDuration={1600} animationOut={'fadeOut'} animationOutDuration={600}>
                   <div className={styles.wrapper}>
                       <Example />
-                      <Example />
-                      <Example />
+                      {/*<Example1 />*/}
+                      {/*<Example2 />*/}
                   </div>
                // </Animated>
             // </Preload>

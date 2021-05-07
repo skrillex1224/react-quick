@@ -7,6 +7,9 @@ import IndexSet from "../../utils/IndexSet";
 import styles from './index.scss'
 import {throttle} from "../../utils/throttle";
 import classNames from "classnames";
+import WeappCarousel from 'pages/ProjectSet/WeappCarousel'
+import BigScreenCarousel from 'pages/ProjectSet/BigScreenCarousel'
+import WebCarousel from 'pages/ProjectSet/WebCarousel'
 
 /*当前的Index*/
 const currentPageIndex = 3;
@@ -30,7 +33,6 @@ export default class  Index extends React.Component<any, any>{
         this.state = {
             isLoading :true,
             isVisible : true,
-            isVisibleCarousel: false,
         }
 
     }
@@ -41,16 +43,6 @@ export default class  Index extends React.Component<any, any>{
         // setTimeout(()=>{
             this.setState({isLoading:false})
         // },600)
-
-        /*滚动监听*/
-        const carouselDiv = document.getElementById('carousel');
-        window.addEventListener('scroll',throttle(()=>{
-            const currentY = carouselDiv.getBoundingClientRect().y;
-            if(currentY < window.innerHeight - 200 ){
-                this.setState({isVisibleCarousel:true})
-            }
-
-        }),false)
 
     }
 
@@ -66,7 +58,7 @@ export default class  Index extends React.Component<any, any>{
 
 
     render() {
-        const {isLoading,isVisible,isVisibleCarousel,translateZArr,translateXArr,translateYArr,rotateArr} =this.state;
+        const {isLoading,isVisible} =this.state;
         const {title,subTitle,imgName} = IndexSet[currentPageIndex];
 
         /**animationOut没啥用在这里*/
@@ -77,21 +69,28 @@ export default class  Index extends React.Component<any, any>{
                     <MainScreen title={title} subTitle={subTitle} imgName={imgName}/>
                 </Animated>
 
-                <Animated   animationIn={'zoomIn'} animationOut={'fadeOut'} isVisible={isVisibleCarousel} animationInDuration={showTime}
+                <Animated   animationIn={'zoomIn'} animationOut={'fadeOut'} isVisible={true} animationInDuration={showTime}
                             animationOutDuration={hiddenTime}>
-                    <div className={styles.wrapper}>
-                        <div id={'carousel'} className={styles.wrapper_carousel}>
-                            {
-                                dataList.map((item,index)=>{
-                                    return (
-                                        <div  className={classNames({
-                                            [`${styles.wrapper_carousel_item}`]:true
-                                        })}>{item}</div>
-                                    )
-                                })
-                            }
-                        </div>
+                    <div className={styles.wrapper_title}>
+                        <a>小程序项目总览</a>
                     </div>
+                    <WeappCarousel/>
+                </Animated>
+
+                <Animated   animationIn={'zoomIn'} animationOut={'fadeOut'} isVisible={true} animationInDuration={showTime}
+                            animationOutDuration={hiddenTime}>
+                    <div className={styles.wrapper_title}>
+                        <a>Web项目总览</a>
+                    </div>
+                    <WebCarousel/>
+                </Animated>
+
+                <Animated   animationIn={'zoomIn'} animationOut={'fadeOut'} isVisible={true} animationInDuration={showTime}
+                            animationOutDuration={hiddenTime}>
+                    <div className={styles.wrapper_title}>
+                        <a>大屏项目总览</a>
+                    </div>
+                    <BigScreenCarousel/>
                 </Animated>
             </Preload>
         )

@@ -1,26 +1,30 @@
 .wrapper{
-    width: 600px;
-    height: 600px;
+    height: 300px;
+    margin-top: 100px;
+    margin-bottom: 100px;
     position: relative;
     perspective: 2000px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 
     &_container{
-        width: 400px;
-        height: 500px;
+        width: 220px;
+        height: 300px;
         transform-style: preserve-3d;
         animation:   photoRotate 36s ease-in-out infinite running ;
 
-        &:hover{
-            animation-play-state: paused;
-        }
     }
 
     &_aspect{
         transform-origin: center center;
         cursor: pointer;
-        width: 240px;
-        height: 400px;
-        background-color: #bfaa;
+        width: 220px;
+        height: 300px;
+        border: 2px solid #373E47;
+        border-radius: 10px;
+        background-color: #22272E;
+        color: white;
         position: absolute;
     }
 

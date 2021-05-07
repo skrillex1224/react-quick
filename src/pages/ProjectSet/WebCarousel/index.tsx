@@ -7,7 +7,7 @@ import styles from './index.scss'
 export default class Index extends React.Component<any, any>{
 
     state = {
-        transformList : [1,2,3,4,5,6,7,8,9,10,11,12]
+        transformList : [1,2,3,4,5,6,7,8]
     }
 
     constructor(props) {
@@ -23,7 +23,7 @@ export default class Index extends React.Component<any, any>{
                <div className={styles.wrapper_container}>
                    {
                        transformList.map((item, index)=>(
-                           <div style={{transform : `rotateY(${index * (360 / 12)}deg) translateZ(${600 * pixel}px) `}} className={styles.wrapper_aspect}>
+                           <div style={{transform : `rotateY(${index * 45}deg) translateZ(${800 * pixel}px) `}} className={styles.wrapper_aspect}>
                                {index}
                            </div>
                        ))

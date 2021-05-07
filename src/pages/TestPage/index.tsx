@@ -1,9 +1,9 @@
 import React from "react";
 import {Animated} from "react-animated-css";
 import {observer} from "mobx-react";
-import Example from '../ProjectSet/Weapp-Carousel'
-import Example1 from '../ProjectSet/BigScreen-Carousel'
-import Example2 from '../ProjectSet/Web-Carousel'
+import Example from '../ProjectSet/WeappCarousel'
+import Example1 from '../ProjectSet/BigScreenCarousel'
+import Example2 from '../ProjectSet/WebCarousel'
 import Preload from '../../components/Preload'
 import styles from './index.scss'
 

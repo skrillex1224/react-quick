@@ -6,13 +6,26 @@ import {throttle} from "../../../utils/throttle";
 import { Animated } from "react-animated-css";
 interface IProps {
    title : string,
-   dataList : any[]
+   dataList : any[],
+   isVisible : boolean
 }
 
 @observer
 export  default  class Index extends React.Component<IProps,any>{
     exactHeightList;
     itemListRef;
+
+    static getDerivedStateFromProps(nextProp , state){
+        if(!nextProp.isVisible) {
+            const {suspendArr} = state;
+            suspendArr.fill(false);
+            return {
+                //修改可见性
+                suspendArr
+            }
+        }
+        return null;
+    }
 
     constructor(props) {
         super(props);
@@ -64,7 +77,8 @@ export  default  class Index extends React.Component<IProps,any>{
 
     static defaultProps = {
         title: '暂无标题',
-        dataList : [1,2,3,4,5,6,7,8]
+        dataList : [1,2,3,4,5,6,7,8],
+        isVisible : true
     }
 
     handleClick = (index)=>{
@@ -89,7 +103,10 @@ export  default  class Index extends React.Component<IProps,any>{
         const {heightArr,suspendArr} = this.state;
         return (
             <div className={styles.wrapper}>
-                <a onClick={this.collapseAll} className={styles.wrapper_title}>{title}</a>
+                <Animated   animationIn={'bounceIn'} animationOut={'fadeOut'} isVisible={suspendArr[0]} animationInDuration={1000}
+                          animationOutDuration={600}>
+                    <a onClick={this.collapseAll} className={styles.wrapper_title}>{title}</a>
+                </Animated>
                 <div className={styles.wrapper_content}>
                     {
                         dataList.map((item,index)=>{
@@ -104,23 +121,8 @@ export  default  class Index extends React.Component<IProps,any>{
                                             React源码剖析从前端的URL到页面渲染的过程
                                         </div>
                                         <div className={styles.wrapper_content_item_article} style={{height:`${heightArr[index]}px`}}>
-                                            <div ref={this.exactHeightList[index]} style={{height:`${index * 50}px`}}>
-                                                React源码剖析从前端的URL到页面渲染的过程
-                                                <br/>React源码剖析从前端的URL到页面渲染的过程
-                                                <br/>React源码剖析从前端的URL到页面渲染的过程
-                                                <br/>React源码剖析从前端的URL到页面渲染的过程
-                                                <br/>React源码剖析从前端的URL到页面渲染的过程
-                                                <br/>React源码剖析从前端的URL到页面渲染的过程
-                                                <br/>React源码剖析从前端的URL到页面渲染的过程
-                                                <br/>React源码剖析从前端的URL到页面渲染的过程
-                                                <br/>React源码剖析从前端的URL到页面渲染的过程
-                                                <br/>React源码剖析从前端的URL到页面渲染的过程
-                                                <br/>React源码剖析从前端的URL到页面渲染的过程
-                                                <br/>React源码剖析从前端的URL到页面渲染的过程
-                                                <br/>React源码剖析从前端的URL到页面渲染的过程
-                                                <br/>React源码剖析从前端的URL到页面渲染的过程
-                                                <br/>React源码剖析从前端的URL到页面渲染的过程
-                                                <br/>React源码剖析从前端的URL到页面渲染的过程
+                                            <div ref={this.exactHeightList[index]} >
+                                                fsdfjsflksjflksjflksjfdkl
                                             </div>
                                         </div>
 

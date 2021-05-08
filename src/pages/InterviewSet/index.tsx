@@ -27,9 +27,9 @@ export default class  Index extends React.Component<any, any>{
     }
 
     componentDidMount(): void {
-        // setTimeout(()=>{
+        setTimeout(()=>{
             this.setState({isLoading:false})
-        // },600)
+        },600)
     }
 
 
@@ -57,10 +57,10 @@ export default class  Index extends React.Component<any, any>{
                 </Animated>
 
                 <div  className={styles.wrapper}>
-                    <ClassListBox title={'Html & Css'} dataList={[1,2,3,4,5,6,7,8]}/>
-                    <ClassListBox title={'JavaScript'} dataList={[1,2,3,4,5,6,7,8]}/>
-                    <ClassListBox title={'Http'} dataList={[1,2,3,4,5,6,7,8]}/>
-                    <ClassListBox title={'React'} dataList={[1,2,3,4,5,6,7,8]}/>
+                    <ClassListBox isVisible={isVisible} title={'Html & Css'} dataList={[1,2,3,4,5,6,7,8]}/>
+                    <ClassListBox isVisible={isVisible} title={'JavaScript'} dataList={[1,2,3,4,5,6,7,8]}/>
+                    <ClassListBox isVisible={isVisible} title={'Http'} dataList={[1,2,3,4,5,6,7,8]}/>
+                    <ClassListBox isVisible={isVisible} title={'React'} dataList={[1,2,3,4,5,6,7,8]}/>
                 </div>
 
             </Preload>

@@ -136,6 +136,7 @@ export default class  Index extends React.Component<any, any>{
         }
     ]
 
+
     render() {
         const {isLoading,suspend,isVisible} =this.state;
         const {title,subTitle,imgName} = IndexSet[IndexSetOfThisIndex];

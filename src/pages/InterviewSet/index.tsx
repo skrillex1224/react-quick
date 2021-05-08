@@ -5,6 +5,7 @@ import {Animated} from 'react-animated-css'
 import MainScreen from "../../components/MainScreen";
 import IndexSet from "../../utils/IndexSet";
 import styles from './index.scss'
+import ClassListBox from './ClassListBox'
 
 /*当前的Index*/
 const currentPageIndex = 4;
@@ -55,7 +56,8 @@ export default class  Index extends React.Component<any, any>{
                 </Animated>
 
                 <div className={styles.wrapper}>
-
+                    <ClassListBox dataList={[1,2,3,4,5,6,7,8]}/>
+                    {/*<ClassListBox />*/}
                 </div>
 
             </Preload>

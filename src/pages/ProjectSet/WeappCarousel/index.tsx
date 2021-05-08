@@ -23,7 +23,7 @@ export default class Index extends React.Component<any, any>{
                <div className={styles.wrapper_container}>
                    {
                        transformList.map((item, index)=>(
-                           <div style={{transform : `rotateY(${index * 30}deg) translateZ(${600 * pixel}px) `}} className={styles.wrapper_aspect}>
+                           <div style={{transform : `rotateY(${index * 30}deg) translateZ(${750 * pixel}px) `}} className={styles.wrapper_aspect}>
                                {index}
                            </div>
                        ))

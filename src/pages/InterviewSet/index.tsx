@@ -26,7 +26,6 @@ export default class  Index extends React.Component<any, any>{
         isVisible : true,
     }
 
-
     componentDidMount(): void {
         // setTimeout(()=>{
             this.setState({isLoading:false})
@@ -43,6 +42,8 @@ export default class  Index extends React.Component<any, any>{
     }
 
 
+
+
     render() {
         const {isLoading,isVisible} =this.state;
         const {title,subTitle,imgName} = IndexSet[currentPageIndex];
@@ -55,9 +56,11 @@ export default class  Index extends React.Component<any, any>{
                     <MainScreen title={title} subTitle={subTitle} imgName={imgName}/>
                 </Animated>
 
-                <div className={styles.wrapper}>
-                    <ClassListBox dataList={[1,2,3,4,5,6,7,8]}/>
-                    {/*<ClassListBox />*/}
+                <div  className={styles.wrapper}>
+                    <ClassListBox title={'Html & Css'} dataList={[1,2,3,4,5,6,7,8]}/>
+                    <ClassListBox title={'JavaScript'} dataList={[1,2,3,4,5,6,7,8]}/>
+                    <ClassListBox title={'Http'} dataList={[1,2,3,4,5,6,7,8]}/>
+                    <ClassListBox title={'React'} dataList={[1,2,3,4,5,6,7,8]}/>
                 </div>
 
             </Preload>

@@ -51,7 +51,7 @@ export  default  class Index extends React.Component<IProps,any>{
                 const {current} = this.itemListRef[i];
                 const offsetY = current?.getBoundingClientRect().y;
 
-                if(offsetY> 0 && offsetY < window.innerHeight - 100){
+                if(offsetY < window.innerHeight - 100){
                     suspendArr[i] = true ;
                 }else{
                     suspendArr[i] = false ;
